@@ -5,9 +5,11 @@ import "github.com/jinzhu/gorm"
 type Room struct {
 	gorm.Model
 	// Metadata
-	idRoom string
-	idUser string
+	IdRoom string `gorm:"primaryKey"`
+	IdUser string
 
 	//Data
-	name string
+	Name string
+
+	Index int
 }
