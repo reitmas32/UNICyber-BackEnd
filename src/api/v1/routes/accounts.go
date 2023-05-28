@@ -1,128 +1,16 @@
 package routes
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
 
+	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/views"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/config"
-	"github.com/gin-gonic/gin"
 )
 
-type UserSignUp struct {
-	Name        string `json:"name"`
-	LastName    string `json:"last_name"`
-	Email       string `json:"email"`
-	UserName    string `json:"user_name"`
-	PhoneNumber string `json:"phone_number"`
-	DateOfBirth string `json:"date_of_birth"`
-	Password    string `json:"password"`
-	Role        string `json:"role"`
+func SignIn() {
+	config.Router.PUT(fmt.Sprintf("/api/%s/signin", config.API_VERSION), views.SignIn_PUT)
 }
 
-type UserSignIn struct {
-	UserName string `json:"user_name"`
-	Password string `json:"password"`
-}
-
-func SignIn_PUT(c *gin.Context) {
-
-	// Decodificar el objeto JSON recibido en la estructura User
-	var user UserSignUp
-	err := json.NewDecoder(c.Request.Body).Decode(&user)
-	if err != nil {
-		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al obtener el contenido del archivo"))
-		return
-	}
-
-	// Crear un cliente HTTP personalizado con los headers deseados
-	client := &http.Client{}
-	//Todo Remplazar la url de desarrollo o producción
-	apiURL := "http://127.0.0.1:5000/api/v1/signin"
-	jsonData, err := json.Marshal(user)
-	if err != nil {
-		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al serializar los datos JSON"))
-		return
-	}
-
-	req, err := http.NewRequest(http.MethodPut, apiURL, bytes.NewBuffer(jsonData))
-	if err != nil {
-		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al crear la petición HTTP"))
-		return
-	}
-
-	// Añadir headers personalizados a la petición
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Api-Key", config.UNIACCOUNTS_API_KEY)
-	req.Header.Set("Service", config.UNIACCOUNTS_API_SERVICE_NAME)
-
-	// Realizar la petición HTTP con el cliente personalizado
-	resp, err := client.Do(req)
-
-	// Leer el contenido de la respuesta
-	if err != nil {
-		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al hacer la petición a la API externa"))
-		return
-	}
-	defer resp.Body.Close()
-
-	// Copiar el contenido de la respuesta del otro servicio a la respuesta HTTP en tu endpoint
-	c.Header("Content-Type", "application/json")
-	io.Copy(c.Writer, resp.Body)
-}
-
-func SignUp_POST(c *gin.Context) {
-
-	// Decodificar el objeto JSON recibido en la estructura User
-	var user UserSignUp
-	err := json.NewDecoder(c.Request.Body).Decode(&user)
-	if err != nil {
-		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al obtener el contenido del archivo"))
-		return
-	}
-
-	// Crear un cliente HTTP personalizado con los headers deseados
-	client := &http.Client{}
-	//Todo Remplazar la url de desarrollo o producción
-	apiURL := fmt.Sprintf("http://127.0.0.1:%d/api/%s/signup", config.UNIACCOUNTS_API_PORT, config.UNIACCOUNTS_API_VERSION)
-	jsonData, err := json.Marshal(user)
-	if err != nil {
-		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al serializar los datos JSON"))
-		return
-	}
-
-	req, err := http.NewRequest(http.MethodPost, apiURL, bytes.NewBuffer(jsonData))
-	if err != nil {
-		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al crear la petición HTTP"))
-		return
-	}
-
-	// Añadir headers personalizados a la petición
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Api-Key", config.UNIACCOUNTS_API_KEY)
-	req.Header.Set("Service", config.UNIACCOUNTS_API_SERVICE_NAME)
-
-	// Realizar la petición HTTP con el cliente personalizado
-	resp, err := client.Do(req)
-
-	// Leer el contenido de la respuesta
-	if err != nil {
-		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al hacer la petición a la API externa"))
-		return
-	}
-	defer resp.Body.Close()
-
-	// Copiar el contenido de la respuesta del otro servicio a la respuesta HTTP en tu endpoint
-	c.Header("Content-Type", "application/json")
-	io.Copy(c.Writer, resp.Body)
+func SignUp() {
+	config.Router.PUT(fmt.Sprintf("/api/%s/signup", config.API_VERSION), views.SignUp_POST)
 }
