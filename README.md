@@ -3,7 +3,7 @@ Sistema para el prestamo de equipos presentes en las Salas de UNICA
 
 ### Operaciones que debehacer
 
-**Operaciones de Cuentas**
+**Operaciones de Cuentas** ✅
 - Coneccion para SignUp de Usuarios UNICA
 - Inicio de Sesion SignIn usando UNIAccounts
   
@@ -45,4 +45,19 @@ Sistema para el prestamo de equipos presentes en las Salas de UNICA
 **Operaciones de Mantenimiento**
 - Apagar una PC
 - Obtener datos de la PC
-- Ejecutar programas/encuesta
+- Ejecutar programas/encuestas
+
+```bash
+source env/local/bin/activate
+cd src
+flask run
+
+cd src
+go run app.go
+
+```
+
+Dowload Modules
+```bash
+go mod download
+```
