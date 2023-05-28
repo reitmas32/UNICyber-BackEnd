@@ -1,7 +1,9 @@
 package models
 
-type Computer struct {
+import "github.com/jinzhu/gorm"
 
+type Computer struct {
+	gorm.Model
 	// Metadata
 	idComputerUI string
 	idRoom       string
