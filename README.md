@@ -61,3 +61,8 @@ Dowload Modules
 ```bash
 go mod download
 ```
+
+Build reduce size
+```bash
+go build -ldflags="-s -w" app.go
+```
