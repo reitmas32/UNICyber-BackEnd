@@ -28,3 +28,4 @@
 src/config/.env
 
 /build
+/src/*.db
