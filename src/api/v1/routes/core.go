@@ -3,13 +3,16 @@ package routes
 import (
 	"io/ioutil"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-func IndexHandler(w http.ResponseWriter, r *http.Request) {
+func IndexHandler(c *gin.Context) {
 	// Hacer una solicitud GET a http://127.0.0.1:5000
 	resp, err := http.Get("http://127.0.0.1:5000")
 	if err != nil {
-		http.Error(w, "Error al obtener el contenido del archivo", http.StatusInternalServerError)
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		c.Writer.Write([]byte("Error al obtener el contenido del archivo"))
 		return
 	}
 	defer resp.Body.Close()
@@ -17,13 +20,10 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	// Leer el contenido de la respuesta
 	htmlBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		http.Error(w, "Error al leer el contenido del archivo", http.StatusInternalServerError)
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		c.Writer.Write([]byte("Error al obtener el contenido del archivo"))
 		return
 	}
 
-	// Establecer el encabezado Content-Type a "text/html"
-	w.Header().Set("Content-Type", "text/html")
-
-	// Escribir el contenido HTML en el cuerpo de la respuesta
-	w.Write(htmlBytes)
+	c.Writer.Write(htmlBytes)
 }
