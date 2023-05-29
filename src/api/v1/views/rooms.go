@@ -35,7 +35,7 @@ func Rooms_POST(c *gin.Context) {
 		"Success": false, // o false
 	}
 
-	// Decodificar el objeto JSON recibido en la estructura User
+	// Decodificar el objeto JSON recibido
 	var roomSchema schemas.RoomSchema
 	err := json.NewDecoder(c.Request.Body).Decode(&roomSchema)
 	if err != nil {
