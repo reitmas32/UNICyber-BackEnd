@@ -5,16 +5,16 @@ import "github.com/jinzhu/gorm"
 type Computer struct {
 	gorm.Model
 	// Metadata
-	idComputerUI string
-	idRoom       string
+	IdComputer string `gorm:"primaryKey"`
+	IdRoom     string
 
 	// UI
-	pos_x int
-	pos_y int
+	Pos_x float32
+	Pos_y float32
 
 	// Data
-	name         string
-	state        string
-	message      string
-	typeComputer string
+	Name    string
+	State   string
+	Message string
+	Type    string
 }
