@@ -29,3 +29,13 @@ func FindComputer(IdComputer string) (bool, string, models.Computer) {
 
 	return true, "Find Computer", computer
 }
+
+func DeleteComputer(IdComputer string) (bool, string, models.Computer) {
+
+	var computer models.Computer
+	if err := config.DB.Delete(&computer, "id_computer = ?", IdComputer).Error; err != nil {
+		return false, "No Find Computer", computer
+	}
+
+	return true, "Delete Computer", computer
+}
