@@ -93,7 +93,7 @@ func Rooms_POST(c *gin.Context) {
 	}
 
 	success := responseData["Success"].(bool)
-	if success == true {
+	if success {
 		var response Response
 		if err := json.Unmarshal(body, &response); err != nil {
 			fmt.Println("Error al analizar el JSON:", err)
