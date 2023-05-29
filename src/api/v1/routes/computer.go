@@ -8,9 +8,12 @@ import (
 )
 
 func Computer() {
-	//Create Room
+	//Create Computer
 	config.Router.POST(fmt.Sprintf("/api/%s/computer", config.API_VERSION), views.Computer_POST)
 
-	//Get Room
+	//Get Computer
 	config.Router.GET(fmt.Sprintf("/api/%s/computer/:id-computer", config.API_VERSION), views.Computer_GET)
+
+	//Delete Computer
+	config.Router.DELETE(fmt.Sprintf("/api/%s/computer/:id-computer", config.API_VERSION), views.Computer_DELETE)
 }
