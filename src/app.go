@@ -3,15 +3,17 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/routes"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/config"
-	"github.com/gorilla/mux"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
+
 	config.LoadEnvs()
+
 	log.Println("Run Server on ENVIRONMENT:", config.ENVIRONMENT)
 	log.Println("Run Server on PORT:", config.PORT)
 	log.Println("Run Server on DEBUG:", config.DEBUG)
@@ -19,11 +21,19 @@ func main() {
 	log.Println("UNIACCOUNTS_API_SERVICE_NAME:", config.UNIACCOUNTS_API_SERVICE_NAME)
 	log.Println("UNIACCOUNTS_API_KEY:", config.UNIACCOUNTS_API_KEY)
 
-	router := mux.NewRouter().StrictSlash(true)
+	// Configuración de la conexión a la base de datos MySQL
+	config.SetupDB()
+	// Genera las tablas en la base de datos
+	config.MigrateDB()
 
-	router.HandleFunc("/", routes.IndexHandler)
-	router.HandleFunc(fmt.Sprintf("/api/%s/signup", config.API_VERSION), routes.SignUp_POST)
-	router.HandleFunc(fmt.Sprintf("/api/%s/signin", config.API_VERSION), routes.SignIn_PUT)
+	config.SetupRouter()
 
-	log.Fatal(http.ListenAndServe(fmt.Sprint(":", config.PORT), router))
+	config.Router.GET("/", routes.IndexHandler)
+	routes.SignIn()
+	routes.SignUp()
+	routes.Rooms()
+	routes.Computer()
+
+	// Escucha en el puerto 8080
+	config.Router.Run(fmt.Sprintf(":%d", config.PORT))
 }
