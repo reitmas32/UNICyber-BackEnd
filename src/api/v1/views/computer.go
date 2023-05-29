@@ -45,7 +45,7 @@ func Computer_POST(c *gin.Context) {
 
 	result, message := services.CreateComputer(computer)
 
-	if result == true {
+	if result {
 
 		responseCreateRoom = map[string]interface{}{
 			"Message": message,
@@ -66,23 +66,40 @@ func Computer_POST(c *gin.Context) {
 
 func Computer_GET(c *gin.Context) {
 
-	responseCreateRoom := map[string]interface{}{
-		"Message": "No Find Computer",
-		"Data":    "{}",
-		"Success": false,
-	}
-
 	result, message, computer := services.FindComputer(c.Param("id-computer"))
 
-	if result == true {
+	responseCreateRoom := map[string]interface{}{
+		"Message": message,
+		"Success": result,
+		"Data":    computer,
+	}
 
-		responseCreateRoom = map[string]interface{}{
-			"Message": message,
-			"Success": result,
-			"Data":    computer,
-		}
+	if !result {
+		responseCreateRoom["Data"] = "{}"
 	}
 
 	c.Header("Content-Type", "application/json")
 	c.JSON(200, responseCreateRoom)
+}
+
+func Computer_DELETE(c *gin.Context) {
+
+	result, message, computer := services.FindComputer(c.Param("id-computer"))
+
+	if result {
+		result, message, _ = services.DeleteComputer(c.Param("id-computer"))
+	}
+
+	responseDeleteRoom := map[string]interface{}{
+		"Message": message,
+		"Success": result,
+		"Data":    computer,
+	}
+
+	if !result {
+		responseDeleteRoom["Data"] = "{}"
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseDeleteRoom)
 }
