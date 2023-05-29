@@ -16,4 +16,7 @@ func Computer() {
 
 	//Delete Computer
 	config.Router.DELETE(fmt.Sprintf("/api/%s/computer/:id-computer", config.API_VERSION), views.Computer_DELETE)
+
+	//Change Name
+	config.Router.PUT(fmt.Sprintf("/api/%s/computer/name/:id-computer", config.API_VERSION), views.Computer_Rename_PUT)
 }
