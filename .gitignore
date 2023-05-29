@@ -19,7 +19,6 @@
 # Dependencias manejadas por Go
 /vendor/
 /go.sum
-/go.mod
 
 # Build
 /src/app
