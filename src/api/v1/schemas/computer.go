@@ -9,3 +9,7 @@ type ComputerCreateSchema struct {
 type ComputerFindSchema struct {
 	IdComputer string `json:"id_computer"`
 }
+
+type ComputerRenameSchema struct {
+	Name string `json:"name"`
+}
