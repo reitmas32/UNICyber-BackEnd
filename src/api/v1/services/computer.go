@@ -39,3 +39,16 @@ func DeleteComputer(IdComputer string) (bool, string, models.Computer) {
 
 	return true, "Delete Computer", computer
 }
+
+func ChangeNameComputer(IdComputer string, new_name string) (bool, string, models.Computer) {
+
+	var computer models.Computer
+	if err := config.DB.First(&computer, "id_computer = ?", IdComputer).Error; err != nil {
+		return false, "No Find Computer", computer
+	} else {
+		computer.Name = new_name
+		config.DB.Save(&computer)
+	}
+
+	return true, "Change Name Successful", computer
+}
