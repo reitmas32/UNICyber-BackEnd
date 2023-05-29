@@ -104,33 +104,27 @@ func Computer_DELETE(c *gin.Context) {
 	c.JSON(200, responseDeleteComputer)
 }
 
-func Computer_Rename_PUT(c *gin.Context) {
+func Computer_PUT(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido
-	var computerRenameSchema schemas.ComputerRenameSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&computerRenameSchema)
+	var computerUpdateSchema schemas.ComputerUpdateSchema
+	err := json.NewDecoder(c.Request.Body).Decode(&computerUpdateSchema)
 	if err != nil {
-		responseRenameComputer := map[string]interface{}{
+		responseUpdateComputer := map[string]interface{}{
 			"Message": "Error to Get Content JSON",
 			"Data":    "{}",
 			"Success": false,
 		}
 		c.Header("Content-Type", "application/json")
-		c.JSON(200, responseRenameComputer)
+		c.JSON(200, responseUpdateComputer)
 		return
 	}
 
 	result, message, computer := services.FindComputer(c.Param("id-computer"))
 
 	if result {
-		result, message, _ = services.ChangeNameComputer(c.Param("id-computer"), computerRenameSchema.Name)
-
-		if result{
-			computer.Name = computerRenameSchema.Name
-		}
+		result, message, computer = services.UpdateComputer(c.Param("id-computer"), computerUpdateSchema)
 	}
-
-	
 
 	responseRenameComputer := map[string]interface{}{
 		"Message": message,
