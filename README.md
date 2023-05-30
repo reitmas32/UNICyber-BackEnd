@@ -11,11 +11,12 @@ Sistema para el prestamo de equipos presentes en las Salas de UNICA
 - Creacion de Aulas para un Usuario
 - Eliminar Aula
 - Cambiar datos de Aula (nombre)
+- Actualizar posicion de una Aula
+  
 - Añadir Nueva Compu/Impresora/Scanner a una Aula
 - Elimanar Compu de Una Aula
 - Actualizar posicionde Compu
 - Cambiar datos de Compu nombre/tipo
-- Actualizar posicion de una Aula
 
 **Operaciones de Alumnos**
 
