@@ -33,6 +33,7 @@ func main() {
 	routes.SignUp()
 	routes.Rooms()
 	routes.Computer()
+	routes.StudentRoutes()
 
 	// Escucha en el puerto 8080
 	config.Router.Run(fmt.Sprintf(":%d", config.PORT))
