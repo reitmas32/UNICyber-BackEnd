@@ -47,10 +47,12 @@ func UpdateComputer(IdComputer string, new_compuer schemas.ComputerUpdateSchema)
 	if err := config.DB.First(&computer, "id_computer = ?", IdComputer).Error; err != nil {
 		return false, "No Find Computer", computer
 	} else {
-		computer.Name = copyFieldString(new_compuer.Name, computer.Name, "")
-		computer.Type = copyFieldString(new_compuer.Type, computer.Type, "")
-		computer.State = copyFieldString(new_compuer.State, computer.State, "")
-		computer.Message = copyFieldString(new_compuer.Message, computer.Message, "")
+		computer.Name = copyField(new_compuer.Name, computer.Name, "")
+		computer.Type = copyField(new_compuer.Type, computer.Type, "")
+		computer.State = copyField(new_compuer.State, computer.State, "")
+		computer.Message = copyField(new_compuer.Message, computer.Message, "")
+		computer.Pos_x = copyField(new_compuer.Pos_x, computer.Pos_x, 0.0)
+		computer.Pos_y = copyField(new_compuer.Pos_y, computer.Pos_y, 0.0)
 
 		config.DB.Save(&computer)
 	}
@@ -58,7 +60,7 @@ func UpdateComputer(IdComputer string, new_compuer schemas.ComputerUpdateSchema)
 	return true, "Change Name Successful", computer
 }
 
-func copyFieldString(src string, des string, default_value string) string {
+func copyField[T string | float32 | int](src T, des T, default_value T) T {
 	if src != default_value {
 		des = src
 	}
