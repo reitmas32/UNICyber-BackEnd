@@ -50,7 +50,7 @@ import (
 // }
 func ComputerLab_POST(c *gin.Context) {
 
-	responseCreateComputer := models.Response{
+	responseCreateComputerLab := models.Response{
 		Message: "No Create Computer Lab",
 		Success: false,
 		Data:    "{}",
@@ -60,13 +60,13 @@ func ComputerLab_POST(c *gin.Context) {
 	var computerLabCreateSchema schemas.ComputerLabCreateSchema
 	err := json.NewDecoder(c.Request.Body).Decode(&computerLabCreateSchema)
 	if err != nil {
-		responseCreateComputer := models.Response{
+		responseCreateComputerLab := models.Response{
 			Message: "Error to Get Content JSON",
 			Success: false,
 			Data:    "{}",
 		}
 		c.Header("Content-Type", "application/json")
-		c.JSON(200, responseCreateComputer)
+		c.JSON(200, responseCreateComputerLab)
 		return
 	}
 
@@ -80,22 +80,22 @@ func ComputerLab_POST(c *gin.Context) {
 
 	if result {
 
-		responseCreateComputer = models.Response{
+		responseCreateComputerLab = models.Response{
 			Message: message,
 			Success: result,
 			Data:    computerLab,
 		}
 	} else {
 
-		responseCreateComputer = models.Response{
+		responseCreateComputerLab = models.Response{
 			Message: message,
-			Success: responseCreateComputer.Success,
+			Success: responseCreateComputerLab.Success,
 			Data:    computerLab,
 		}
 	}
 
 	c.Header("Content-Type", "application/json")
-	c.JSON(200, responseCreateComputer)
+	c.JSON(200, responseCreateComputerLab)
 }
 
 // @Summary get a item of the computer-lab
