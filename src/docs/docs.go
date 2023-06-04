@@ -11,9 +11,9 @@ const docTemplate = `{
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
         "contact": {
-            "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
+            "name": "Oswaldo Rafael Zamora Ramirez",
+            "url": "https://github.com/reitmas32",
+            "email": "rafa.zamora.rals@gmail.com"
         },
         "license": {
             "name": "MIT",
@@ -30,7 +30,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Computer"
+                    "Computers"
                 ],
                 "summary": "get a item of the computers",
                 "operationId": "get-computer",
@@ -63,7 +63,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Computer"
+                    "Computers"
                 ],
                 "summary": "update a item of the computers",
                 "operationId": "put-computer",
@@ -105,7 +105,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Computer"
+                    "Computers"
                 ],
                 "summary": "add a new item of the computers",
                 "operationId": "create-computer",
@@ -140,7 +140,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Computer"
+                    "Computers"
                 ],
                 "summary": "delete a item of the computers",
                 "operationId": "delete-computer",
@@ -313,6 +313,296 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/v1/room": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "get a item of the rooms",
+                "operationId": "get-room",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of Room",
+                        "name": "id-room",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "update a item of the rooms",
+                "operationId": "put-room",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of Room",
+                        "name": "id-room",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Schema by Update New Room",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.RoomUpdateSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "add a new item of the rooms",
+                "operationId": "create-room",
+                "parameters": [
+                    {
+                        "description": "Schema by Create New Room",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.RoomCreateSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "delete a item of the rooms",
+                "operationId": "delete-room",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of Room",
+                        "name": "id-room",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/student": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Students"
+                ],
+                "summary": "get a item of the students",
+                "operationId": "get-student",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of Student",
+                        "name": "id-student",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Students"
+                ],
+                "summary": "update a item of the students",
+                "operationId": "put-student",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of Students",
+                        "name": "id-student",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Schema by Update New Student",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.StudentUpdateSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Students"
+                ],
+                "summary": "add a new item of the students",
+                "operationId": "create-student",
+                "parameters": [
+                    {
+                        "description": "Schema by Create New Student",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.StudentCreateSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Students"
+                ],
+                "summary": "delete a item of the students",
+                "operationId": "delete-student",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of Student",
+                        "name": "id-student",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -397,6 +687,86 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        },
+        "schemas.RoomCreateSchema": {
+            "type": "object",
+            "properties": {
+                "id_computer_lab": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "schemas.RoomUpdateSchema": {
+            "type": "object",
+            "properties": {
+                "index": {
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Data",
+                    "type": "string"
+                }
+            }
+        },
+        "schemas.StudentCreateSchema": {
+            "type": "object",
+            "required": [
+                "account_number",
+                "last_name",
+                "name",
+                "semester",
+                "university_program"
+            ],
+            "properties": {
+                "account_number": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Info Personal",
+                    "type": "string"
+                },
+                "semester": {
+                    "type": "integer"
+                },
+                "university_program": {
+                    "description": "Info Academic",
+                    "type": "string"
+                }
+            }
+        },
+        "schemas.StudentUpdateSchema": {
+            "type": "object",
+            "properties": {
+                "account_number": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Info Personal",
+                    "type": "string"
+                },
+                "semester": {
+                    "type": "integer"
+                },
+                "university_program": {
+                    "description": "Info Academic",
+                    "type": "string"
+                }
+            }
         }
     }
 }`
@@ -404,11 +774,11 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
+	Host:             "localhost:3000",
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "UNICyber-API",
-	Description:      "This is a sample server todo server. You can visit the GitHub repository at https://github.com/LordGhostX/swag-gin-demo",
+	Description:      "This is a API by System UNICyber|SISEC https://github.com/reitmas32/UNICyber-BackEnd",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

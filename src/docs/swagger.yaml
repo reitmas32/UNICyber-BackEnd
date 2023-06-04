@@ -55,14 +55,68 @@ definitions:
       type:
         type: string
     type: object
-host: localhost:8080
+  schemas.RoomCreateSchema:
+    properties:
+      id_computer_lab:
+        type: string
+      name:
+        type: string
+    type: object
+  schemas.RoomUpdateSchema:
+    properties:
+      index:
+        type: integer
+      name:
+        description: Data
+        type: string
+    type: object
+  schemas.StudentCreateSchema:
+    properties:
+      account_number:
+        type: string
+      email:
+        type: string
+      last_name:
+        type: string
+      name:
+        description: Info Personal
+        type: string
+      semester:
+        type: integer
+      university_program:
+        description: Info Academic
+        type: string
+    required:
+    - account_number
+    - last_name
+    - name
+    - semester
+    - university_program
+    type: object
+  schemas.StudentUpdateSchema:
+    properties:
+      account_number:
+        type: string
+      email:
+        type: string
+      last_name:
+        type: string
+      name:
+        description: Info Personal
+        type: string
+      semester:
+        type: integer
+      university_program:
+        description: Info Academic
+        type: string
+    type: object
+host: localhost:3000
 info:
   contact:
-    email: support@swagger.io
-    name: API Support
-    url: http://www.swagger.io/support
-  description: This is a sample server todo server. You can visit the GitHub repository
-    at https://github.com/LordGhostX/swag-gin-demo
+    email: rafa.zamora.rals@gmail.com
+    name: Oswaldo Rafael Zamora Ramirez
+    url: https://github.com/reitmas32
+  description: This is a API by System UNICyber|SISEC https://github.com/reitmas32/UNICyber-BackEnd
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
@@ -91,7 +145,7 @@ paths:
             $ref: '#/definitions/models.Response'
       summary: delete a item of the computers
       tags:
-      - Computer
+      - Computers
     get:
       operationId: get-computer
       parameters:
@@ -113,7 +167,7 @@ paths:
             $ref: '#/definitions/models.Response'
       summary: get a item of the computers
       tags:
-      - Computer
+      - Computers
     post:
       operationId: create-computer
       parameters:
@@ -136,7 +190,7 @@ paths:
             $ref: '#/definitions/models.Response'
       summary: add a new item of the computers
       tags:
-      - Computer
+      - Computers
     put:
       operationId: put-computer
       parameters:
@@ -164,7 +218,7 @@ paths:
             $ref: '#/definitions/models.Response'
       summary: update a item of the computers
       tags:
-      - Computer
+      - Computers
   /api/v1/computer-lab:
     delete:
       operationId: delete-computer-lab
@@ -261,4 +315,196 @@ paths:
       summary: update a item of the computer-lab
       tags:
       - Computer Lab
+  /api/v1/room:
+    delete:
+      operationId: delete-room
+      parameters:
+      - description: ID of Room
+        in: path
+        name: id-room
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: delete a item of the rooms
+      tags:
+      - Rooms
+    get:
+      operationId: get-room
+      parameters:
+      - description: ID of Room
+        in: path
+        name: id-room
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get a item of the rooms
+      tags:
+      - Rooms
+    post:
+      operationId: create-room
+      parameters:
+      - description: Schema by Create New Room
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.RoomCreateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: add a new item of the rooms
+      tags:
+      - Rooms
+    put:
+      operationId: put-room
+      parameters:
+      - description: ID of Room
+        in: path
+        name: id-room
+        required: true
+        type: string
+      - description: Schema by Update New Room
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.RoomUpdateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: update a item of the rooms
+      tags:
+      - Rooms
+  /api/v1/student:
+    delete:
+      operationId: delete-student
+      parameters:
+      - description: ID of Student
+        in: path
+        name: id-student
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: delete a item of the students
+      tags:
+      - Students
+    get:
+      operationId: get-student
+      parameters:
+      - description: ID of Student
+        in: path
+        name: id-student
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get a item of the students
+      tags:
+      - Students
+    post:
+      operationId: create-student
+      parameters:
+      - description: Schema by Create New Student
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.StudentCreateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: add a new item of the students
+      tags:
+      - Students
+    put:
+      operationId: put-student
+      parameters:
+      - description: ID of Students
+        in: path
+        name: id-student
+        required: true
+        type: string
+      - description: Schema by Update New Student
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.StudentUpdateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: update a item of the students
+      tags:
+      - Students
 swagger: "2.0"
