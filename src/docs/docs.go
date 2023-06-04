@@ -24,20 +24,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/": {
-            "get": {
-                "produces": [
-                    "text/html"
-                ],
-                "summary": "Get Docs API",
-                "operationId": "index",
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
         "/api/v1/computer": {
             "post": {
                 "produces": [
@@ -65,9 +51,157 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/v1/computer-lab": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Computer Lab"
+                ],
+                "summary": "get a item to the computer-lab",
+                "operationId": "get-computer-lab",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID del item",
+                        "name": "id-computer-lab",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Computer Lab"
+                ],
+                "summary": "update a item to the computer-lab",
+                "operationId": "update-computer-lab",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID del item",
+                        "name": "id-computer-lab",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Computer Lab"
+                ],
+                "summary": "add a new item to the computer-lab",
+                "operationId": "create-computer-lab",
+                "parameters": [
+                    {
+                        "description": "todo data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.ComputerLabCreateSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Computer Lab"
+                ],
+                "summary": "delete a item to the computer-lab",
+                "operationId": "delete-computer-lab",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID del item",
+                        "name": "id-computer-lab",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "models.Response": {
+            "type": "object",
+            "properties": {
+                "Data": {},
+                "Message": {
+                    "type": "string"
+                },
+                "Success": {
+                    "type": "boolean"
+                }
+            }
+        },
         "schemas.ComputerCreateSchema": {
             "type": "object",
             "properties": {
@@ -78,6 +212,21 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "schemas.ComputerLabCreateSchema": {
+            "type": "object",
+            "required": [
+                "description",
+                "name"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 }
             }

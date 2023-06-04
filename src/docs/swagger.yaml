@@ -1,5 +1,13 @@
 basePath: /
 definitions:
+  models.Response:
+    properties:
+      Data: {}
+      Message:
+        type: string
+      Success:
+        type: boolean
+    type: object
   schemas.ComputerCreateSchema:
     properties:
       id_room:
@@ -8,6 +16,16 @@ definitions:
         type: string
       type:
         type: string
+    type: object
+  schemas.ComputerLabCreateSchema:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    required:
+    - description
+    - name
     type: object
 host: localhost:8080
 info:
@@ -23,15 +41,6 @@ info:
   title: UNICyber-API
   version: "1.0"
 paths:
-  /:
-    get:
-      operationId: index
-      produces:
-      - text/html
-      responses:
-        "200":
-          description: OK
-      summary: Get Docs API
   /api/v1/computer:
     post:
       operationId: create-computer
@@ -50,4 +59,94 @@ paths:
         "400":
           description: Bad Request
       summary: add a new item to the computers
+  /api/v1/computer-lab:
+    delete:
+      operationId: delete-computer-lab
+      parameters:
+      - description: ID del item
+        in: path
+        name: id-computer-lab
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: delete a item to the computer-lab
+      tags:
+      - Computer Lab
+    get:
+      operationId: get-computer-lab
+      parameters:
+      - description: ID del item
+        in: path
+        name: id-computer-lab
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get a item to the computer-lab
+      tags:
+      - Computer Lab
+    post:
+      operationId: create-computer-lab
+      parameters:
+      - description: todo data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.ComputerLabCreateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: add a new item to the computer-lab
+      tags:
+      - Computer Lab
+    put:
+      operationId: update-computer-lab
+      parameters:
+      - description: ID del item
+        in: path
+        name: id-computer-lab
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: update a item to the computer-lab
+      tags:
+      - Computer Lab
 swagger: "2.0"
