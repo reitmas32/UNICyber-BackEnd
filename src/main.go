@@ -46,7 +46,7 @@ func main() {
 
 	config.SetupRouter()
 
-	// docs route
+	// docs route on Mode Debug
 	config.Router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	config.Router.GET("/", routes.IndexHandler)
