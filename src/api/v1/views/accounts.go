@@ -17,6 +17,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary SignIn User
+// @ID signin-user
+// @Tags Accounts
+// @Produce json
+// @Param data body schemas.UserSignInSchema true "Schema by SignIn User"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/signin [put]
 func SignIn_PUT(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido en la estructura User
@@ -67,6 +75,14 @@ func SignIn_PUT(c *gin.Context) {
 	io.Copy(c.Writer, resp.Body)
 }
 
+// @Summary SignUp User
+// @ID signup-user
+// @Tags Accounts
+// @Produce json
+// @Param data body schemas.UserSignUpSchema true "Schema by SignUp User"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/signup [post]
 func SignUp_POST(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido en la estructura User
@@ -117,6 +133,14 @@ func SignUp_POST(c *gin.Context) {
 	io.Copy(c.Writer, resp.Body)
 }
 
+// @Summary LinkAccount User whit ComputerLab
+// @ID post-link-account
+// @Tags Accounts
+// @Produce json
+// @Param data body schemas.LinkAccountRequisitionSchema true "Schema by LinkAccount User whit ComputerLab"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/link-account [post]
 func LinkAccount_POST(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido en la estructura User
@@ -164,6 +188,14 @@ func LinkAccount_POST(c *gin.Context) {
 
 }
 
+// @Summary LinkAccount User whit ComputerLab
+// @ID put-link-account
+// @Tags Accounts
+// @Produce json
+// @Param data body schemas.LinkAccountConfirmationSchema true "Schema by LinkAccount User whit ComputerLab"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/link-account [put]
 func LinkAccount_PUT(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido en la estructura User
