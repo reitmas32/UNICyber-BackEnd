@@ -10,5 +10,5 @@ type RoomUpdateSchema struct {
 
 	// Data
 	Name  string `json:"name"`
-	Index string `json:"index"`
+	Index int    `json:"index"`
 }
