@@ -20,20 +20,20 @@ import (
 // @Router /api/v1/computer [post]
 func Computer_POST(c *gin.Context) {
 
-	responseCreateComputer := map[string]interface{}{
-		"Message": "No Create Computer",
-		"Data":    "{}",
-		"Success": false,
+	responseCreateComputer := models.Response{
+		Message: "No Create Computer Lab",
+		Success: false,
+		Data:    "{}",
 	}
 
 	// Decodificar el objeto JSON recibido
 	var computerCreateSchema schemas.ComputerCreateSchema
 	err := json.NewDecoder(c.Request.Body).Decode(&computerCreateSchema)
 	if err != nil {
-		responseCreateComputer := map[string]interface{}{
-			"Message": "Error to Get Content JSON",
-			"Data":    "{}",
-			"Success": false,
+		responseCreateComputer := models.Response{
+			Message: "Error to Get Content JSON",
+			Success: false,
+			Data:    "{}",
 		}
 		c.Header("Content-Type", "application/json")
 		c.JSON(200, responseCreateComputer)
@@ -55,16 +55,16 @@ func Computer_POST(c *gin.Context) {
 
 	if result {
 
-		responseCreateComputer = map[string]interface{}{
-			"Message": message,
-			"Success": result,
-			"Data":    computer,
+		responseCreateComputer = models.Response{
+			Message: message,
+			Success: result,
+			Data:    computer,
 		}
 	} else {
-		responseCreateComputer = map[string]interface{}{
-			"Message": message,
-			"Success": responseCreateComputer["Success"],
-			"Data":    computer,
+		responseCreateComputer = models.Response{
+			Message: message,
+			Success: responseCreateComputer.Success,
+			Data:    computer,
 		}
 	}
 
@@ -84,14 +84,14 @@ func Computer_GET(c *gin.Context) {
 
 	result, message, computer := services.FindComputer(c.Param("id-computer"))
 
-	responseGetComputer := map[string]interface{}{
-		"Message": message,
-		"Success": result,
-		"Data":    computer,
+	responseGetComputer := models.Response{
+		Message: message,
+		Success: result,
+		Data:    computer,
 	}
 
 	if !result {
-		responseGetComputer["Data"] = "{}"
+		responseGetComputer.Data = "{}"
 	}
 
 	c.Header("Content-Type", "application/json")
@@ -114,14 +114,14 @@ func Computer_DELETE(c *gin.Context) {
 		result, message, _ = services.DeleteComputer(c.Param("id-computer"))
 	}
 
-	responseDeleteComputer := map[string]interface{}{
-		"Message": message,
-		"Success": result,
-		"Data":    computer,
+	responseDeleteComputer := models.Response{
+		Message: message,
+		Success: result,
+		Data:    computer,
 	}
 
 	if !result {
-		responseDeleteComputer["Data"] = "{}"
+		responseDeleteComputer.Data = "{}"
 	}
 
 	c.Header("Content-Type", "application/json")
@@ -143,10 +143,10 @@ func Computer_PUT(c *gin.Context) {
 	var computerUpdateSchema schemas.ComputerUpdateSchema
 	err := json.NewDecoder(c.Request.Body).Decode(&computerUpdateSchema)
 	if err != nil {
-		responseUpdateComputer := map[string]interface{}{
-			"Message": "Error to Get Content JSON",
-			"Data":    "{}",
-			"Success": false,
+		responseUpdateComputer := models.Response{
+			Message: "Error to Get Content JSON",
+			Success: false,
+			Data:    "{}",
 		}
 		c.Header("Content-Type", "application/json")
 		c.JSON(200, responseUpdateComputer)
@@ -159,16 +159,16 @@ func Computer_PUT(c *gin.Context) {
 		result, message, computer = services.UpdateComputer(c.Param("id-computer"), computerUpdateSchema)
 	}
 
-	responseRenameComputer := map[string]interface{}{
-		"Message": message,
-		"Success": result,
-		"Data":    computer,
+	responseUpdateComputer := models.Response{
+		Message: message,
+		Success: result,
+		Data:    computer,
 	}
 
 	if !result {
-		responseRenameComputer["Data"] = "{}"
+		responseUpdateComputer.Data = "{}"
 	}
 
 	c.Header("Content-Type", "application/json")
-	c.JSON(200, responseRenameComputer)
+	c.JSON(200, responseUpdateComputer)
 }
