@@ -1,0 +1,510 @@
+basePath: /
+definitions:
+  models.Response:
+    properties:
+      Data: {}
+      Message:
+        type: string
+      Success:
+        type: boolean
+    type: object
+  schemas.ComputerCreateSchema:
+    properties:
+      id_room:
+        type: string
+      name:
+        type: string
+      type:
+        type: string
+    type: object
+  schemas.ComputerLabCreateSchema:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    required:
+    - description
+    - name
+    type: object
+  schemas.ComputerLabUpdateSchema:
+    properties:
+      description:
+        type: string
+      name:
+        description: Data
+        type: string
+    required:
+    - description
+    - name
+    type: object
+  schemas.ComputerUpdateSchema:
+    properties:
+      message:
+        type: string
+      name:
+        description: Data
+        type: string
+      pos_x:
+        description: UI
+        type: number
+      pos_y:
+        type: number
+      state:
+        type: string
+      type:
+        type: string
+    type: object
+  schemas.RoomCreateSchema:
+    properties:
+      id_computer_lab:
+        type: string
+      name:
+        type: string
+    type: object
+  schemas.RoomUpdateSchema:
+    properties:
+      index:
+        type: integer
+      name:
+        description: Data
+        type: string
+    type: object
+  schemas.StudentCreateSchema:
+    properties:
+      account_number:
+        type: string
+      email:
+        type: string
+      last_name:
+        type: string
+      name:
+        description: Info Personal
+        type: string
+      semester:
+        type: integer
+      university_program:
+        description: Info Academic
+        type: string
+    required:
+    - account_number
+    - last_name
+    - name
+    - semester
+    - university_program
+    type: object
+  schemas.StudentUpdateSchema:
+    properties:
+      account_number:
+        type: string
+      email:
+        type: string
+      last_name:
+        type: string
+      name:
+        description: Info Personal
+        type: string
+      semester:
+        type: integer
+      university_program:
+        description: Info Academic
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: rafa.zamora.rals@gmail.com
+    name: Oswaldo Rafael Zamora Ramirez
+    url: https://github.com/reitmas32
+  description: This is a API by System UNICyber|SISEC https://github.com/reitmas32/UNICyber-BackEnd
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: UNICyber-API
+  version: "1.0"
+paths:
+  /api/v1/computer:
+    delete:
+      operationId: delete-computer
+      parameters:
+      - description: ID of Computer
+        in: path
+        name: id-computer
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: delete a item of the computers
+      tags:
+      - Computers
+    get:
+      operationId: get-computer
+      parameters:
+      - description: ID of Computer
+        in: path
+        name: id-computer
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get a item of the computers
+      tags:
+      - Computers
+    post:
+      operationId: create-computer
+      parameters:
+      - description: Schema by Create New Computer
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.ComputerCreateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: add a new item of the computers
+      tags:
+      - Computers
+    put:
+      operationId: put-computer
+      parameters:
+      - description: ID of Computer
+        in: path
+        name: id-computer
+        required: true
+        type: string
+      - description: Schema by Update New Computer
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.ComputerUpdateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: update a item of the computers
+      tags:
+      - Computers
+  /api/v1/computer-lab:
+    delete:
+      operationId: delete-computer-lab
+      parameters:
+      - description: ID del item
+        in: path
+        name: id-computer-lab
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: delete a item of the computer-lab
+      tags:
+      - Computer Lab
+    get:
+      operationId: get-computer-lab
+      parameters:
+      - description: ID of ComputerLab
+        in: path
+        name: id-computer-lab
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get a item of the computer-lab
+      tags:
+      - Computer Lab
+    post:
+      operationId: create-computer-lab
+      parameters:
+      - description: Schema by Create New Computer Lab
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.ComputerLabCreateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: add a new item of the computer-lab
+      tags:
+      - Computer Lab
+    put:
+      operationId: put-computer-lab
+      parameters:
+      - description: ID del item
+        in: path
+        name: id-computer-lab
+        required: true
+        type: string
+      - description: Schema by Update New Computer Lab
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.ComputerLabUpdateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: update a item of the computer-lab
+      tags:
+      - Computer Lab
+  /api/v1/room:
+    delete:
+      operationId: delete-room
+      parameters:
+      - description: ID of Room
+        in: path
+        name: id-room
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: delete a item of the rooms
+      tags:
+      - Rooms
+    get:
+      operationId: get-room
+      parameters:
+      - description: ID of Room
+        in: path
+        name: id-room
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get a item of the rooms
+      tags:
+      - Rooms
+    post:
+      operationId: create-room
+      parameters:
+      - description: Schema by Create New Room
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.RoomCreateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: add a new item of the rooms
+      tags:
+      - Rooms
+    put:
+      operationId: put-room
+      parameters:
+      - description: ID of Room
+        in: path
+        name: id-room
+        required: true
+        type: string
+      - description: Schema by Update New Room
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.RoomUpdateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: update a item of the rooms
+      tags:
+      - Rooms
+  /api/v1/student:
+    delete:
+      operationId: delete-student
+      parameters:
+      - description: ID of Student
+        in: path
+        name: id-student
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: delete a item of the students
+      tags:
+      - Students
+    get:
+      operationId: get-student
+      parameters:
+      - description: ID of Student
+        in: path
+        name: id-student
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get a item of the students
+      tags:
+      - Students
+    post:
+      operationId: create-student
+      parameters:
+      - description: Schema by Create New Student
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.StudentCreateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: add a new item of the students
+      tags:
+      - Students
+    put:
+      operationId: put-student
+      parameters:
+      - description: ID of Students
+        in: path
+        name: id-student
+        required: true
+        type: string
+      - description: Schema by Update New Student
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.StudentUpdateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: update a item of the students
+      tags:
+      - Students
+swagger: "2.0"

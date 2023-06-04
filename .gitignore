@@ -1,0 +1,30 @@
+# Archivos ejecutables
+*.exe
+*.out
+
+# Archivos de configuración del editor
+.idea/
+.vscode/
+
+# Archivos y directorios generados por go build
+/bin/
+/pkg/
+/*.exe
+
+# Archivos de registro y salida
+*.log
+*.log.*
+*.swp
+
+# Dependencias manejadas por Go
+/vendor/
+/go.sum
+
+# Build
+/src/app
+/src/src
+
+src/config/.env
+
+/build
+/src/*.db
