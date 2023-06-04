@@ -6,7 +6,7 @@ type Room struct {
 	gorm.Model
 	// Metadata
 	IdRoom string `gorm:"primaryKey"`
-	IdUser string
+	IdComputerLab string
 
 	//Data
 	Name string
