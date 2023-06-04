@@ -9,5 +9,5 @@ import (
 
 func Rooms() {
 	//Create Room
-	config.Router.POST(fmt.Sprintf("/api/%s/rooms", config.API_VERSION), views.Rooms_POST)
+	config.Router.POST(fmt.Sprintf("/api/%s/rooms", config.API_VERSION), views.Room_POST)
 }
