@@ -10,6 +10,13 @@ import (
 	"github.com/google/uuid"
 )
 
+// @Summary add a new item to the computers
+// @ID create-computer
+// @Produce json
+// @Param data body schemas.ComputerCreateSchema true "todo data"
+// @Success 200
+// @Failure 400
+// @Router /api/v1/computer [post]
 func Computer_POST(c *gin.Context) {
 
 	responseCreateComputer := map[string]interface{}{
