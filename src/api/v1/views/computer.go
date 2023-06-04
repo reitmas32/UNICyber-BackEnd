@@ -12,7 +12,7 @@ import (
 
 // @Summary add a new item of the computers
 // @ID create-computer
-// @Tags Computer
+// @Tags Computers
 // @Produce json
 // @Param data body schemas.ComputerCreateSchema true "Schema by Create New Computer"
 // @Success 200 {object} models.Response
@@ -21,7 +21,7 @@ import (
 func Computer_POST(c *gin.Context) {
 
 	responseCreateComputer := models.Response{
-		Message: "No Create Computer Lab",
+		Message: "No Create Computer",
 		Success: false,
 		Data:    "{}",
 	}
@@ -74,7 +74,7 @@ func Computer_POST(c *gin.Context) {
 
 // @Summary get a item of the computers
 // @ID get-computer
-// @Tags Computer
+// @Tags Computers
 // @Produce json
 // @Param id-computer path string true "ID of Computer"
 // @Success 200 {object} models.Response
@@ -100,7 +100,7 @@ func Computer_GET(c *gin.Context) {
 
 // @Summary delete a item of the computers
 // @ID delete-computer
-// @Tags Computer
+// @Tags Computers
 // @Produce json
 // @Param id-computer path string true "ID of Computer"
 // @Success 200 {object} models.Response
@@ -130,7 +130,7 @@ func Computer_DELETE(c *gin.Context) {
 
 // @Summary update a item of the computers
 // @ID put-computer
-// @Tags Computer
+// @Tags Computers
 // @Produce json
 // @Param id-computer path string true "ID of Computer"
 // @Param data body schemas.ComputerUpdateSchema true "Schema by Update New Computer"
