@@ -22,5 +22,6 @@ type LinkAccountRequisitionSchema struct {
 }
 
 type LinkAccountConfirmationSchema struct {
-	Code string `json:"code" binding:"required"`
+	Code     string `json:"code" binding:"required"`
+	UserName string `json:"user_name" binding:"required"`
 }
