@@ -5,10 +5,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math/rand"
 	"net/http"
+	"strconv"
+	"text/template"
+	"time"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/schemas"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/config"
+	"github.com/UNIHacks/UNIAccounts-BackEnd/src/tools"
 	"github.com/gin-gonic/gin"
 )
 
@@ -110,4 +115,66 @@ func SignUp_POST(c *gin.Context) {
 	// Copiar el contenido de la respuesta del otro servicio a la respuesta HTTP en tu endpoint
 	c.Header("Content-Type", "application/json")
 	io.Copy(c.Writer, resp.Body)
+}
+
+func LinkAccount_POST(c *gin.Context) {
+
+	// Decodificar el objeto JSON recibido en la estructura User
+	var user schemas.LinkAccountRequisitionSchema
+	err := json.NewDecoder(c.Request.Body).Decode(&user)
+	if err != nil {
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		c.Writer.Write([]byte("Error al obtener el contenido del archivo"))
+		return
+	}
+	//crear un numero random de 6 digitos
+	// Generar una semilla única utilizando la hora actual
+	rand.Seed(time.Now().UnixNano())
+
+	// Generar un número aleatorio de 6 dígitos
+	code := rand.Intn(900000) + 100000
+
+	//Obtener el nombre de sala
+	//Verificar que exista el User Name
+
+	//generar Email
+	html_body := tools.GenerateLinkAccountHTML(strconv.Itoa(code))
+
+	// Renderiza el contenido HTML
+	tmpl, err := template.New("").Parse(html_body)
+	if err != nil {
+		c.String(500, "Error al renderizar el contenido HTML")
+		return
+	}
+
+	// Crea un buffer para almacenar la salida renderizada
+	var buf bytes.Buffer
+	err = tmpl.Execute(&buf, nil)
+	if err != nil {
+		c.String(500, "Error al renderizar el contenido HTML")
+		return
+	}
+
+	// Establece el tipo de contenido en la respuesta
+	c.Header("Content-Type", "text/html; charset=utf-8")
+
+	// Envía el contenido HTML renderizado como respuesta
+	c.Status(http.StatusOK)
+	c.Writer.Write(buf.Bytes())
+
+}
+
+func LinkAccount_PUT(c *gin.Context) {
+
+	// Decodificar el objeto JSON recibido en la estructura User
+	var user schemas.LinkAccountConfirmationSchema
+	err := json.NewDecoder(c.Request.Body).Decode(&user)
+	if err != nil {
+		c.Writer.WriteHeader(http.StatusInternalServerError)
+		c.Writer.Write([]byte("Error al obtener el contenido del archivo"))
+		return
+	}
+
+	//añadir a la tabla LinkAccounts los campos [idComputerLab, username]
+
 }
