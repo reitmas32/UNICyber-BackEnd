@@ -55,6 +55,7 @@ func main() {
 	routes.LinkAccountWithComputerLab()
 	routes.Rooms()
 	routes.Computer()
+	routes.ComputerLab()
 	routes.StudentRoutes()
 
 	// Escucha en el puerto 8080
