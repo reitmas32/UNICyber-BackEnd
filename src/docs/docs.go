@@ -25,15 +25,93 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/api/v1/computer": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Computer"
+                ],
+                "summary": "get a item of the computers",
+                "operationId": "get-computer",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of Computer",
+                        "name": "id-computer",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Computer"
+                ],
+                "summary": "update a item of the computers",
+                "operationId": "put-computer",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of Computer",
+                        "name": "id-computer",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Schema by Update New Computer",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.ComputerUpdateSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
             "post": {
                 "produces": [
                     "application/json"
                 ],
-                "summary": "add a new item to the computers",
+                "tags": [
+                    "Computer"
+                ],
+                "summary": "add a new item of the computers",
                 "operationId": "create-computer",
                 "parameters": [
                     {
-                        "description": "todo data",
+                        "description": "Schema by Create New Computer",
                         "name": "data",
                         "in": "body",
                         "required": true,
@@ -44,10 +122,49 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
                     },
                     "400": {
-                        "description": "Bad Request"
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Computer"
+                ],
+                "summary": "delete a item of the computers",
+                "operationId": "delete-computer",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of Computer",
+                        "name": "id-computer",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
                     }
                 }
             }
@@ -60,12 +177,12 @@ const docTemplate = `{
                 "tags": [
                     "Computer Lab"
                 ],
-                "summary": "get a item to the computer-lab",
+                "summary": "get a item of the computer-lab",
                 "operationId": "get-computer-lab",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "ID del item",
+                        "description": "ID of ComputerLab",
                         "name": "id-computer-lab",
                         "in": "path",
                         "required": true
@@ -93,8 +210,8 @@ const docTemplate = `{
                 "tags": [
                     "Computer Lab"
                 ],
-                "summary": "update a item to the computer-lab",
-                "operationId": "update-computer-lab",
+                "summary": "update a item of the computer-lab",
+                "operationId": "put-computer-lab",
                 "parameters": [
                     {
                         "type": "string",
@@ -102,6 +219,15 @@ const docTemplate = `{
                         "name": "id-computer-lab",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "description": "Schema by Update New Computer Lab",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.ComputerLabUpdateSchema"
+                        }
                     }
                 ],
                 "responses": {
@@ -126,11 +252,11 @@ const docTemplate = `{
                 "tags": [
                     "Computer Lab"
                 ],
-                "summary": "add a new item to the computer-lab",
+                "summary": "add a new item of the computer-lab",
                 "operationId": "create-computer-lab",
                 "parameters": [
                     {
-                        "description": "todo data",
+                        "description": "Schema by Create New Computer Lab",
                         "name": "data",
                         "in": "body",
                         "required": true,
@@ -161,7 +287,7 @@ const docTemplate = `{
                 "tags": [
                     "Computer Lab"
                 ],
-                "summary": "delete a item to the computer-lab",
+                "summary": "delete a item of the computer-lab",
                 "operationId": "delete-computer-lab",
                 "parameters": [
                     {
@@ -227,6 +353,47 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "schemas.ComputerLabUpdateSchema": {
+            "type": "object",
+            "required": [
+                "description",
+                "name"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Data",
+                    "type": "string"
+                }
+            }
+        },
+        "schemas.ComputerUpdateSchema": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Data",
+                    "type": "string"
+                },
+                "pos_x": {
+                    "description": "UI",
+                    "type": "number"
+                },
+                "pos_y": {
+                    "type": "number"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "type": {
                     "type": "string"
                 }
             }

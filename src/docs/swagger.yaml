@@ -27,6 +27,34 @@ definitions:
     - description
     - name
     type: object
+  schemas.ComputerLabUpdateSchema:
+    properties:
+      description:
+        type: string
+      name:
+        description: Data
+        type: string
+    required:
+    - description
+    - name
+    type: object
+  schemas.ComputerUpdateSchema:
+    properties:
+      message:
+        type: string
+      name:
+        description: Data
+        type: string
+      pos_x:
+        description: UI
+        type: number
+      pos_y:
+        type: number
+      state:
+        type: string
+      type:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -42,10 +70,54 @@ info:
   version: "1.0"
 paths:
   /api/v1/computer:
+    delete:
+      operationId: delete-computer
+      parameters:
+      - description: ID of Computer
+        in: path
+        name: id-computer
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: delete a item of the computers
+      tags:
+      - Computer
+    get:
+      operationId: get-computer
+      parameters:
+      - description: ID of Computer
+        in: path
+        name: id-computer
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get a item of the computers
+      tags:
+      - Computer
     post:
       operationId: create-computer
       parameters:
-      - description: todo data
+      - description: Schema by Create New Computer
         in: body
         name: data
         required: true
@@ -56,9 +128,43 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
         "400":
           description: Bad Request
-      summary: add a new item to the computers
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: add a new item of the computers
+      tags:
+      - Computer
+    put:
+      operationId: put-computer
+      parameters:
+      - description: ID of Computer
+        in: path
+        name: id-computer
+        required: true
+        type: string
+      - description: Schema by Update New Computer
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.ComputerUpdateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: update a item of the computers
+      tags:
+      - Computer
   /api/v1/computer-lab:
     delete:
       operationId: delete-computer-lab
@@ -79,13 +185,13 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/models.Response'
-      summary: delete a item to the computer-lab
+      summary: delete a item of the computer-lab
       tags:
       - Computer Lab
     get:
       operationId: get-computer-lab
       parameters:
-      - description: ID del item
+      - description: ID of ComputerLab
         in: path
         name: id-computer-lab
         required: true
@@ -101,13 +207,13 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/models.Response'
-      summary: get a item to the computer-lab
+      summary: get a item of the computer-lab
       tags:
       - Computer Lab
     post:
       operationId: create-computer-lab
       parameters:
-      - description: todo data
+      - description: Schema by Create New Computer Lab
         in: body
         name: data
         required: true
@@ -124,17 +230,23 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/models.Response'
-      summary: add a new item to the computer-lab
+      summary: add a new item of the computer-lab
       tags:
       - Computer Lab
     put:
-      operationId: update-computer-lab
+      operationId: put-computer-lab
       parameters:
       - description: ID del item
         in: path
         name: id-computer-lab
         required: true
         type: string
+      - description: Schema by Update New Computer Lab
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.ComputerLabUpdateSchema'
       produces:
       - application/json
       responses:
@@ -146,7 +258,7 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/models.Response'
-      summary: update a item to the computer-lab
+      summary: update a item of the computer-lab
       tags:
       - Computer Lab
 swagger: "2.0"
