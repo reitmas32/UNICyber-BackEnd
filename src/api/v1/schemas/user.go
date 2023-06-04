@@ -15,3 +15,12 @@ type UserSignUpSchema struct {
 	Password    string `json:"password" binding:"required"`
 	Role        string `json:"role" binding:"required"`
 }
+
+type LinkAccountRequisitionSchema struct {
+	UserName      string `json:"user_name" binding:"required"`
+	IdComputerLab string `json:"idComputerLab" binding:"required"`
+}
+
+type LinkAccountConfirmationSchema struct {
+	Code string `json:"code" binding:"required"`
+}
