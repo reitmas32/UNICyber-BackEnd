@@ -314,6 +314,78 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/link-account": {
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "LinkAccount User whit ComputerLab",
+                "operationId": "put-link-account",
+                "parameters": [
+                    {
+                        "description": "Schema by LinkAccount User whit ComputerLab",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.LinkAccountConfirmationSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "LinkAccount User whit ComputerLab",
+                "operationId": "post-link-account",
+                "parameters": [
+                    {
+                        "description": "Schema by LinkAccount User whit ComputerLab",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.LinkAccountRequisitionSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/room": {
             "get": {
                 "produces": [
@@ -441,6 +513,80 @@ const docTemplate = `{
                         "name": "id-room",
                         "in": "path",
                         "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/signin": {
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "SignIn User",
+                "operationId": "signin-user",
+                "parameters": [
+                    {
+                        "description": "Schema by SignIn User",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.UserSignInSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/signup": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "SignUp User",
+                "operationId": "signup-user",
+                "parameters": [
+                    {
+                        "description": "Schema by SignUp User",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.UserSignUpSchema"
+                        }
                     }
                 ],
                 "responses": {
@@ -611,24 +757,30 @@ const docTemplate = `{
             "properties": {
                 "Data": {},
                 "Message": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "Equipo 2"
                 },
                 "Success": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "example": false
                 }
             }
         },
         "schemas.ComputerCreateSchema": {
+            "description": "Descripción de la estructura A",
             "type": "object",
             "properties": {
                 "id_room": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "62dcb6fc-0f68-4a50-9d8c-8fe352b0f7f3"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "Equipo 2"
                 },
                 "type": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "Impresora"
                 }
             }
         },
@@ -667,23 +819,59 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "message": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "Solo falta instalar DevC++"
                 },
                 "name": {
                     "description": "Data",
-                    "type": "string"
+                    "type": "string",
+                    "example": "Equipo 3"
                 },
                 "pos_x": {
                     "description": "UI",
-                    "type": "number"
+                    "type": "number",
+                    "example": 156.29
                 },
                 "pos_y": {
-                    "type": "number"
+                    "type": "number",
+                    "example": 157.3
                 },
                 "state": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "Disponible"
                 },
                 "type": {
+                    "type": "string",
+                    "example": "Prestamo"
+                }
+            }
+        },
+        "schemas.LinkAccountConfirmationSchema": {
+            "type": "object",
+            "required": [
+                "code",
+                "user_name"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "user_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "schemas.LinkAccountRequisitionSchema": {
+            "type": "object",
+            "required": [
+                "idComputerLab",
+                "user_name"
+            ],
+            "properties": {
+                "idComputerLab": {
+                    "type": "string"
+                },
+                "user_name": {
                     "type": "string"
                 }
             }
@@ -764,6 +952,60 @@ const docTemplate = `{
                 },
                 "university_program": {
                     "description": "Info Academic",
+                    "type": "string"
+                }
+            }
+        },
+        "schemas.UserSignInSchema": {
+            "type": "object",
+            "required": [
+                "password",
+                "user_name"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "user_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "schemas.UserSignUpSchema": {
+            "type": "object",
+            "required": [
+                "date_of_birth",
+                "email",
+                "last_name",
+                "name",
+                "password",
+                "phone_number",
+                "role",
+                "user_name"
+            ],
+            "properties": {
+                "date_of_birth": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "user_name": {
                     "type": "string"
                 }
             }

@@ -39,13 +39,13 @@ func SedMail(destination string, subject string, html_content string) bool {
 	m.SetHeader("To", destination)
 
 	// Set E-Mail subject
-	m.SetHeader("Subject", config.SMTP_PASSWORD)
+	m.SetHeader("Subject", "Vinculacion Solicitada")
 
 	// Set E-Mail body. You can set plain text or html with text/html
-	m.SetBody("html", "This is Gomail test body")
+	m.SetBody("text/html", html_content)
 
 	// Settings for SMTP server
-	d := gomail.NewDialer("smtp.office365.com", 587, "rafa.zamora.rals@hotmail.com", "tereza1234")
+	d := gomail.NewDialer("smtp.office365.com", 587, config.SMTP_USER, config.SMTP_PASSWORD)
 
 	// This is only needed when SSL/TLS certificate is not valid on server.
 	// In production this should be set to false.

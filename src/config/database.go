@@ -22,4 +22,10 @@ func MigrateDB() {
 	DB.AutoMigrate(&models.Student{})
 	DB.AutoMigrate(&models.ComputerLab{})
 
+	//Tables Intermedas
+	DB.AutoMigrate(&models.LinkAccount{})
+
+	//Tools
+	DB.AutoMigrate(&models.LinkAccountCode{})
+
 }
