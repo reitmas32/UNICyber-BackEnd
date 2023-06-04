@@ -1,6 +1,6 @@
 package schemas
 
-type RoomSchema struct {
-	Name string `json:"name"`
-	JWT  string `json:"jwt"`
+type RoomCreateSchema struct {
+	Name          string `json:"name"`
+	IdComputerLab string `json:"id_computer_lab"`
 }
