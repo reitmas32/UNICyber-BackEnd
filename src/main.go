@@ -16,16 +16,16 @@ import (
 
 // @title UNICyber-API
 // @version 1.0
-// @description This is a sample server todo server. You can visit the GitHub repository at https://github.com/LordGhostX/swag-gin-demo
+// @description This is a API by System UNICyber|SISEC https://github.com/reitmas32/UNICyber-BackEnd
 
-// @contact.name API Support
-// @contact.url http://www.swagger.io/support
-// @contact.email support@swagger.io
+// @contact.name Oswaldo Rafael Zamora Ramirez
+// @contact.url https://github.com/reitmas32
+// @contact.email rafa.zamora.rals@gmail.com
 
 // @license.name MIT
 // @license.url https://opensource.org/licenses/MIT
 
-// @host localhost:8080
+// @host localhost:3000
 // @BasePath /
 // @query.collection.format multi
 func main() {
