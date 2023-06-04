@@ -4,12 +4,30 @@ import (
 	"fmt"
 	"log"
 
+	_ "github.com/UNIHacks/UNIAccounts-BackEnd/src/docs"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/routes"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/config"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
+// @title UNICyber-API
+// @version 1.0
+// @description This is a sample server todo server. You can visit the GitHub repository at https://github.com/LordGhostX/swag-gin-demo
+
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+
+// @license.name MIT
+// @license.url https://opensource.org/licenses/MIT
+
+// @host localhost:8080
+// @BasePath /
+// @query.collection.format multi
 func main() {
 
 	config.LoadEnvs()
@@ -28,9 +46,13 @@ func main() {
 
 	config.SetupRouter()
 
+	// docs route
+	config.Router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	config.Router.GET("/", routes.IndexHandler)
 	routes.SignIn()
 	routes.SignUp()
+	routes.LinkAccountWithComputerLab()
 	routes.Rooms()
 	routes.Computer()
 	routes.StudentRoutes()
