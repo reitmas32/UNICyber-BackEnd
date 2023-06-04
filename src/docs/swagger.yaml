@@ -4,17 +4,23 @@ definitions:
     properties:
       Data: {}
       Message:
+        example: Equipo 2
         type: string
       Success:
+        example: false
         type: boolean
     type: object
   schemas.ComputerCreateSchema:
+    description: Descripción de la estructura A
     properties:
       id_room:
+        example: 62dcb6fc-0f68-4a50-9d8c-8fe352b0f7f3
         type: string
       name:
+        example: Equipo 2
         type: string
       type:
+        example: Impresora
         type: string
     type: object
   schemas.ComputerLabCreateSchema:
@@ -41,19 +47,45 @@ definitions:
   schemas.ComputerUpdateSchema:
     properties:
       message:
+        example: Solo falta instalar DevC++
         type: string
       name:
         description: Data
+        example: Equipo 3
         type: string
       pos_x:
         description: UI
+        example: 156.29
         type: number
       pos_y:
+        example: 157.3
         type: number
       state:
+        example: Disponible
         type: string
       type:
+        example: Prestamo
         type: string
+    type: object
+  schemas.LinkAccountConfirmationSchema:
+    properties:
+      code:
+        type: string
+      user_name:
+        type: string
+    required:
+    - code
+    - user_name
+    type: object
+  schemas.LinkAccountRequisitionSchema:
+    properties:
+      idComputerLab:
+        type: string
+      user_name:
+        type: string
+    required:
+    - idComputerLab
+    - user_name
     type: object
   schemas.RoomCreateSchema:
     properties:
@@ -109,6 +141,44 @@ definitions:
       university_program:
         description: Info Academic
         type: string
+    type: object
+  schemas.UserSignInSchema:
+    properties:
+      password:
+        type: string
+      user_name:
+        type: string
+    required:
+    - password
+    - user_name
+    type: object
+  schemas.UserSignUpSchema:
+    properties:
+      date_of_birth:
+        type: string
+      email:
+        type: string
+      last_name:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      phone_number:
+        type: string
+      role:
+        type: string
+      user_name:
+        type: string
+    required:
+    - date_of_birth
+    - email
+    - last_name
+    - name
+    - password
+    - phone_number
+    - role
+    - user_name
     type: object
 host: localhost:3000
 info:
@@ -315,6 +385,53 @@ paths:
       summary: update a item of the computer-lab
       tags:
       - Computer Lab
+  /api/v1/link-account:
+    post:
+      operationId: post-link-account
+      parameters:
+      - description: Schema by LinkAccount User whit ComputerLab
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.LinkAccountRequisitionSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: LinkAccount User whit ComputerLab
+      tags:
+      - Accounts
+    put:
+      operationId: put-link-account
+      parameters:
+      - description: Schema by LinkAccount User whit ComputerLab
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.LinkAccountConfirmationSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: LinkAccount User whit ComputerLab
+      tags:
+      - Accounts
   /api/v1/room:
     delete:
       operationId: delete-room
@@ -411,6 +528,54 @@ paths:
       summary: update a item of the rooms
       tags:
       - Rooms
+  /api/v1/signin:
+    put:
+      operationId: signin-user
+      parameters:
+      - description: Schema by SignIn User
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.UserSignInSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: SignIn User
+      tags:
+      - Accounts
+  /api/v1/signup:
+    post:
+      operationId: signup-user
+      parameters:
+      - description: Schema by SignUp User
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.UserSignUpSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: SignUp User
+      tags:
+      - Accounts
   /api/v1/student:
     delete:
       operationId: delete-student
