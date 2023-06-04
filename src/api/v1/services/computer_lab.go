@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/schemas"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/config"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
@@ -21,7 +23,7 @@ func FindComputerLab(IdComputerLab string) (bool, string, models.ComputerLab) {
 
 	var computerLab models.ComputerLab
 	if err := config.DB.First(&computerLab, "id_computer_lab = ?", IdComputerLab).Error; err != nil {
-		return false, "No Find Computer", computerLab
+		return false, fmt.Sprint("No Find Computer Lab: ", err), computerLab
 	}
 
 	return true, "Find Computer Lab", computerLab
