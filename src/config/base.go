@@ -25,6 +25,10 @@ var (
 	UNIACCOUNTS_API_PORT         = 5000
 	UNIACCOUNTS_API_KEY          string
 	UNIACCOUNTS_API_SERVICE_NAME string
+	SMTP_HOST                    = "smtp.office365.com"
+	SMTP_PORT                    = 587
+	SMTP_USER                    string
+	SMTP_PASSWORD                string
 )
 
 func LoadEnvs() {
@@ -39,6 +43,8 @@ func LoadEnvs() {
 	SECRET_KEY_TOKEN = getEnv("SECRET_KEY_TOKEN")
 	UNIACCOUNTS_API_SERVICE_NAME = getEnv("UNIACCOUNTS_API_SERVICE_NAME")
 	UNIACCOUNTS_API_KEY = getEnv("UNIACCOUNTS_API_KEY")
+	SMTP_USER = getEnv("SMTP_USER")
+	SMTP_PASSWORD = getEnv("SMTP_PASSWORD")
 
 }
 
@@ -57,6 +63,10 @@ func getEnv(key string) string {
 			return "api_key"
 		case "UNIACCOUNTS_API_SERVICE_NAME":
 			return "service"
+		case "SMTP_USER":
+			return "user@mail.com"
+		case "SMTP_PASSWORD":
+			return "password"
 		default:
 			return ""
 		}
