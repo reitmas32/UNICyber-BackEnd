@@ -10,11 +10,11 @@ import (
 	"github.com/google/uuid"
 )
 
-// @Summary add a new item to the computer-lab
+// @Summary add a new item of the computer-lab
 // @ID create-computer-lab
 // @Tags Computer Lab
 // @Produce json
-// @Param data body schemas.ComputerLabCreateSchema true "todo data"
+// @Param data body schemas.ComputerLabCreateSchema true "Schema by Create New Computer Lab"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/computer-lab [post]
@@ -98,11 +98,11 @@ func ComputerLab_POST(c *gin.Context) {
 	c.JSON(200, responseCreateComputer)
 }
 
-// @Summary get a item to the computer-lab
+// @Summary get a item of the computer-lab
 // @ID get-computer-lab
 // @Tags Computer Lab
 // @Produce json
-// @Param id-computer-lab path string true "ID del item"
+// @Param id-computer-lab path string true "ID of ComputerLab"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/computer-lab [get]
@@ -124,7 +124,7 @@ func ComputerLab_GET(c *gin.Context) {
 	c.JSON(200, responseGetComputerLab)
 }
 
-// @Summary delete a item to the computer-lab
+// @Summary delete a item of the computer-lab
 // @ID delete-computer-lab
 // @Tags Computer Lab
 // @Produce json
@@ -154,11 +154,12 @@ func ComputerLab_DELETE(c *gin.Context) {
 	c.JSON(200, responseDeleteComputerLab)
 }
 
-// @Summary update a item to the computer-lab
-// @ID update-computer-lab
+// @Summary update a item of the computer-lab
+// @ID put-computer-lab
 // @Tags Computer Lab
 // @Produce json
 // @Param id-computer-lab path string true "ID del item"
+// @Param data body schemas.ComputerLabUpdateSchema true "Schema by Update New Computer Lab"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/computer-lab [put]
