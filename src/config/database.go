@@ -20,5 +20,6 @@ func MigrateDB() {
 	DB.AutoMigrate(&models.Computer{})
 	DB.AutoMigrate(&models.Room{})
 	DB.AutoMigrate(&models.Student{})
+	DB.AutoMigrate(&models.ComputerLab{})
 
 }
