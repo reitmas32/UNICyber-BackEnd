@@ -42,14 +42,14 @@ func DeleteRoom(IdRoom string) (bool, string, models.Room) {
 	return true, "Delete Room", room
 }
 
-func UpdateRoom(IdRoom string, new_compuer schemas.RoomUpdateSchema) (bool, string, models.Room) {
+func UpdateRoom(IdRoom string, new_room schemas.RoomUpdateSchema) (bool, string, models.Room) {
 
 	var room models.Room
 	if err := config.DB.First(&room, "id_room = ?", IdRoom).Error; err != nil {
 		return false, "No Find Computer", room
 	} else {
-		room.Name = tools.CopyField(new_compuer.Name, room.Name, "")
-		room.Index = tools.CopyField(new_compuer.Index, room.Index, -1)
+		room.Name = tools.CopyField(new_room.Name, room.Name, "")
+		room.Index = tools.CopyField(new_room.Index, room.Index, -1)
 
 		config.DB.Save(&room)
 	}
