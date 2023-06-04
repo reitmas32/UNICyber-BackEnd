@@ -8,11 +8,12 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
-	"text/template"
 	"time"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/schemas"
+	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/services"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/config"
+	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/tools"
 	"github.com/gin-gonic/gin"
 )
@@ -161,30 +162,42 @@ func LinkAccount_POST(c *gin.Context) {
 	//Obtener el nombre de sala
 	//Verificar que exista el User Name
 
-	//generar Email
-	html_body := tools.GenerateLinkAccountHTML(strconv.Itoa(code))
-
-	// Renderiza el contenido HTML
-	tmpl, err := template.New("").Parse(html_body)
-	if err != nil {
-		c.String(500, "Error al renderizar el contenido HTML")
-		return
+	responseLinkAccount := models.Response{
+		Message: "No se pudo solicitar la vinculacion",
+		Success: false,
+		Data:    "{}",
 	}
 
-	// Crea un buffer para almacenar la salida renderizada
-	var buf bytes.Buffer
-	err = tmpl.Execute(&buf, nil)
-	if err != nil {
-		c.String(500, "Error al renderizar el contenido HTML")
-		return
+	linkAccountCode := models.LinkAccountCode{
+		UserName:      user.UserName,
+		IdComputerLab: user.IdComputerLab,
+
+		Code: strconv.Itoa(code),
 	}
 
-	// Establece el tipo de contenido en la respuesta
-	c.Header("Content-Type", "text/html; charset=utf-8")
+	result, message := services.CreateLinkAccountCode(linkAccountCode)
 
-	// Envía el contenido HTML renderizado como respuesta
-	c.Status(http.StatusOK)
-	c.Writer.Write(buf.Bytes())
+	responseLinkAccount.Message = message
+	responseLinkAccount.Success = result
+	responseLinkAccount.Data = "{}"
+
+	if result {
+		//generar Email
+		linkAccountCode.Code = "******"
+		responseLinkAccount.Data = linkAccountCode
+		html_body := tools.GenerateLinkAccountHTML(strconv.Itoa(code))
+		response := tools.SedMail(config.SMTP_USER, "Vinculacion de Sala", html_body)
+		if !response {
+			responseLinkAccount = models.Response{
+				Message: "No se pudo solicitar la vinculacion",
+				Success: response,
+				Data:    "{}",
+			}
+		}
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseLinkAccount)
 
 }
 
@@ -199,14 +212,37 @@ func LinkAccount_POST(c *gin.Context) {
 func LinkAccount_PUT(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido en la estructura User
-	var user schemas.LinkAccountConfirmationSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&user)
+	var linkAccountConfirmationSchema schemas.LinkAccountConfirmationSchema
+	err := json.NewDecoder(c.Request.Body).Decode(&linkAccountConfirmationSchema)
 	if err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
 		c.Writer.Write([]byte("Error al obtener el contenido del archivo"))
 		return
 	}
 
-	//añadir a la tabla LinkAccounts los campos [idComputerLab, username]
+	responseLinkAccount := models.Response{
+		Message: "No se pudo confirmar la vinculacion",
+		Success: false,
+		Data:    "{}",
+	}
 
+	result, _, linkAccountCode := services.FindLinkAccountCode(linkAccountConfirmationSchema.Code, linkAccountConfirmationSchema.UserName)
+
+	if result {
+		linkAccount := models.LinkAccount{
+			UserName:      linkAccountCode.UserName,
+			IdComputerLab: linkAccountCode.IdComputerLab,
+		}
+
+		result, message := services.CreateLinkAccount(linkAccount)
+
+		responseLinkAccount = models.Response{
+			Message: message,
+			Success: result,
+			Data:    linkAccount,
+		}
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseLinkAccount)
 }
