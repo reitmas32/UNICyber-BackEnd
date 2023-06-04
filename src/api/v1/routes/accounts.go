@@ -17,4 +17,6 @@ func SignUp() {
 
 func LinkAccountWithComputerLab() {
 	config.Router.POST(fmt.Sprintf("/api/%s/link-account", config.API_VERSION), views.LinkAccount_POST)
+
+	config.Router.PUT(fmt.Sprintf("/api/%s/link-account", config.API_VERSION), views.LinkAccount_PUT)
 }
