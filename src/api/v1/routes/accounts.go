@@ -12,7 +12,7 @@ func SignIn() {
 }
 
 func SignUp() {
-	config.Router.PUT(fmt.Sprintf("/api/%s/signup", config.API_VERSION), views.SignUp_POST)
+	config.Router.POST(fmt.Sprintf("/api/%s/signup", config.API_VERSION), views.SignUp_POST)
 }
 
 func LinkAccountWithComputerLab() {
