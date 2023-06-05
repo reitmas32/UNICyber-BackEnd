@@ -385,6 +385,46 @@ paths:
       summary: update a item of the computer-lab
       tags:
       - Computer Lab
+  /api/v1/computer-labs:
+    get:
+      operationId: get-computer-labs
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get all items of the computer-lab
+      tags:
+      - Computer Lab
+  /api/v1/computer-labs-limit/{length}:
+    get:
+      operationId: get-computer-labs_limit
+      parameters:
+      - description: Length of result
+        in: path
+        name: length
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get N items of the computer-lab
+      tags:
+      - Computer Lab
   /api/v1/link-account:
     post:
       operationId: post-link-account

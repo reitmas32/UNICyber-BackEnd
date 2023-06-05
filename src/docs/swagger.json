@@ -307,6 +307,67 @@
                 }
             }
         },
+        "/api/v1/computer-labs": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Computer Lab"
+                ],
+                "summary": "get all items of the computer-lab",
+                "operationId": "get-computer-labs",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/computer-labs-limit/{length}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Computer Lab"
+                ],
+                "summary": "get N items of the computer-lab",
+                "operationId": "get-computer-labs_limit",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Length of result",
+                        "name": "length",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/link-account": {
             "put": {
                 "produces": [
