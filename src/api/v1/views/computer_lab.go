@@ -2,6 +2,7 @@ package views
 
 import (
 	"encoding/json"
+	"strconv"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/schemas"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/services"
@@ -197,4 +198,57 @@ func ComputerLab_PUT(c *gin.Context) {
 
 	c.Header("Content-Type", "application/json")
 	c.JSON(200, responseUpdateComputerLab)
+}
+
+// @Summary get all items of the computer-lab
+// @ID get-computer-labs
+// @Tags Computer Lab
+// @Produce json
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/computer-labs [get]
+func ComputerLabs_GET(c *gin.Context) {
+
+	result, message, computerLabs := services.GetComputerLabs()
+
+	responseGetComputerLab := models.Response{
+		Message: message,
+		Success: result,
+		Data:    computerLabs,
+	}
+
+	if !result {
+		responseGetComputerLab.Data = "{}"
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseGetComputerLab)
+}
+
+// @Summary get N items of the computer-lab
+// @ID get-computer-labs_limit
+// @Tags Computer Lab
+// @Produce json
+// @Param length path string true "Length of result"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/computer-labs-limit/{length} [get]
+func ComputerLabs_Limit_GET(c *gin.Context) {
+
+	length, _ := strconv.Atoi(c.Param("length"))
+
+	result, message, computerLabs := services.GetComputerLabs_Limit(length)
+
+	responseGetComputerLab := models.Response{
+		Message: message,
+		Success: result,
+		Data:    computerLabs,
+	}
+
+	if !result {
+		responseGetComputerLab.Data = "{}"
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseGetComputerLab)
 }
