@@ -19,4 +19,10 @@ func ComputerLab() {
 
 	//Delete Computer
 	config.Router.DELETE(fmt.Sprintf("/api/%s/computer-lab/:id-computer-lab", config.API_VERSION), views.ComputerLab_DELETE)
+
+	//Get All ComputerLabs
+	config.Router.GET(fmt.Sprintf("/api/%s/computer-labs", config.API_VERSION), views.ComputerLabs_GET)
+
+	//Get All ComputerLabs
+	config.Router.GET(fmt.Sprintf("/api/%s/computer-labs-limit/:length", config.API_VERSION), views.ComputerLabs_Limit_GET)
 }
