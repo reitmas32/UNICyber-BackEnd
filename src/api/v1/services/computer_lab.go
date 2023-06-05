@@ -53,3 +53,21 @@ func UpdateComputerLab(IdComputerLab string, new_compuer schemas.ComputerLabUpda
 
 	return true, "Update ComputerLab Successful", computerLab
 }
+
+func GetComputerLabs() (bool, string, []models.ComputerLab) {
+	var computerLabs []models.ComputerLab
+	if err := config.DB.Find(&computerLabs).Error; err != nil {
+		return false, fmt.Sprint("No se encontraron Computer Labs: ", err), computerLabs
+	}
+
+	return true, "Computer Labs encontrados", computerLabs
+}
+
+func GetComputerLabs_Limit(limit int) (bool, string, []models.ComputerLab) {
+	var computerLabs []models.ComputerLab
+	if err := config.DB.Limit(limit).Find(&computerLabs).Error; err != nil {
+		return false, fmt.Sprint("No se encontraron Computer Labs: ", err), computerLabs
+	}
+
+	return true, "Computer Labs encontrados", computerLabs
+}
