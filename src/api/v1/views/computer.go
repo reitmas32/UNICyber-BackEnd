@@ -51,6 +51,18 @@ func Computer_POST(c *gin.Context) {
 		Type:       computerCreateSchema.Type,
 	}
 
+	result, message, _ := services.FindRoom(computer.IdRoom)
+
+	if !result {
+		responseCreateComputer := models.Response{
+			Message: message,
+			Success: result,
+			Data:    nil,
+		}
+		c.Header("Content-Type", "application/json")
+		c.JSON(200, responseCreateComputer)
+	}
+
 	result, message, new_compuer := services.CreateComputer(computer)
 
 	if result {
