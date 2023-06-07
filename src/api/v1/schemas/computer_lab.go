@@ -5,7 +5,7 @@ type ComputerLabCreateSchema struct {
 	Description string `json:"description" binding:"required"`
 }
 
-func (c *ComputerLabCreateSchema) isValid() bool {
+func (c *ComputerLabCreateSchema) IsValid() bool {
 	if c.Name == "" || c.Description == "" {
 		return false
 	}
@@ -16,7 +16,7 @@ type ComputerLabFindSchema struct {
 	Name string `json:"name" binding:"required"`
 }
 
-func (c *ComputerLabFindSchema) isValid() bool {
+func (c *ComputerLabFindSchema) IsValid() bool {
 	if c.Name == "" {
 		return false
 	}
@@ -33,7 +33,7 @@ type ComputerLabUpdateSchema struct {
 	Description string `json:"description" binding:"required"`
 }
 
-func (c *ComputerLabUpdateSchema) isValid() bool {
+func (c *ComputerLabUpdateSchema) IsValid() bool {
 	if c.Name == "" || c.Description == "" {
 		return false
 	}

@@ -5,7 +5,7 @@ type UserSignInSchema struct {
 	Password string `json:"password" binding:"required"`
 }
 
-func (u *UserSignInSchema) isValid() bool {
+func (u *UserSignInSchema) IsValid() bool {
 	if u.UserName == "" || u.Password == "" {
 		return false
 	}
@@ -23,7 +23,7 @@ type UserSignUpSchema struct {
 	Role        string `json:"role" binding:"required"`
 }
 
-func (u *UserSignUpSchema) isValid() bool {
+func (u *UserSignUpSchema) IsValid() bool {
 	if u.UserName == "" || u.Password == "" || u.Email == "" || u.LastName == "" || u.Name == "" || u.DateOfBirth == "" || u.Role == "" || u.PhoneNumber == "" {
 		return false
 	}
@@ -35,7 +35,7 @@ type LinkAccountRequisitionSchema struct {
 	IdComputerLab string `json:"idComputerLab" binding:"required"`
 }
 
-func (l *LinkAccountRequisitionSchema) isValid() bool {
+func (l *LinkAccountRequisitionSchema) IsValid() bool {
 	if l.UserName == "" || l.IdComputerLab == "" {
 		return false
 	}
@@ -47,7 +47,7 @@ type LinkAccountConfirmationSchema struct {
 	UserName string `json:"user_name" binding:"required"`
 }
 
-func (l *LinkAccountConfirmationSchema) isValid() bool {
+func (l *LinkAccountConfirmationSchema) IsValid() bool {
 	if l.UserName == "" || l.Code == "" {
 		return false
 	}

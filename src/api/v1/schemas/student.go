@@ -12,7 +12,7 @@ type StudentCreateSchema struct {
 	Semester          uint8  `json:"semester" binding:"required"`
 }
 
-func (s *StudentCreateSchema) isValid() bool {
+func (s *StudentCreateSchema) IsValid() bool {
 	if s.Name == "" || s.AccountNumber == "" || s.LastName == "" || s.UniversityProgram == "" {
 		return false
 	}
@@ -31,6 +31,6 @@ type StudentUpdateSchema struct {
 	Semester          uint8  `json:"semester"`
 }
 
-func (s *StudentUpdateSchema) isValid() bool {
+func (s *StudentUpdateSchema) IsValid() bool {
 	return true
 }

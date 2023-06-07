@@ -5,7 +5,7 @@ type RoomCreateSchema struct {
 	IdComputerLab string `json:"id_computer_lab"`
 }
 
-func (c *RoomCreateSchema) isValid() bool {
+func (c *RoomCreateSchema) IsValid() bool {
 	if c.Name == "" || c.IdComputerLab == "" {
 		return false
 	}
@@ -20,6 +20,6 @@ type RoomUpdateSchema struct {
 	Index int    `json:"index"`
 }
 
-func (c *RoomUpdateSchema) isValid() bool {
+func (c *RoomUpdateSchema) IsValid() bool {
 	return true
 }
