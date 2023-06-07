@@ -34,7 +34,7 @@ func DeleteStudent(id string) (bool, string, models.Student) {
 		return false, "No Find Student", student
 	}
 
-	return true, "Find Student", student
+	return true, "Delete Student", student
 }
 
 func UpdateStudent(id string, new_student schemas.StudentUpdateSchema) (bool, string, models.Student) {
