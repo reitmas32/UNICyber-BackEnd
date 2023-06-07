@@ -47,20 +47,33 @@ func Room_POST(c *gin.Context) {
 		//Create Index whit one more current max index of ComputerLab
 	}
 
-	result, message := services.CreateRoom(room)
+	result, message, _ := services.FindComputerLab(room.IdComputerLab)
+
+	if !result {
+		responseCreateRoom := models.Response{
+			Message: message,
+			Success: result,
+			Data:    nil,
+		}
+		c.Header("Content-Type", "application/json")
+		c.JSON(200, responseCreateRoom)
+		return
+	}
+
+	result, message, new_room := services.CreateRoom(room)
 
 	if result {
 
 		responseCreateRoom = models.Response{
 			Message: message,
 			Success: result,
-			Data:    room,
+			Data:    new_room,
 		}
 	} else {
 		responseCreateRoom = models.Response{
 			Message: message,
 			Success: responseCreateRoom.Success,
-			Data:    room,
+			Data:    nil,
 		}
 	}
 
