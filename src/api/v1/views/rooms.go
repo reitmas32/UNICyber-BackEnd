@@ -8,7 +8,6 @@ import (
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/google/uuid"
 )
 
 // @Summary add a new item of the rooms
@@ -42,7 +41,6 @@ func Room_POST(c *gin.Context) {
 
 	room := models.Room{
 		IdComputerLab: roomSchema.IdComputerLab,
-		IdRoom:        uuid.New().String(),
 		Name:          roomSchema.Name,
 		//Create Index whit one more current max index of ComputerLab
 	}
@@ -85,13 +83,13 @@ func Room_POST(c *gin.Context) {
 // @ID get-room
 // @Tags Rooms
 // @Produce json
-// @Param id-room path string true "ID of Room"
+// @Param id path string true "ID of Room"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/room [get]
 func Room_GET(c *gin.Context) {
 
-	result, message, room := services.FindRoom(c.Param("id-room"))
+	result, message, room := services.FindRoom(c.Param("id"))
 
 	responseGetRoom := models.Response{
 		Message: message,
@@ -111,16 +109,16 @@ func Room_GET(c *gin.Context) {
 // @ID delete-room
 // @Tags Rooms
 // @Produce json
-// @Param id-room path string true "ID of Room"
+// @Param id path string true "ID of Room"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/room [delete]
 func Room_DELETE(c *gin.Context) {
 
-	result, message, computer := services.FindRoom(c.Param("id-room"))
+	result, message, computer := services.FindRoom(c.Param("id"))
 
 	if result {
-		result, message, _ = services.DeleteRoom(c.Param("id-room"))
+		result, message, _ = services.DeleteRoom(c.Param("id"))
 	}
 
 	responseDeleteRoom := models.Response{
@@ -141,7 +139,7 @@ func Room_DELETE(c *gin.Context) {
 // @ID put-room
 // @Tags Rooms
 // @Produce json
-// @Param id-room path string true "ID of Room"
+// @Param id path string true "ID of Room"
 // @Param data body schemas.RoomUpdateSchema true "Schema by Update New Room"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
@@ -161,10 +159,10 @@ func Room_PUT(c *gin.Context) {
 		return
 	}
 
-	result, message, room := services.FindRoom(c.Param("id-room"))
+	result, message, room := services.FindRoom(c.Param("id"))
 
 	if result {
-		result, message, room = services.UpdateRoom(c.Param("id-room"), roomUpdateSchema)
+		result, message, room = services.UpdateRoom(c.Param("id"), roomUpdateSchema)
 	}
 
 	responseUpdateRoom := models.Response{
