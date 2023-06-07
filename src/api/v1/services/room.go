@@ -7,19 +7,14 @@ import (
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/tools"
 )
 
-func CreateRoom(room models.Room) (bool, string) {
-
-	var computerLab models.ComputerLab
-	if err := config.DB.First(&computerLab, "id_computer_lab = ?", room.IdComputerLab).Error; err != nil {
-		return false, "No Exist the ComputerLab"
-	}
+func CreateRoom(room models.Room) (bool, string, models.Room) {
 
 	result := config.DB.Create(&room)
 	if result.Error != nil {
-		return false, result.Error.Error()
+		return false, result.Error.Error(), room
 	}
 
-	return true, "Create Room Successful"
+	return true, "Create Room Successful", room
 }
 
 func FindRoom(IdRoom string) (bool, string, models.Room) {
