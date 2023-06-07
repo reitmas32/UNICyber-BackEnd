@@ -9,7 +9,6 @@ import (
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/google/uuid"
 )
 
 // @Summary add a new item of the computer-lab
@@ -72,9 +71,8 @@ func ComputerLab_POST(c *gin.Context) {
 	}
 
 	computerLab := models.ComputerLab{
-		IdComputerLab: uuid.New().String(),
-		Name:          computerLabCreateSchema.Name,
-		Description:   computerLabCreateSchema.Description,
+		Name:        computerLabCreateSchema.Name,
+		Description: computerLabCreateSchema.Description,
 	}
 
 	result, message, newComputerLab := services.CreateComputerLab(computerLab)
