@@ -9,8 +9,22 @@ type ComputerCreateSchema struct {
 	Type   string `json:"type" example:"Impresora"`
 }
 
+func (c *ComputerCreateSchema) isValid() bool {
+	if c.Name == "" || c.IdRoom == "" || c.Type == "" {
+		return false
+	}
+	return true
+}
+
 type ComputerFindSchema struct {
 	IdComputer string `json:"id_computer"`
+}
+
+func (c *ComputerFindSchema) isValid() bool {
+	if c.IdComputer == "" {
+		return false
+	}
+	return true
 }
 
 type ComputerUpdateSchema struct {
@@ -27,4 +41,8 @@ type ComputerUpdateSchema struct {
 	State   string `json:"state" example:"Disponible"`
 	Message string `json:"message" example:"Solo falta instalar DevC++"`
 	Type    string `json:"type" example:"Prestamo"`
+}
+
+func (c *ComputerUpdateSchema) isValid() bool {
+	return true
 }
