@@ -77,14 +77,14 @@ func ComputerLab_POST(c *gin.Context) {
 		Description:   computerLabCreateSchema.Description,
 	}
 
-	result, message := services.CreateComputerLab(computerLab)
+	result, message, newComputerLab := services.CreateComputerLab(computerLab)
 
 	if result {
 
 		responseCreateComputerLab = models.Response{
 			Message: message,
 			Success: result,
-			Data:    computerLab,
+			Data:    newComputerLab,
 		}
 	} else {
 
