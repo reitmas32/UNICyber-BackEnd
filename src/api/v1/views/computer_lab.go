@@ -60,7 +60,7 @@ func ComputerLab_POST(c *gin.Context) {
 	// Decodificar el objeto JSON recibido
 	var computerLabCreateSchema schemas.ComputerLabCreateSchema
 	err := json.NewDecoder(c.Request.Body).Decode(&computerLabCreateSchema)
-	if err != nil {
+	if err != nil || !computerLabCreateSchema.IsValid() {
 		responseCreateComputerLab := models.Response{
 			Message: "Error to Get Content JSON",
 			Success: false,
@@ -169,7 +169,7 @@ func ComputerLab_PUT(c *gin.Context) {
 	// Decodificar el objeto JSON recibido
 	var computerLabUpdateSchema schemas.ComputerLabUpdateSchema
 	err := json.NewDecoder(c.Request.Body).Decode(&computerLabUpdateSchema)
-	if err != nil {
+	if err != nil || !computerLabUpdateSchema.IsValid() {
 		responseUpdateComputerLab := models.Response{
 			Message: "Error to Get Content JSON",
 			Success: false,
