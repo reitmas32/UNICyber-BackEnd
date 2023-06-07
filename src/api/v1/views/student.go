@@ -74,13 +74,13 @@ func Student_POST(c *gin.Context) {
 // @ID get-student
 // @Tags Students
 // @Produce json
-// @Param id-student path string true "ID of Student"
+// @Param id path string true "ID of Student"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/student [get]
 func Student_GET(c *gin.Context) {
 
-	result, message, student := services.FindStudent(c.Param("id-student"))
+	result, message, student := services.FindStudent(c.Param("id"))
 
 	responseGetStudent := models.Response{
 		Message: message,
@@ -100,13 +100,13 @@ func Student_GET(c *gin.Context) {
 // @ID delete-student
 // @Tags Students
 // @Produce json
-// @Param id-student path string true "ID of Student"
+// @Param id path string true "ID of Student"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/student [delete]
 func Student_DELETE(c *gin.Context) {
 
-	result, message, student := services.DeleteStudent(c.Param("id-student"))
+	result, message, student := services.DeleteStudent(c.Param("id"))
 
 	responseDeleteStudent := models.Response{
 		Message: message,
@@ -126,7 +126,7 @@ func Student_DELETE(c *gin.Context) {
 // @ID put-student
 // @Tags Students
 // @Produce json
-// @Param id-student path string true "ID of Students"
+// @Param id path string true "ID of Students"
 // @Param data body schemas.StudentUpdateSchema true "Schema by Update New Student"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
@@ -147,10 +147,10 @@ func Student_PUT(c *gin.Context) {
 		return
 	}
 
-	result, message, student := services.FindStudent(c.Param("id-student"))
+	result, message, student := services.FindStudent(c.Param("id"))
 
 	if result {
-		result, message, student = services.UpdateStudent(c.Param("id-student"), studentUpdateSchema)
+		result, message, student = services.UpdateStudent(c.Param("id"), studentUpdateSchema)
 	}
 
 	responseUpdateStudent := models.Response{
