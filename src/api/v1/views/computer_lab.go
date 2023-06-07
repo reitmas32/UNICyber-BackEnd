@@ -101,13 +101,13 @@ func ComputerLab_POST(c *gin.Context) {
 // @ID get-computer-lab
 // @Tags Computer Lab
 // @Produce json
-// @Param id-computer-lab path string true "ID of ComputerLab"
+// @Param id path string true "ID of ComputerLab"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/computer-lab [get]
 func ComputerLab_GET(c *gin.Context) {
 
-	result, message, computerLab := services.FindComputerLab(c.Param("id-computer-lab"))
+	result, message, computerLab := services.FindComputerLab(c.Param("id"))
 
 	responseGetComputerLab := models.Response{
 		Message: message,
@@ -127,16 +127,16 @@ func ComputerLab_GET(c *gin.Context) {
 // @ID delete-computer-lab
 // @Tags Computer Lab
 // @Produce json
-// @Param id-computer-lab path string true "ID del item"
+// @Param id path string true "ID del item"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/computer-lab [delete]
 func ComputerLab_DELETE(c *gin.Context) {
 
-	result, message, computerLab := services.FindComputerLab(c.Param("id-computer-lab"))
+	result, message, computerLab := services.FindComputerLab(c.Param("id"))
 
 	if result {
-		result, message, _ = services.DeleteComputerLab(c.Param("id-computer-lab"))
+		result, message, _ = services.DeleteComputerLab(c.Param("id"))
 	}
 
 	responseDeleteComputerLab := models.Response{
@@ -157,7 +157,7 @@ func ComputerLab_DELETE(c *gin.Context) {
 // @ID put-computer-lab
 // @Tags Computer Lab
 // @Produce json
-// @Param id-computer-lab path string true "ID del item"
+// @Param id path string true "ID del item"
 // @Param data body schemas.ComputerLabUpdateSchema true "Schema by Update New Computer Lab"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
@@ -177,10 +177,10 @@ func ComputerLab_PUT(c *gin.Context) {
 		return
 	}
 
-	result, message, computerLab := services.FindComputerLab(c.Param("id-computer-lab"))
+	result, message, computerLab := services.FindComputerLab(c.Param("id"))
 
 	if result {
-		result, message, computerLab = services.UpdateComputerLab(c.Param("id-computer-lab"), computerLabUpdateSchema)
+		result, message, computerLab = services.UpdateComputerLab(c.Param("id"), computerLabUpdateSchema)
 	}
 
 	responseUpdateComputerLab := models.Response{

@@ -12,13 +12,13 @@ func ComputerLab() {
 	config.Router.POST(fmt.Sprintf("/api/%s/computer-lab", config.API_VERSION), views.ComputerLab_POST)
 
 	//Get Computer
-	config.Router.GET(fmt.Sprintf("/api/%s/computer-lab/:id-computer-lab", config.API_VERSION), views.ComputerLab_GET)
+	config.Router.GET(fmt.Sprintf("/api/%s/computer-lab/:id", config.API_VERSION), views.ComputerLab_GET)
 
 	//Update Computer
-	config.Router.PUT(fmt.Sprintf("/api/%s/computer-lab/:id-computer-lab", config.API_VERSION), views.ComputerLab_PUT)
+	config.Router.PUT(fmt.Sprintf("/api/%s/computer-lab/:id", config.API_VERSION), views.ComputerLab_PUT)
 
 	//Delete Computer
-	config.Router.DELETE(fmt.Sprintf("/api/%s/computer-lab/:id-computer-lab", config.API_VERSION), views.ComputerLab_DELETE)
+	config.Router.DELETE(fmt.Sprintf("/api/%s/computer-lab/:id", config.API_VERSION), views.ComputerLab_DELETE)
 
 	//Get All ComputerLabs
 	config.Router.GET(fmt.Sprintf("/api/%s/computer-labs", config.API_VERSION), views.ComputerLabs_GET)
