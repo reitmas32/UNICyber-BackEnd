@@ -61,6 +61,7 @@ func Computer_POST(c *gin.Context) {
 		}
 		c.Header("Content-Type", "application/json")
 		c.JSON(200, responseCreateComputer)
+		return
 	}
 
 	result, message, new_compuer := services.CreateComputer(computer)
