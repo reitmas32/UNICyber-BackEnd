@@ -1,12 +1,13 @@
 package views
 
 import (
-	"encoding/json"
+	"strings"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/schemas"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/services"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"github.com/google/uuid"
 )
 
@@ -28,12 +29,11 @@ func Computer_POST(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido
 	var computerCreateSchema schemas.ComputerCreateSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&computerCreateSchema)
-	if err != nil {
+	if err := c.ShouldBindWith(&computerCreateSchema, binding.JSON); err != nil {
 		responseCreateComputer := models.Response{
 			Message: "Error to Get Content JSON",
 			Success: false,
-			Data:    "{}",
+			Data:    strings.Split(err.Error(), "\n"),
 		}
 		c.Header("Content-Type", "application/json")
 		c.JSON(200, responseCreateComputer)
@@ -141,12 +141,11 @@ func Computer_PUT(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido
 	var computerUpdateSchema schemas.ComputerUpdateSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&computerUpdateSchema)
-	if err != nil {
+	if err := c.ShouldBindWith(&computerUpdateSchema, binding.JSON); err != nil {
 		responseUpdateComputer := models.Response{
 			Message: "Error to Get Content JSON",
 			Success: false,
-			Data:    "{}",
+			Data:    strings.Split(err.Error(), "\n"),
 		}
 		c.Header("Content-Type", "application/json")
 		c.JSON(200, responseUpdateComputer)

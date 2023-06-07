@@ -1,12 +1,13 @@
 package views
 
 import (
-	"encoding/json"
+	"strings"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/schemas"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/services"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"github.com/google/uuid"
 )
 
@@ -28,12 +29,11 @@ func Room_POST(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido
 	var roomSchema schemas.RoomCreateSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&roomSchema)
-	if err != nil {
+	if err := c.ShouldBindWith(&roomSchema, binding.JSON); err != nil {
 		responseCreateRoom := models.Response{
 			Message: "Error to Get Content JSON",
 			Success: false,
-			Data:    "{}",
+			Data:    strings.Split(err.Error(), "\n"),
 		}
 		c.Header("Content-Type", "application/json")
 		c.JSON(200, responseCreateRoom)
@@ -137,12 +137,11 @@ func Room_PUT(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido
 	var roomUpdateSchema schemas.RoomUpdateSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&roomUpdateSchema)
-	if err != nil {
+	if err := c.ShouldBindWith(&roomUpdateSchema, binding.JSON); err != nil {
 		responseUpdateRoom := models.Response{
 			Message: "Error to Get Content JSON",
 			Success: false,
-			Data:    "{}",
+			Data:    strings.Split(err.Error(), "\n"),
 		}
 		c.Header("Content-Type", "application/json")
 		c.JSON(200, responseUpdateRoom)

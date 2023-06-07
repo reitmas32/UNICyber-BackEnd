@@ -1,13 +1,14 @@
 package views
 
 import (
-	"encoding/json"
 	"strconv"
+	"strings"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/schemas"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/services"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"github.com/google/uuid"
 )
 
@@ -59,12 +60,11 @@ func ComputerLab_POST(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido
 	var computerLabCreateSchema schemas.ComputerLabCreateSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&computerLabCreateSchema)
-	if err != nil || !computerLabCreateSchema.IsValid() {
+	if err := c.ShouldBindWith(&computerLabCreateSchema, binding.JSON); err != nil {
 		responseCreateComputerLab := models.Response{
 			Message: "Error to Get Content JSON",
 			Success: false,
-			Data:    "{}",
+			Data:    strings.Split(err.Error(), "\n"),
 		}
 		c.Header("Content-Type", "application/json")
 		c.JSON(200, responseCreateComputerLab)
@@ -168,12 +168,11 @@ func ComputerLab_PUT(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido
 	var computerLabUpdateSchema schemas.ComputerLabUpdateSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&computerLabUpdateSchema)
-	if err != nil || !computerLabUpdateSchema.IsValid() {
+	if err := c.ShouldBindWith(&computerLabUpdateSchema, binding.JSON); err != nil {
 		responseUpdateComputerLab := models.Response{
 			Message: "Error to Get Content JSON",
 			Success: false,
-			Data:    "{}",
+			Data:    strings.Split(err.Error(), "\n"),
 		}
 		c.Header("Content-Type", "application/json")
 		c.JSON(200, responseUpdateComputerLab)
