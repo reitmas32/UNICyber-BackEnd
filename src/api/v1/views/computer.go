@@ -51,20 +51,20 @@ func Computer_POST(c *gin.Context) {
 		Type:       computerCreateSchema.Type,
 	}
 
-	result, message := services.CreateComputer(computer)
+	result, message, new_compuer := services.CreateComputer(computer)
 
 	if result {
 
 		responseCreateComputer = models.Response{
 			Message: message,
 			Success: result,
-			Data:    computer,
+			Data:    new_compuer,
 		}
 	} else {
 		responseCreateComputer = models.Response{
 			Message: message,
 			Success: responseCreateComputer.Success,
-			Data:    computer,
+			Data:    nil,
 		}
 	}
 
