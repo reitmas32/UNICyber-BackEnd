@@ -8,7 +8,6 @@ import (
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/google/uuid"
 )
 
 // @Summary add a new item of the computers
@@ -41,14 +40,13 @@ func Computer_POST(c *gin.Context) {
 	}
 
 	computer := models.Computer{
-		IdRoom:     computerCreateSchema.IdRoom,
-		IdComputer: uuid.New().String(),
-		Pos_x:      0.0,
-		Pos_y:      0.0,
-		Name:       computerCreateSchema.Name,
-		State:      "Disponible",
-		Message:    "",
-		Type:       computerCreateSchema.Type,
+		IdRoom:  computerCreateSchema.IdRoom,
+		Pos_x:   0.0,
+		Pos_y:   0.0,
+		Name:    computerCreateSchema.Name,
+		State:   "Disponible",
+		Message: "",
+		Type:    computerCreateSchema.Type,
 	}
 
 	result, message, _ := services.FindRoom(computer.IdRoom)
@@ -89,13 +87,13 @@ func Computer_POST(c *gin.Context) {
 // @ID get-computer
 // @Tags Computers
 // @Produce json
-// @Param id-computer path string true "ID of Computer"
+// @Param id path string true "ID of Computer"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/computer [get]
 func Computer_GET(c *gin.Context) {
 
-	result, message, computer := services.FindComputer(c.Param("id-computer"))
+	result, message, computer := services.FindComputer(c.Param("id"))
 
 	responseGetComputer := models.Response{
 		Message: message,
@@ -115,16 +113,16 @@ func Computer_GET(c *gin.Context) {
 // @ID delete-computer
 // @Tags Computers
 // @Produce json
-// @Param id-computer path string true "ID of Computer"
+// @Param id path string true "ID of Computer"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/computer [delete]
 func Computer_DELETE(c *gin.Context) {
 
-	result, message, computer := services.FindComputer(c.Param("id-computer"))
+	result, message, computer := services.FindComputer(c.Param("id"))
 
 	if result {
-		result, message, _ = services.DeleteComputer(c.Param("id-computer"))
+		result, message, _ = services.DeleteComputer(c.Param("id"))
 	}
 
 	responseDeleteComputer := models.Response{
@@ -145,7 +143,7 @@ func Computer_DELETE(c *gin.Context) {
 // @ID put-computer
 // @Tags Computers
 // @Produce json
-// @Param id-computer path string true "ID of Computer"
+// @Param id path string true "ID of Computer"
 // @Param data body schemas.ComputerUpdateSchema true "Schema by Update New Computer"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
@@ -165,10 +163,10 @@ func Computer_PUT(c *gin.Context) {
 		return
 	}
 
-	result, message, computer := services.FindComputer(c.Param("id-computer"))
+	result, message, computer := services.FindComputer(c.Param("id"))
 
 	if result {
-		result, message, computer = services.UpdateComputer(c.Param("id-computer"), computerUpdateSchema)
+		result, message, computer = services.UpdateComputer(c.Param("id"), computerUpdateSchema)
 	}
 
 	responseUpdateComputer := models.Response{
