@@ -7,40 +7,40 @@ import (
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/tools"
 )
 
-func CreateStudent(student models.Student) (bool, string) {
+func CreateStudent(student models.Student) (bool, string, models.Student) {
 
 	result := config.DB.Create(&student)
 	if result.Error != nil {
-		return false, result.Error.Error()
+		return false, result.Error.Error(), student
 	}
 
-	return true, "Create Student Successful"
+	return true, "Create Student Successful", student
 }
 
-func FindStudent(IdStudent string) (bool, string, models.Student) {
+func FindStudent(id string) (bool, string, models.Student) {
 
 	var student models.Student
-	if err := config.DB.First(&student, "id_student = ?", IdStudent).Error; err != nil {
+	if err := config.DB.First(&student, "id = ?", id).Error; err != nil {
 		return false, "No Find Student", student
 	}
 
 	return true, "Find Student", student
 }
 
-func DeleteStudent(IdStudent string) (bool, string, models.Student) {
+func DeleteStudent(id string) (bool, string, models.Student) {
 
 	var student models.Student
-	if err := config.DB.Delete(&student, "id_student = ?", IdStudent).Error; err != nil {
+	if err := config.DB.Delete(&student, "id = ?", id).Error; err != nil {
 		return false, "No Find Student", student
 	}
 
 	return true, "Find Student", student
 }
 
-func UpdateStudent(IdStudent string, new_student schemas.StudentUpdateSchema) (bool, string, models.Student) {
+func UpdateStudent(id string, new_student schemas.StudentUpdateSchema) (bool, string, models.Student) {
 
 	var student models.Student
-	if err := config.DB.First(&student, "id_student = ?", IdStudent).Error; err != nil {
+	if err := config.DB.First(&student, "id = ?", id).Error; err != nil {
 		return false, "No Find Computer", student
 	} else {
 		student.Name = tools.CopyField(new_student.Name, student.Name, "")
