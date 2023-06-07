@@ -41,7 +41,7 @@ func UpdateStudent(id string, new_student schemas.StudentUpdateSchema) (bool, st
 
 	var student models.Student
 	if err := config.DB.First(&student, "id = ?", id).Error; err != nil {
-		return false, "No Find Computer", student
+		return false, "No Find Student", student
 	} else {
 		student.Name = tools.CopyField(new_student.Name, student.Name, "")
 		student.LastName = tools.CopyField(new_student.LastName, student.LastName, "")
@@ -53,5 +53,5 @@ func UpdateStudent(id string, new_student schemas.StudentUpdateSchema) (bool, st
 		config.DB.Save(&student)
 	}
 
-	return true, "Change Name Successful", student
+	return true, "Update Student Successful", student
 }
