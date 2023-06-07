@@ -9,7 +9,6 @@ import (
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/google/uuid"
 )
 
 // @Summary add a new item of the students
@@ -42,7 +41,6 @@ func Student_POST(c *gin.Context) {
 	}
 
 	student := models.Student{
-		IdStudent:         uuid.New().String(),
 		Name:              studentCreateSchema.Name,
 		LastName:          studentCreateSchema.LastName,
 		UniversityProgram: studentCreateSchema.UniversityProgram,
@@ -51,20 +49,20 @@ func Student_POST(c *gin.Context) {
 		Semester:          studentCreateSchema.Semester,
 	}
 
-	result, message := services.CreateStudent(student)
+	result, message, new_student := services.CreateStudent(student)
 
 	if result {
 
 		responseCreateStudent = models.Response{
 			Message: message,
 			Success: result,
-			Data:    student,
+			Data:    new_student,
 		}
 	} else {
 		responseCreateStudent = models.Response{
 			Message: message,
 			Success: responseCreateStudent.Success,
-			Data:    student,
+			Data:    "{}",
 		}
 	}
 
