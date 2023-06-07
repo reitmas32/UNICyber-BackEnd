@@ -9,14 +9,14 @@ import (
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/tools"
 )
 
-func CreateComputerLab(computerLab models.ComputerLab) (bool, string) {
+func CreateComputerLab(computerLab models.ComputerLab) (bool, string, models.ComputerLab) {
 
 	result := config.DB.Create(&computerLab)
 	if result.Error != nil {
-		return false, result.Error.Error()
+		return false, result.Error.Error(), computerLab
 	}
 
-	return true, "Create ComputerLab Successful"
+	return true, "Create ComputerLab Successful", computerLab
 }
 
 func FindComputerLab(IdComputerLab string) (bool, string, models.ComputerLab) {
