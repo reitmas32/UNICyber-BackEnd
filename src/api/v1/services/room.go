@@ -51,3 +51,13 @@ func UpdateRoom(id uint, new_room schemas.RoomUpdateSchema) (bool, string, model
 
 	return true, "Update Room Successful", room
 }
+
+func FindRoomsOfComputerLab(id_computer_lab uint) (bool, string, []models.Room) {
+
+	var rooms []models.Room
+	result := config.DB.Where("id_computer_lab = ?", id_computer_lab).Find(&rooms)
+	if result.Error != nil {
+		return false, result.Error.Error(), rooms
+	}
+	return true, "Find Rooms by ComputerLabs", rooms
+}
