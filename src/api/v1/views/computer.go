@@ -189,3 +189,31 @@ func Computer_PUT(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 	c.JSON(200, responseUpdateComputer)
 }
+
+// @Summary get a item of the computers of Room
+// @ID get-computers-of-room
+// @Tags Computers
+// @Produce json
+// @Param id-room path string true "ID of Room"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/computers/{id-room} [get]
+func ComputersOfRoom_GET(c *gin.Context) {
+
+	id, _ := (strconv.ParseUint(c.Param("id-room"), 10, 32))
+
+	result, message, room := services.FindComputerOfRoom(uint(id))
+
+	responseGetRoom := models.Response{
+		Message: message,
+		Success: result,
+		Data:    room,
+	}
+
+	if !result {
+		responseGetRoom.Data = "{}"
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseGetRoom)
+}
