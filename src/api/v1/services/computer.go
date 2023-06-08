@@ -56,11 +56,12 @@ func UpdateComputer(id uint, new_compuer schemas.ComputerUpdateSchema) (bool, st
 	return true, "Change Name Successful", computer
 }
 
-/*
-func copyFieldFloat32(src float32, des float32, default_value float32) float32 {
-	if src != default_value {
-		des = src
+func FindComputerOfRoom(id_room uint) (bool, string, []models.Computer) {
+
+	var computers []models.Computer
+	result := config.DB.Where("id_room = ?", id_room).Find(&computers)
+	if result.Error != nil {
+		return false, result.Error.Error(), computers
 	}
-	return des
+	return true, "Find Computers by Room", computers
 }
-*/
