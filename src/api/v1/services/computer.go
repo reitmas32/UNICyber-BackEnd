@@ -17,7 +17,7 @@ func CreateComputer(computer models.Computer) (bool, string, models.Computer) {
 	return true, "Create Computer Successful", computer
 }
 
-func FindComputer(id string) (bool, string, models.Computer) {
+func FindComputer(id uint) (bool, string, models.Computer) {
 
 	var computer models.Computer
 	if err := config.DB.First(&computer, "id = ?", id).Error; err != nil {
@@ -27,7 +27,7 @@ func FindComputer(id string) (bool, string, models.Computer) {
 	return true, "Find Computer", computer
 }
 
-func DeleteComputer(id string) (bool, string, models.Computer) {
+func DeleteComputer(id uint) (bool, string, models.Computer) {
 
 	var computer models.Computer
 	if err := config.DB.Delete(&computer, "id = ?", id).Error; err != nil {
@@ -37,7 +37,7 @@ func DeleteComputer(id string) (bool, string, models.Computer) {
 	return true, "Delete Computer", computer
 }
 
-func UpdateComputer(id string, new_compuer schemas.ComputerUpdateSchema) (bool, string, models.Computer) {
+func UpdateComputer(id uint, new_compuer schemas.ComputerUpdateSchema) (bool, string, models.Computer) {
 
 	var computer models.Computer
 	if err := config.DB.First(&computer, "id = ?", id).Error; err != nil {
