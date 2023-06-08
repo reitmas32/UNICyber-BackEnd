@@ -1,6 +1,7 @@
 package views
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/schemas"
@@ -93,7 +94,9 @@ func Computer_POST(c *gin.Context) {
 // @Router /api/v1/computer [get]
 func Computer_GET(c *gin.Context) {
 
-	result, message, computer := services.FindComputer(c.Param("id"))
+	id, _ := (strconv.ParseUint(c.Param("id"), 10, 32))
+
+	result, message, computer := services.FindComputer(uint(id))
 
 	responseGetComputer := models.Response{
 		Message: message,
@@ -119,10 +122,12 @@ func Computer_GET(c *gin.Context) {
 // @Router /api/v1/computer [delete]
 func Computer_DELETE(c *gin.Context) {
 
-	result, message, computer := services.FindComputer(c.Param("id"))
+	id, _ := (strconv.ParseUint(c.Param("id"), 10, 32))
+
+	result, message, computer := services.FindComputer(uint(id))
 
 	if result {
-		result, message, _ = services.DeleteComputer(c.Param("id"))
+		result, message, _ = services.DeleteComputer(uint(id))
 	}
 
 	responseDeleteComputer := models.Response{
@@ -163,10 +168,12 @@ func Computer_PUT(c *gin.Context) {
 		return
 	}
 
-	result, message, computer := services.FindComputer(c.Param("id"))
+	id, _ := (strconv.ParseUint(c.Param("id"), 10, 32))
+
+	result, message, computer := services.FindComputer(uint(id))
 
 	if result {
-		result, message, computer = services.UpdateComputer(c.Param("id"), computerUpdateSchema)
+		result, message, computer = services.UpdateComputer(uint(id), computerUpdateSchema)
 	}
 
 	responseUpdateComputer := models.Response{
