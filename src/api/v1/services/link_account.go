@@ -21,6 +21,6 @@ func GetComputerLabs_User(user_name string) (bool, string, []models.LinkAccount)
 	if result.Error != nil {
 		return false, result.Error.Error(), linksAccount
 	}
-	return true, "Create LinkAccount Successful", linksAccount
+	return true, "Find ComputerLabs by User", linksAccount
 
 }
