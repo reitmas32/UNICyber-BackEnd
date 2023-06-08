@@ -183,7 +183,6 @@ func ComputerLab_PUT(c *gin.Context) {
 
 	id, _ := (strconv.ParseUint(c.Param("id"), 10, 32))
 
-
 	result, message, computerLab := services.FindComputerLab(uint(id))
 
 	if result {
@@ -276,8 +275,16 @@ func ComputerLabs_User_GET(c *gin.Context) {
 		Success: result,
 		Data:    computerLabs,
 	}
+	if result {
+		data_list := responseGetComputerLab.Data.([]models.LinkAccount)
+		var computerLabs []models.ComputerLab
+		for i := 0; i < len(data_list); i++ {
+			_, _, computerLab := services.FindComputerLab(data_list[i].IdComputerLab)
+			computerLabs = append(computerLabs, computerLab)
+		}
 
-	if !result {
+		responseGetComputerLab.Data = computerLabs
+	} else {
 		responseGetComputerLab.Data = "{}"
 	}
 
