@@ -6,5 +6,5 @@ type LinkAccount struct {
 	gorm.Model
 	// Metadata
 	UserName      string `json:"user_name"`
-	IdComputerLab string `json:"id_computer_lab"`
+	IdComputerLab uint   `json:"id_computer_lab"`
 }

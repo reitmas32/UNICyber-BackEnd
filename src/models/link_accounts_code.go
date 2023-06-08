@@ -7,5 +7,5 @@ type LinkAccountCode struct {
 	// Metadata
 	UserName      string `json:"user_name"`
 	Code          string `json:"code" binding:"len=6"`
-	IdComputerLab string `json:"id_computer_lab"`
+	IdComputerLab uint   `json:"id_computer_lab"`
 }
