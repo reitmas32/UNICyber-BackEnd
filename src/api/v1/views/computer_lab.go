@@ -1,13 +1,14 @@
 package views
 
 import (
-	"encoding/json"
+	"strconv"
+	"strings"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/schemas"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/services"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
+	"github.com/gin-gonic/gin/binding"
 )
 
 // @Summary add a new item of the computer-lab
@@ -58,12 +59,11 @@ func ComputerLab_POST(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido
 	var computerLabCreateSchema schemas.ComputerLabCreateSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&computerLabCreateSchema)
-	if err != nil {
+	if err := c.ShouldBindWith(&computerLabCreateSchema, binding.JSON); err != nil {
 		responseCreateComputerLab := models.Response{
 			Message: "Error to Get Content JSON",
 			Success: false,
-			Data:    "{}",
+			Data:    strings.Split(err.Error(), "\n"),
 		}
 		c.Header("Content-Type", "application/json")
 		c.JSON(200, responseCreateComputerLab)
@@ -71,19 +71,18 @@ func ComputerLab_POST(c *gin.Context) {
 	}
 
 	computerLab := models.ComputerLab{
-		IdComputerLab: uuid.New().String(),
-		Name:          computerLabCreateSchema.Name,
-		Description:   computerLabCreateSchema.Description,
+		Name:        computerLabCreateSchema.Name,
+		Description: computerLabCreateSchema.Description,
 	}
 
-	result, message := services.CreateComputerLab(computerLab)
+	result, message, newComputerLab := services.CreateComputerLab(computerLab)
 
 	if result {
 
 		responseCreateComputerLab = models.Response{
 			Message: message,
 			Success: result,
-			Data:    computerLab,
+			Data:    newComputerLab,
 		}
 	} else {
 
@@ -102,13 +101,13 @@ func ComputerLab_POST(c *gin.Context) {
 // @ID get-computer-lab
 // @Tags Computer Lab
 // @Produce json
-// @Param id-computer-lab path string true "ID of ComputerLab"
+// @Param id path string true "ID of ComputerLab"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/computer-lab [get]
 func ComputerLab_GET(c *gin.Context) {
 
-	result, message, computerLab := services.FindComputerLab(c.Param("id-computer-lab"))
+	result, message, computerLab := services.FindComputerLab(c.Param("id"))
 
 	responseGetComputerLab := models.Response{
 		Message: message,
@@ -128,16 +127,16 @@ func ComputerLab_GET(c *gin.Context) {
 // @ID delete-computer-lab
 // @Tags Computer Lab
 // @Produce json
-// @Param id-computer-lab path string true "ID del item"
+// @Param id path string true "ID del item"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/computer-lab [delete]
 func ComputerLab_DELETE(c *gin.Context) {
 
-	result, message, computerLab := services.FindComputerLab(c.Param("id-computer-lab"))
+	result, message, computerLab := services.FindComputerLab(c.Param("id"))
 
 	if result {
-		result, message, _ = services.DeleteComputerLab(c.Param("id-computer-lab"))
+		result, message, _ = services.DeleteComputerLab(c.Param("id"))
 	}
 
 	responseDeleteComputerLab := models.Response{
@@ -158,7 +157,7 @@ func ComputerLab_DELETE(c *gin.Context) {
 // @ID put-computer-lab
 // @Tags Computer Lab
 // @Produce json
-// @Param id-computer-lab path string true "ID del item"
+// @Param id path string true "ID del item"
 // @Param data body schemas.ComputerLabUpdateSchema true "Schema by Update New Computer Lab"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
@@ -167,22 +166,21 @@ func ComputerLab_PUT(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido
 	var computerLabUpdateSchema schemas.ComputerLabUpdateSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&computerLabUpdateSchema)
-	if err != nil {
+	if err := c.ShouldBindWith(&computerLabUpdateSchema, binding.JSON); err != nil {
 		responseUpdateComputerLab := models.Response{
 			Message: "Error to Get Content JSON",
 			Success: false,
-			Data:    "{}",
+			Data:    strings.Split(err.Error(), "\n"),
 		}
 		c.Header("Content-Type", "application/json")
 		c.JSON(200, responseUpdateComputerLab)
 		return
 	}
 
-	result, message, computerLab := services.FindComputerLab(c.Param("id-computer-lab"))
+	result, message, computerLab := services.FindComputerLab(c.Param("id"))
 
 	if result {
-		result, message, computerLab = services.UpdateComputerLab(c.Param("id-computer-lab"), computerLabUpdateSchema)
+		result, message, computerLab = services.UpdateComputerLab(c.Param("id"), computerLabUpdateSchema)
 	}
 
 	responseUpdateComputerLab := models.Response{
@@ -197,4 +195,57 @@ func ComputerLab_PUT(c *gin.Context) {
 
 	c.Header("Content-Type", "application/json")
 	c.JSON(200, responseUpdateComputerLab)
+}
+
+// @Summary get all items of the computer-lab
+// @ID get-computer-labs
+// @Tags Computer Lab
+// @Produce json
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/computer-labs [get]
+func ComputerLabs_GET(c *gin.Context) {
+
+	result, message, computerLabs := services.GetComputerLabs()
+
+	responseGetComputerLab := models.Response{
+		Message: message,
+		Success: result,
+		Data:    computerLabs,
+	}
+
+	if !result {
+		responseGetComputerLab.Data = "{}"
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseGetComputerLab)
+}
+
+// @Summary get N items of the computer-lab
+// @ID get-computer-labs_limit
+// @Tags Computer Lab
+// @Produce json
+// @Param length path string true "Length of result"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/computer-labs-limit/{length} [get]
+func ComputerLabs_Limit_GET(c *gin.Context) {
+
+	length, _ := strconv.Atoi(c.Param("length"))
+
+	result, message, computerLabs := services.GetComputerLabs_Limit(length)
+
+	responseGetComputerLab := models.Response{
+		Message: message,
+		Success: result,
+		Data:    computerLabs,
+	}
+
+	if !result {
+		responseGetComputerLab.Data = "{}"
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseGetComputerLab)
 }

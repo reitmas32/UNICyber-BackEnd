@@ -5,8 +5,7 @@ import "github.com/jinzhu/gorm"
 type Computer struct {
 	gorm.Model
 	// Metadata
-	IdComputer string `gorm:"primaryKey"`
-	IdRoom     string
+	IdRoom string
 
 	// UI
 	Pos_x float32

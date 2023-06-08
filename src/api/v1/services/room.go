@@ -7,46 +7,41 @@ import (
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/tools"
 )
 
-func CreateRoom(room models.Room) (bool, string) {
-
-	var computerLab models.ComputerLab
-	if err := config.DB.First(&computerLab, "id_computer_lab = ?", room.IdComputerLab).Error; err != nil {
-		return false, "No Exist the ComputerLab"
-	}
+func CreateRoom(room models.Room) (bool, string, models.Room) {
 
 	result := config.DB.Create(&room)
 	if result.Error != nil {
-		return false, result.Error.Error()
+		return false, result.Error.Error(), room
 	}
 
-	return true, "Create Room Successful"
+	return true, "Create Room Successful", room
 }
 
-func FindRoom(IdRoom string) (bool, string, models.Room) {
+func FindRoom(id string) (bool, string, models.Room) {
 
 	var room models.Room
-	if err := config.DB.First(&room, "id_room = ?", IdRoom).Error; err != nil {
+	if err := config.DB.First(&room, "id = ?", id).Error; err != nil {
 		return false, "No Find Room", room
 	}
 
 	return true, "Find Room", room
 }
 
-func DeleteRoom(IdRoom string) (bool, string, models.Room) {
+func DeleteRoom(id string) (bool, string, models.Room) {
 
 	var room models.Room
-	if err := config.DB.Delete(&room, "id_room = ?", IdRoom).Error; err != nil {
+	if err := config.DB.Delete(&room, "id = ?", id).Error; err != nil {
 		return false, "No Find Room", room
 	}
 
 	return true, "Delete Room", room
 }
 
-func UpdateRoom(IdRoom string, new_room schemas.RoomUpdateSchema) (bool, string, models.Room) {
+func UpdateRoom(id string, new_room schemas.RoomUpdateSchema) (bool, string, models.Room) {
 
 	var room models.Room
-	if err := config.DB.First(&room, "id_room = ?", IdRoom).Error; err != nil {
-		return false, "No Find Computer", room
+	if err := config.DB.First(&room, "id = ?", id).Error; err != nil {
+		return false, "No Find Room", room
 	} else {
 		room.Name = tools.CopyField(new_room.Name, room.Name, "")
 		room.Index = tools.CopyField(new_room.Index, room.Index, -1)
@@ -54,5 +49,5 @@ func UpdateRoom(IdRoom string, new_room schemas.RoomUpdateSchema) (bool, string,
 		config.DB.Save(&room)
 	}
 
-	return true, "Change Name Successful", room
+	return true, "Update Room Successful", room
 }

@@ -12,11 +12,11 @@ func StudentRoutes() {
 	config.Router.POST(fmt.Sprintf("/api/%s/student", config.API_VERSION), views.Student_POST)
 
 	//Get Computer
-	config.Router.GET(fmt.Sprintf("/api/%s/student/:id-student", config.API_VERSION), views.Student_GET)
+	config.Router.GET(fmt.Sprintf("/api/%s/student/:id", config.API_VERSION), views.Student_GET)
 
 	//Update Computer
-	config.Router.PUT(fmt.Sprintf("/api/%s/student/:id-student", config.API_VERSION), views.Student_PUT)
+	config.Router.PUT(fmt.Sprintf("/api/%s/student/:id", config.API_VERSION), views.Student_PUT)
 
 	//Delete Computer
-	config.Router.DELETE(fmt.Sprintf("/api/%s/student/:id-student", config.API_VERSION), views.Student_DELETE)
+	config.Router.DELETE(fmt.Sprintf("/api/%s/student/:id", config.API_VERSION), views.Student_DELETE)
 }

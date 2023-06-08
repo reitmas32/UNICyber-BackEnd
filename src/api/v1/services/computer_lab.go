@@ -9,40 +9,40 @@ import (
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/tools"
 )
 
-func CreateComputerLab(computerLab models.ComputerLab) (bool, string) {
+func CreateComputerLab(computerLab models.ComputerLab) (bool, string, models.ComputerLab) {
 
 	result := config.DB.Create(&computerLab)
 	if result.Error != nil {
-		return false, result.Error.Error()
+		return false, result.Error.Error(), computerLab
 	}
 
-	return true, "Create ComputerLab Successful"
+	return true, "Create ComputerLab Successful", computerLab
 }
 
-func FindComputerLab(IdComputerLab string) (bool, string, models.ComputerLab) {
+func FindComputerLab(id string) (bool, string, models.ComputerLab) {
 
 	var computerLab models.ComputerLab
-	if err := config.DB.First(&computerLab, "id_computer_lab = ?", IdComputerLab).Error; err != nil {
+	if err := config.DB.First(&computerLab, "id = ?", id).Error; err != nil {
 		return false, fmt.Sprint("No Find Computer Lab: ", err), computerLab
 	}
 
 	return true, "Find Computer Lab", computerLab
 }
 
-func DeleteComputerLab(IdComputerLab string) (bool, string, models.ComputerLab) {
+func DeleteComputerLab(id string) (bool, string, models.ComputerLab) {
 
 	var computerLab models.ComputerLab
-	if err := config.DB.Delete(&computerLab, "id_computer_lab = ?", IdComputerLab).Error; err != nil {
+	if err := config.DB.Delete(&computerLab, "id = ?", id).Error; err != nil {
 		return false, "No Find Computer Lab", computerLab
 	}
 
 	return true, "Delete Computer Lab", computerLab
 }
 
-func UpdateComputerLab(IdComputerLab string, new_compuer schemas.ComputerLabUpdateSchema) (bool, string, models.ComputerLab) {
+func UpdateComputerLab(id string, new_compuer schemas.ComputerLabUpdateSchema) (bool, string, models.ComputerLab) {
 
 	var computerLab models.ComputerLab
-	if err := config.DB.First(&computerLab, "id_computer_lab = ?", IdComputerLab).Error; err != nil {
+	if err := config.DB.First(&computerLab, "id = ?", id).Error; err != nil {
 		return false, "No Find Computer Lab", computerLab
 	} else {
 		computerLab.Name = tools.CopyField(new_compuer.Name, computerLab.Name, "")
@@ -52,4 +52,22 @@ func UpdateComputerLab(IdComputerLab string, new_compuer schemas.ComputerLabUpda
 	}
 
 	return true, "Update ComputerLab Successful", computerLab
+}
+
+func GetComputerLabs() (bool, string, []models.ComputerLab) {
+	var computerLabs []models.ComputerLab
+	if err := config.DB.Find(&computerLabs).Error; err != nil {
+		return false, fmt.Sprint("No se encontraron Computer Labs: ", err), computerLabs
+	}
+
+	return true, "Computer Labs encontrados", computerLabs
+}
+
+func GetComputerLabs_Limit(limit int) (bool, string, []models.ComputerLab) {
+	var computerLabs []models.ComputerLab
+	if err := config.DB.Limit(limit).Find(&computerLabs).Error; err != nil {
+		return false, fmt.Sprint("No se encontraron Computer Labs: ", err), computerLabs
+	}
+
+	return true, "Computer Labs encontrados", computerLabs
 }

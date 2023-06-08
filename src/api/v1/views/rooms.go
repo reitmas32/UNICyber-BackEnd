@@ -1,13 +1,13 @@
 package views
 
 import (
-	"encoding/json"
+	"strings"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/schemas"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/services"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
+	"github.com/gin-gonic/gin/binding"
 )
 
 // @Summary add a new item of the rooms
@@ -28,12 +28,11 @@ func Room_POST(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido
 	var roomSchema schemas.RoomCreateSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&roomSchema)
-	if err != nil {
+	if err := c.ShouldBindWith(&roomSchema, binding.JSON); err != nil {
 		responseCreateRoom := models.Response{
 			Message: "Error to Get Content JSON",
 			Success: false,
-			Data:    "{}",
+			Data:    strings.Split(err.Error(), "\n"),
 		}
 		c.Header("Content-Type", "application/json")
 		c.JSON(200, responseCreateRoom)
@@ -42,25 +41,37 @@ func Room_POST(c *gin.Context) {
 
 	room := models.Room{
 		IdComputerLab: roomSchema.IdComputerLab,
-		IdRoom:        uuid.New().String(),
 		Name:          roomSchema.Name,
 		//Create Index whit one more current max index of ComputerLab
 	}
 
-	result, message := services.CreateRoom(room)
+	result, message, _ := services.FindComputerLab(room.IdComputerLab)
+
+	if !result {
+		responseCreateRoom := models.Response{
+			Message: message,
+			Success: result,
+			Data:    nil,
+		}
+		c.Header("Content-Type", "application/json")
+		c.JSON(200, responseCreateRoom)
+		return
+	}
+
+	result, message, new_room := services.CreateRoom(room)
 
 	if result {
 
 		responseCreateRoom = models.Response{
 			Message: message,
 			Success: result,
-			Data:    room,
+			Data:    new_room,
 		}
 	} else {
 		responseCreateRoom = models.Response{
 			Message: message,
 			Success: responseCreateRoom.Success,
-			Data:    room,
+			Data:    nil,
 		}
 	}
 
@@ -72,13 +83,13 @@ func Room_POST(c *gin.Context) {
 // @ID get-room
 // @Tags Rooms
 // @Produce json
-// @Param id-room path string true "ID of Room"
+// @Param id path string true "ID of Room"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/room [get]
 func Room_GET(c *gin.Context) {
 
-	result, message, room := services.FindRoom(c.Param("id-room"))
+	result, message, room := services.FindRoom(c.Param("id"))
 
 	responseGetRoom := models.Response{
 		Message: message,
@@ -98,16 +109,16 @@ func Room_GET(c *gin.Context) {
 // @ID delete-room
 // @Tags Rooms
 // @Produce json
-// @Param id-room path string true "ID of Room"
+// @Param id path string true "ID of Room"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/room [delete]
 func Room_DELETE(c *gin.Context) {
 
-	result, message, computer := services.FindRoom(c.Param("id-room"))
+	result, message, computer := services.FindRoom(c.Param("id"))
 
 	if result {
-		result, message, _ = services.DeleteRoom(c.Param("id-room"))
+		result, message, _ = services.DeleteRoom(c.Param("id"))
 	}
 
 	responseDeleteRoom := models.Response{
@@ -128,7 +139,7 @@ func Room_DELETE(c *gin.Context) {
 // @ID put-room
 // @Tags Rooms
 // @Produce json
-// @Param id-room path string true "ID of Room"
+// @Param id path string true "ID of Room"
 // @Param data body schemas.RoomUpdateSchema true "Schema by Update New Room"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
@@ -137,22 +148,21 @@ func Room_PUT(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido
 	var roomUpdateSchema schemas.RoomUpdateSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&roomUpdateSchema)
-	if err != nil {
+	if err := c.ShouldBindWith(&roomUpdateSchema, binding.JSON); err != nil {
 		responseUpdateRoom := models.Response{
 			Message: "Error to Get Content JSON",
 			Success: false,
-			Data:    "{}",
+			Data:    strings.Split(err.Error(), "\n"),
 		}
 		c.Header("Content-Type", "application/json")
 		c.JSON(200, responseUpdateRoom)
 		return
 	}
 
-	result, message, room := services.FindRoom(c.Param("id-room"))
+	result, message, room := services.FindRoom(c.Param("id"))
 
 	if result {
-		result, message, room = services.UpdateRoom(c.Param("id-room"), roomUpdateSchema)
+		result, message, room = services.UpdateRoom(c.Param("id"), roomUpdateSchema)
 	}
 
 	responseUpdateRoom := models.Response{

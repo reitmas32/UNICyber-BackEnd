@@ -4,13 +4,13 @@ package schemas
 // @Description Descripción de la estructura A
 // @Tags Computer
 type ComputerCreateSchema struct {
-	Name   string `json:"name" example:"Equipo 2"`
-	IdRoom string `json:"id_room" example:"62dcb6fc-0f68-4a50-9d8c-8fe352b0f7f3"`
-	Type   string `json:"type" example:"Impresora"`
+	Name   string `json:"name" example:"Equipo 2" binding:"required"`
+	IdRoom string `json:"id_room" example:"62dcb6fc-0f68-4a50-9d8c-8fe352b0f7f3" binding:"required"`
+	Type   string `json:"type" example:"Impresora" binding:"required"`
 }
 
 type ComputerFindSchema struct {
-	IdComputer string `json:"id_computer"`
+	IdComputer string `json:"id_computer" binding:"required"`
 }
 
 type ComputerUpdateSchema struct {

@@ -12,11 +12,11 @@ func Computer() {
 	config.Router.POST(fmt.Sprintf("/api/%s/computer", config.API_VERSION), views.Computer_POST)
 
 	//Get Computer
-	config.Router.GET(fmt.Sprintf("/api/%s/computer/:id-computer", config.API_VERSION), views.Computer_GET)
+	config.Router.GET(fmt.Sprintf("/api/%s/computer/:id", config.API_VERSION), views.Computer_GET)
 
 	//Update Computer
-	config.Router.PUT(fmt.Sprintf("/api/%s/computer/:id-computer", config.API_VERSION), views.Computer_PUT)
+	config.Router.PUT(fmt.Sprintf("/api/%s/computer/:id", config.API_VERSION), views.Computer_PUT)
 
 	//Delete Computer
-	config.Router.DELETE(fmt.Sprintf("/api/%s/computer/:id-computer", config.API_VERSION), views.Computer_DELETE)
+	config.Router.DELETE(fmt.Sprintf("/api/%s/computer/:id", config.API_VERSION), views.Computer_DELETE)
 }

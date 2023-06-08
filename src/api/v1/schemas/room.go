@@ -1,8 +1,8 @@
 package schemas
 
 type RoomCreateSchema struct {
-	Name          string `json:"name"`
-	IdComputerLab string `json:"id_computer_lab"`
+	Name          string `json:"name" binding:"required"`
+	IdComputerLab string `json:"id_computer_lab" binding:"required"`
 }
 
 type RoomUpdateSchema struct {

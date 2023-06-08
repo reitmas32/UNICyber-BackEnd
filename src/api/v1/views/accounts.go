@@ -16,6 +16,7 @@ import (
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/tools"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 // @Summary SignIn User
@@ -30,10 +31,9 @@ func SignIn_PUT(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido en la estructura User
 	var user schemas.UserSignInSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&user)
-	if err != nil {
+	if err := c.ShouldBindWith(&user, binding.JSON); err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al obtener el contenido del archivo"))
+		c.Writer.Write([]byte("Error to Decode JSON Body"))
 		return
 	}
 
@@ -44,14 +44,14 @@ func SignIn_PUT(c *gin.Context) {
 	jsonData, err := json.Marshal(user)
 	if err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al serializar los datos JSON"))
+		c.Writer.Write([]byte("Error to serializer data on JSON"))
 		return
 	}
 
 	req, err := http.NewRequest(http.MethodPut, apiURL, bytes.NewBuffer(jsonData))
 	if err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al crear la petición HTTP"))
+		c.Writer.Write([]byte("Error to Create HTTP Request"))
 		return
 	}
 
@@ -66,7 +66,7 @@ func SignIn_PUT(c *gin.Context) {
 	// Leer el contenido de la respuesta
 	if err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al hacer la petición a la API externa"))
+		c.Writer.Write([]byte("Error when making the request to the external API"))
 		return
 	}
 	defer resp.Body.Close()
@@ -88,10 +88,9 @@ func SignUp_POST(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido en la estructura User
 	var user schemas.UserSignUpSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&user)
-	if err != nil {
+	if err := c.ShouldBindWith(&user, binding.JSON); err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al obtener el contenido del archivo"))
+		c.Writer.Write([]byte("Error to Decode JSON Body"))
 		return
 	}
 
@@ -102,14 +101,14 @@ func SignUp_POST(c *gin.Context) {
 	jsonData, err := json.Marshal(user)
 	if err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al serializar los datos JSON"))
+		c.Writer.Write([]byte("Error to serializer data on JSON"))
 		return
 	}
 
 	req, err := http.NewRequest(http.MethodPost, apiURL, bytes.NewBuffer(jsonData))
 	if err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al crear la petición HTTP"))
+		c.Writer.Write([]byte("Error to Create HTTP Request"))
 		return
 	}
 
@@ -124,7 +123,7 @@ func SignUp_POST(c *gin.Context) {
 	// Leer el contenido de la respuesta
 	if err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al hacer la petición a la API externa"))
+		c.Writer.Write([]byte("Error when making the request to the external API"))
 		return
 	}
 	defer resp.Body.Close()
@@ -146,10 +145,9 @@ func LinkAccount_POST(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido en la estructura User
 	var user schemas.LinkAccountRequisitionSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&user)
-	if err != nil {
+	if err := c.ShouldBindWith(&user, binding.JSON); err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al obtener el contenido del archivo"))
+		c.Writer.Write([]byte("Error to Decode JSON Body"))
 		return
 	}
 	//crear un numero random de 6 digitos
@@ -163,7 +161,7 @@ func LinkAccount_POST(c *gin.Context) {
 	//Verificar que exista el User Name
 
 	responseLinkAccount := models.Response{
-		Message: "No se pudo solicitar la vinculacion",
+		Message: "Failed to request the linking.",
 		Success: false,
 		Data:    "{}",
 	}
@@ -189,7 +187,7 @@ func LinkAccount_POST(c *gin.Context) {
 		response := tools.SedMail(config.SMTP_USER, "Vinculacion de Sala", html_body)
 		if !response {
 			responseLinkAccount = models.Response{
-				Message: "No se pudo solicitar la vinculacion",
+				Message: "Failed to request the linking.",
 				Success: response,
 				Data:    "{}",
 			}
@@ -213,15 +211,14 @@ func LinkAccount_PUT(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido en la estructura User
 	var linkAccountConfirmationSchema schemas.LinkAccountConfirmationSchema
-	err := json.NewDecoder(c.Request.Body).Decode(&linkAccountConfirmationSchema)
-	if err != nil {
+	if err := c.ShouldBindWith(&linkAccountConfirmationSchema, binding.JSON); err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error al obtener el contenido del archivo"))
+		c.Writer.Write([]byte("Error to Decode JSON Body"))
 		return
 	}
 
 	responseLinkAccount := models.Response{
-		Message: "No se pudo confirmar la vinculacion",
+		Message: "Failed to confirm the linking.",
 		Success: false,
 		Data:    "{}",
 	}
