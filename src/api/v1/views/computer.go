@@ -217,3 +217,54 @@ func ComputersOfRoom_GET(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 	c.JSON(200, responseGetRoom)
 }
+
+// @Summary Set State of Compute
+// @ID put-computer-set-state
+// @Tags Computers
+// @Produce json
+// @Param id path string true "ID of Computer"
+// @Param data body schemas.ComputerUpdateSchema true "Schema by Update New Computer"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/computer [put]
+func ComputerSetState_PUT(c *gin.Context) {
+
+	// Decodificar el objeto JSON recibido
+	var setStateSchema schemas.SetStateSchema
+	if err := c.ShouldBindWith(&setStateSchema, binding.JSON); err != nil {
+		setStateComputerResult := models.Response{
+			Message: "Error to Get Content JSON",
+			Success: false,
+			Data:    strings.Split(err.Error(), "\n"),
+		}
+		c.Header("Content-Type", "application/json")
+		c.JSON(200, setStateComputerResult)
+		return
+	}
+
+	id, _ := (strconv.ParseUint(c.Param("id"), 10, 32))
+
+	result, message, computer := services.FindComputer(uint(id))
+
+	if result {
+		result, message, _ = services.FindComputer(uint(id))
+
+		if result {
+
+			result, message, computer = services.SetStateComputer(uint(id), setStateSchema.IdState)
+		}
+	}
+
+	setStateComputerResult := models.Response{
+		Message: message,
+		Success: result,
+		Data:    computer,
+	}
+
+	if !result {
+		setStateComputerResult.Data = "{}"
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, setStateComputerResult)
+}

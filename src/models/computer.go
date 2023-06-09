@@ -14,6 +14,7 @@ type Computer struct {
 	// Data
 	Name    string
 	State   string
+	IdState uint
 	Message string
 	Type    string
 }
