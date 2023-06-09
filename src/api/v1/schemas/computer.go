@@ -28,3 +28,7 @@ type ComputerUpdateSchema struct {
 	Message string `json:"message" example:"Solo falta instalar DevC++"`
 	Type    string `json:"type" example:"Prestamo"`
 }
+
+type SetStateSchema struct {
+	IdState uint `json:"id_state" example:"Disponible"`
+}
