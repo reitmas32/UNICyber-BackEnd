@@ -5,14 +5,35 @@ import (
 	"log"
 
 	_ "github.com/UNIHacks/UNIAccounts-BackEnd/src/docs"
+	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/routes"
+	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/services"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/config"
 
 	_ "github.com/mattn/go-sqlite3"
 )
+
+func CreateStates() {
+	createState(1, "Disponible")
+	createState(2, "Descompuesto")
+	createState(3, "Mantenimiento")
+	createState(4, "Proyecto")
+	createState(5, "Reparación")
+
+}
+
+func createState(id uint, name string) {
+	result, _, _ := services.FindState(id)
+	if !result {
+		state := models.State{
+			Name: name,
+		}
+		services.CreateState(state)
+	}
+}
 
 // @title UNICyber-API
 // @version 1.0
@@ -43,6 +64,8 @@ func main() {
 	config.SetupDB()
 	// Genera las tablas en la base de datos
 	config.MigrateDB()
+
+	CreateStates()
 
 	config.SetupRouter()
 
