@@ -22,4 +22,7 @@ func Computer() {
 
 	//Get Computers of Room
 	config.Router.GET(fmt.Sprintf("/api/%s/computers/:id-room", config.API_VERSION), views.ComputersOfRoom_GET)
+
+	//Set State of Computer
+	config.Router.PUT(fmt.Sprintf("/api/%s/computer-set-state/:id", config.API_VERSION), views.ComputerSetState_PUT)
 }
