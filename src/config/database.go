@@ -28,4 +28,7 @@ func MigrateDB() {
 	//Tools
 	DB.AutoMigrate(&models.LinkAccountCode{})
 
+	//State
+	DB.AutoMigrate(&models.State{})
+
 }
