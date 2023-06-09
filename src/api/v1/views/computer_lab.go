@@ -257,13 +257,13 @@ func ComputerLabs_Limit_GET(c *gin.Context) {
 }
 
 // @Summary get N items of the computer-lab
-// @ID get-computer-labs_limit
+// @ID get-computer-labs-by-user
 // @Tags Computer Lab
 // @Produce json
-// @Param id path string true "Id of User"
+// @Param user_name path string true "User Name"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
-// @Router /api/v1/computer-labs-limit/{id} [get]
+// @Router /api/v1/computer-labs-user/{user_name} [get]
 func ComputerLabs_User_GET(c *gin.Context) {
 
 	user_name := c.Param("user_name")

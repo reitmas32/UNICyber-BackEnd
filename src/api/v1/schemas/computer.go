@@ -5,7 +5,7 @@ package schemas
 // @Tags Computer
 type ComputerCreateSchema struct {
 	Name   string `json:"name" example:"Equipo 2" binding:"required"`
-	IdRoom uint   `json:"id_room" example:"62dcb6fc-0f68-4a50-9d8c-8fe352b0f7f3" binding:"required"`
+	IdRoom uint   `json:"id_room" example:"3" binding:"required"`
 	Type   string `json:"type" example:"Impresora" binding:"required"`
 }
 
@@ -30,5 +30,5 @@ type ComputerUpdateSchema struct {
 }
 
 type SetStateSchema struct {
-	IdState uint `json:"id_state" example:"Disponible"`
+	IdState uint `json:"id_state" example:"1"`
 }
