@@ -223,10 +223,10 @@ func ComputersOfRoom_GET(c *gin.Context) {
 // @Tags Computers
 // @Produce json
 // @Param id path string true "ID of Computer"
-// @Param data body schemas.ComputerUpdateSchema true "Schema by Update New Computer"
+// @Param data body schemas.SetStateSchema true "Schema by Update New Computer"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
-// @Router /api/v1/computer [put]
+// @Router /api/v1/computer-set-state/{id} [put]
 func ComputerSetState_PUT(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido

@@ -14,14 +14,18 @@ definitions:
     description: Descripción de la estructura A
     properties:
       id_room:
-        example: 62dcb6fc-0f68-4a50-9d8c-8fe352b0f7f3
-        type: string
+        example: 3
+        type: integer
       name:
         example: Equipo 2
         type: string
       type:
         example: Impresora
         type: string
+    required:
+    - id_room
+    - name
+    - type
     type: object
   schemas.ComputerLabCreateSchema:
     properties:
@@ -80,7 +84,7 @@ definitions:
   schemas.LinkAccountRequisitionSchema:
     properties:
       idComputerLab:
-        type: string
+        type: integer
       user_name:
         type: string
     required:
@@ -90,9 +94,12 @@ definitions:
   schemas.RoomCreateSchema:
     properties:
       id_computer_lab:
-        type: string
+        type: integer
       name:
         type: string
+    required:
+    - id_computer_lab
+    - name
     type: object
   schemas.RoomUpdateSchema:
     properties:
@@ -101,6 +108,12 @@ definitions:
       name:
         description: Data
         type: string
+    type: object
+  schemas.SetStateSchema:
+    properties:
+      id_state:
+        example: 1
+        type: integer
     type: object
   schemas.StudentCreateSchema:
     properties:
@@ -199,7 +212,7 @@ paths:
       parameters:
       - description: ID of Computer
         in: path
-        name: id-computer
+        name: id
         required: true
         type: string
       produces:
@@ -221,7 +234,7 @@ paths:
       parameters:
       - description: ID of Computer
         in: path
-        name: id-computer
+        name: id
         required: true
         type: string
       produces:
@@ -266,7 +279,7 @@ paths:
       parameters:
       - description: ID of Computer
         in: path
-        name: id-computer
+        name: id
         required: true
         type: string
       - description: Schema by Update New Computer
@@ -295,7 +308,7 @@ paths:
       parameters:
       - description: ID del item
         in: path
-        name: id-computer-lab
+        name: id
         required: true
         type: string
       produces:
@@ -317,7 +330,7 @@ paths:
       parameters:
       - description: ID of ComputerLab
         in: path
-        name: id-computer-lab
+        name: id
         required: true
         type: string
       produces:
@@ -362,7 +375,7 @@ paths:
       parameters:
       - description: ID del item
         in: path
-        name: id-computer-lab
+        name: id
         required: true
         type: string
       - description: Schema by Update New Computer Lab
@@ -425,6 +438,81 @@ paths:
       summary: get N items of the computer-lab
       tags:
       - Computer Lab
+  /api/v1/computer-labs-user/{user_name}:
+    get:
+      operationId: get-computer-labs-by-user
+      parameters:
+      - description: User Name
+        in: path
+        name: user_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get N items of the computer-lab
+      tags:
+      - Computer Lab
+  /api/v1/computer-set-state/{id}:
+    put:
+      operationId: put-computer-set-state
+      parameters:
+      - description: ID of Computer
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Schema by Update New Computer
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.SetStateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Set State of Compute
+      tags:
+      - Computers
+  /api/v1/computers/{id-room}:
+    get:
+      operationId: get-computers-of-room
+      parameters:
+      - description: ID of Room
+        in: path
+        name: id-room
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get a item of the computers of Room
+      tags:
+      - Computers
   /api/v1/link-account:
     post:
       operationId: post-link-account
@@ -478,7 +566,7 @@ paths:
       parameters:
       - description: ID of Room
         in: path
-        name: id-room
+        name: id
         required: true
         type: string
       produces:
@@ -500,7 +588,7 @@ paths:
       parameters:
       - description: ID of Room
         in: path
-        name: id-room
+        name: id
         required: true
         type: string
       produces:
@@ -545,7 +633,7 @@ paths:
       parameters:
       - description: ID of Room
         in: path
-        name: id-room
+        name: id
         required: true
         type: string
       - description: Schema by Update New Room
@@ -566,6 +654,29 @@ paths:
           schema:
             $ref: '#/definitions/models.Response'
       summary: update a item of the rooms
+      tags:
+      - Rooms
+  /api/v1/rooms/{id-computer-lab}:
+    get:
+      operationId: get-rooms-of-computer-lab
+      parameters:
+      - description: ID of ComputerLab
+        in: path
+        name: id-computer-lab
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get a item of the rooms of ComputerLab
       tags:
       - Rooms
   /api/v1/signin:
@@ -622,7 +733,7 @@ paths:
       parameters:
       - description: ID of Student
         in: path
-        name: id-student
+        name: id
         required: true
         type: string
       produces:
@@ -644,7 +755,7 @@ paths:
       parameters:
       - description: ID of Student
         in: path
-        name: id-student
+        name: id
         required: true
         type: string
       produces:
@@ -689,7 +800,7 @@ paths:
       parameters:
       - description: ID of Students
         in: path
-        name: id-student
+        name: id
         required: true
         type: string
       - description: Schema by Update New Student

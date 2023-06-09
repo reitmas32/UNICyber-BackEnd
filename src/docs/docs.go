@@ -38,7 +38,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "ID of Computer",
-                        "name": "id-computer",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     }
@@ -71,7 +71,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "ID of Computer",
-                        "name": "id-computer",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     },
@@ -148,7 +148,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "ID of Computer",
-                        "name": "id-computer",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     }
@@ -183,7 +183,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "ID of ComputerLab",
-                        "name": "id-computer-lab",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     }
@@ -216,7 +216,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "ID del item",
-                        "name": "id-computer-lab",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     },
@@ -293,7 +293,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "ID del item",
-                        "name": "id-computer-lab",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     }
@@ -355,6 +355,120 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Length of result",
                         "name": "length",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/computer-labs-user/{user_name}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Computer Lab"
+                ],
+                "summary": "get N items of the computer-lab",
+                "operationId": "get-computer-labs-by-user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User Name",
+                        "name": "user_name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/computer-set-state/{id}": {
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Computers"
+                ],
+                "summary": "Set State of Compute",
+                "operationId": "put-computer-set-state",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of Computer",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Schema by Update New Computer",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.SetStateSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/computers/{id-room}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Computers"
+                ],
+                "summary": "get a item of the computers of Room",
+                "operationId": "get-computers-of-room",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of Room",
+                        "name": "id-room",
                         "in": "path",
                         "required": true
                     }
@@ -461,7 +575,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "ID of Room",
-                        "name": "id-room",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     }
@@ -494,7 +608,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "ID of Room",
-                        "name": "id-room",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     },
@@ -571,7 +685,42 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "ID of Room",
-                        "name": "id-room",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/rooms/{id-computer-lab}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rooms"
+                ],
+                "summary": "get a item of the rooms of ComputerLab",
+                "operationId": "get-rooms-of-computer-lab",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of ComputerLab",
+                        "name": "id-computer-lab",
                         "in": "path",
                         "required": true
                     }
@@ -680,7 +829,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "ID of Student",
-                        "name": "id-student",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     }
@@ -713,7 +862,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "ID of Students",
-                        "name": "id-student",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     },
@@ -790,7 +939,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "ID of Student",
-                        "name": "id-student",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     }
@@ -830,10 +979,15 @@ const docTemplate = `{
         "schemas.ComputerCreateSchema": {
             "description": "Descripción de la estructura A",
             "type": "object",
+            "required": [
+                "id_room",
+                "name",
+                "type"
+            ],
             "properties": {
                 "id_room": {
-                    "type": "string",
-                    "example": "62dcb6fc-0f68-4a50-9d8c-8fe352b0f7f3"
+                    "type": "integer",
+                    "example": 3
                 },
                 "name": {
                     "type": "string",
@@ -930,7 +1084,7 @@ const docTemplate = `{
             ],
             "properties": {
                 "idComputerLab": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "user_name": {
                     "type": "string"
@@ -939,9 +1093,13 @@ const docTemplate = `{
         },
         "schemas.RoomCreateSchema": {
             "type": "object",
+            "required": [
+                "id_computer_lab",
+                "name"
+            ],
             "properties": {
                 "id_computer_lab": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "name": {
                     "type": "string"
@@ -957,6 +1115,15 @@ const docTemplate = `{
                 "name": {
                     "description": "Data",
                     "type": "string"
+                }
+            }
+        },
+        "schemas.SetStateSchema": {
+            "type": "object",
+            "properties": {
+                "id_state": {
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },
