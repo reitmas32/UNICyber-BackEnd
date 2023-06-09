@@ -18,7 +18,7 @@ type UserSignUpSchema struct {
 
 type LinkAccountRequisitionSchema struct {
 	UserName      string `json:"user_name" binding:"required"`
-	IdComputerLab string `json:"idComputerLab" binding:"required"`
+	IdComputerLab uint   `json:"idComputerLab" binding:"required"`
 }
 
 type LinkAccountConfirmationSchema struct {

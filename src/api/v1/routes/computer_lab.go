@@ -25,4 +25,7 @@ func ComputerLab() {
 
 	//Get All ComputerLabs
 	config.Router.GET(fmt.Sprintf("/api/%s/computer-labs-limit/:length", config.API_VERSION), views.ComputerLabs_Limit_GET)
+
+	//Get All ComputerLabs of User
+	config.Router.GET(fmt.Sprintf("/api/%s/computer-labs-user/:user_name", config.API_VERSION), views.ComputerLabs_User_GET)
 }

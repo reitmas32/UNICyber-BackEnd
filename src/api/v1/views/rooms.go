@@ -1,6 +1,7 @@
 package views
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/schemas"
@@ -89,7 +90,9 @@ func Room_POST(c *gin.Context) {
 // @Router /api/v1/room [get]
 func Room_GET(c *gin.Context) {
 
-	result, message, room := services.FindRoom(c.Param("id"))
+	id, _ := (strconv.ParseUint(c.Param("id"), 10, 32))
+
+	result, message, room := services.FindRoom(uint(id))
 
 	responseGetRoom := models.Response{
 		Message: message,
@@ -115,10 +118,12 @@ func Room_GET(c *gin.Context) {
 // @Router /api/v1/room [delete]
 func Room_DELETE(c *gin.Context) {
 
-	result, message, computer := services.FindRoom(c.Param("id"))
+	id, _ := (strconv.ParseUint(c.Param("id"), 10, 32))
+
+	result, message, computer := services.FindRoom(uint(id))
 
 	if result {
-		result, message, _ = services.DeleteRoom(c.Param("id"))
+		result, message, _ = services.DeleteRoom(uint(id))
 	}
 
 	responseDeleteRoom := models.Response{
@@ -159,10 +164,12 @@ func Room_PUT(c *gin.Context) {
 		return
 	}
 
-	result, message, room := services.FindRoom(c.Param("id"))
+	id, _ := (strconv.ParseUint(c.Param("id"), 10, 32))
+
+	result, message, room := services.FindRoom(uint(id))
 
 	if result {
-		result, message, room = services.UpdateRoom(c.Param("id"), roomUpdateSchema)
+		result, message, room = services.UpdateRoom(uint(id), roomUpdateSchema)
 	}
 
 	responseUpdateRoom := models.Response{
@@ -177,4 +184,32 @@ func Room_PUT(c *gin.Context) {
 
 	c.Header("Content-Type", "application/json")
 	c.JSON(200, responseUpdateRoom)
+}
+
+// @Summary get a item of the rooms of ComputerLab
+// @ID get-rooms-of-computer-lab
+// @Tags Rooms
+// @Produce json
+// @Param id-computer-lab path string true "ID of ComputerLab"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/rooms/{id-computer-lab} [get]
+func RoomsOfCompuer_GET(c *gin.Context) {
+
+	id, _ := (strconv.ParseUint(c.Param("id-computer-lab"), 10, 32))
+
+	result, message, room := services.FindRoomsOfComputerLab(uint(id))
+
+	responseGetRoom := models.Response{
+		Message: message,
+		Success: result,
+		Data:    room,
+	}
+
+	if !result {
+		responseGetRoom.Data = "{}"
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseGetRoom)
 }

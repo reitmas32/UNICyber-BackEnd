@@ -19,7 +19,7 @@ func CreateComputerLab(computerLab models.ComputerLab) (bool, string, models.Com
 	return true, "Create ComputerLab Successful", computerLab
 }
 
-func FindComputerLab(id string) (bool, string, models.ComputerLab) {
+func FindComputerLab(id uint) (bool, string, models.ComputerLab) {
 
 	var computerLab models.ComputerLab
 	if err := config.DB.First(&computerLab, "id = ?", id).Error; err != nil {
@@ -29,7 +29,7 @@ func FindComputerLab(id string) (bool, string, models.ComputerLab) {
 	return true, "Find Computer Lab", computerLab
 }
 
-func DeleteComputerLab(id string) (bool, string, models.ComputerLab) {
+func DeleteComputerLab(id uint) (bool, string, models.ComputerLab) {
 
 	var computerLab models.ComputerLab
 	if err := config.DB.Delete(&computerLab, "id = ?", id).Error; err != nil {
@@ -39,7 +39,7 @@ func DeleteComputerLab(id string) (bool, string, models.ComputerLab) {
 	return true, "Delete Computer Lab", computerLab
 }
 
-func UpdateComputerLab(id string, new_compuer schemas.ComputerLabUpdateSchema) (bool, string, models.ComputerLab) {
+func UpdateComputerLab(id uint, new_compuer schemas.ComputerLabUpdateSchema) (bool, string, models.ComputerLab) {
 
 	var computerLab models.ComputerLab
 	if err := config.DB.First(&computerLab, "id = ?", id).Error; err != nil {

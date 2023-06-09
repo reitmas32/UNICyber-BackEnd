@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/schemas"
@@ -146,8 +147,13 @@ func LinkAccount_POST(c *gin.Context) {
 	// Decodificar el objeto JSON recibido en la estructura User
 	var user schemas.LinkAccountRequisitionSchema
 	if err := c.ShouldBindWith(&user, binding.JSON); err != nil {
-		c.Writer.WriteHeader(http.StatusInternalServerError)
-		c.Writer.Write([]byte("Error to Decode JSON Body"))
+		responseLinkAccount := models.Response{
+			Message: "Error to Get Content JSON",
+			Success: false,
+			Data:    strings.Split(err.Error(), "\n"),
+		}
+		c.Header("Content-Type", "application/json")
+		c.JSON(200, responseLinkAccount)
 		return
 	}
 	//crear un numero random de 6 digitos
@@ -173,16 +179,29 @@ func LinkAccount_POST(c *gin.Context) {
 		Code: strconv.Itoa(code),
 	}
 
-	result, message := services.CreateLinkAccountCode(linkAccountCode)
+	result, message, _ := services.FindComputerLab(linkAccountCode.IdComputerLab)
+
+	if !result {
+		responseCreateLinkAccountCode := models.Response{
+			Message: message,
+			Success: result,
+			Data:    nil,
+		}
+		c.Header("Content-Type", "application/json")
+		c.JSON(200, responseCreateLinkAccountCode)
+		return
+	}
+
+	result, message, new_linkAccountCode := services.CreateLinkAccountCode(linkAccountCode)
 
 	responseLinkAccount.Message = message
 	responseLinkAccount.Success = result
-	responseLinkAccount.Data = "{}"
+	responseLinkAccount.Data = new_linkAccountCode
 
 	if result {
 		//generar Email
 		linkAccountCode.Code = "******"
-		responseLinkAccount.Data = linkAccountCode
+		responseLinkAccount.Data = new_linkAccountCode
 		html_body := tools.GenerateLinkAccountHTML(strconv.Itoa(code))
 		response := tools.SedMail(config.SMTP_USER, "Vinculacion de Sala", html_body)
 		if !response {
@@ -231,13 +250,23 @@ func LinkAccount_PUT(c *gin.Context) {
 			IdComputerLab: linkAccountCode.IdComputerLab,
 		}
 
-		result, message := services.CreateLinkAccount(linkAccount)
+		result, message, new_linkAccount := services.CreateLinkAccount(linkAccount)
 
-		responseLinkAccount = models.Response{
-			Message: message,
-			Success: result,
-			Data:    linkAccount,
+		if result {
+
+			responseLinkAccount = models.Response{
+				Message: message,
+				Success: result,
+				Data:    new_linkAccount,
+			}
+		} else {
+			responseLinkAccount = models.Response{
+				Message: message,
+				Success: result,
+				Data:    "{}",
+			}
 		}
+
 	}
 
 	c.Header("Content-Type", "application/json")

@@ -5,7 +5,7 @@ import "github.com/jinzhu/gorm"
 type Computer struct {
 	gorm.Model
 	// Metadata
-	IdRoom string
+	IdRoom uint
 
 	// UI
 	Pos_x float32

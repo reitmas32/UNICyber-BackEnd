@@ -17,7 +17,7 @@ func CreateRoom(room models.Room) (bool, string, models.Room) {
 	return true, "Create Room Successful", room
 }
 
-func FindRoom(id string) (bool, string, models.Room) {
+func FindRoom(id uint) (bool, string, models.Room) {
 
 	var room models.Room
 	if err := config.DB.First(&room, "id = ?", id).Error; err != nil {
@@ -27,7 +27,7 @@ func FindRoom(id string) (bool, string, models.Room) {
 	return true, "Find Room", room
 }
 
-func DeleteRoom(id string) (bool, string, models.Room) {
+func DeleteRoom(id uint) (bool, string, models.Room) {
 
 	var room models.Room
 	if err := config.DB.Delete(&room, "id = ?", id).Error; err != nil {
@@ -37,7 +37,7 @@ func DeleteRoom(id string) (bool, string, models.Room) {
 	return true, "Delete Room", room
 }
 
-func UpdateRoom(id string, new_room schemas.RoomUpdateSchema) (bool, string, models.Room) {
+func UpdateRoom(id uint, new_room schemas.RoomUpdateSchema) (bool, string, models.Room) {
 
 	var room models.Room
 	if err := config.DB.First(&room, "id = ?", id).Error; err != nil {
@@ -50,4 +50,14 @@ func UpdateRoom(id string, new_room schemas.RoomUpdateSchema) (bool, string, mod
 	}
 
 	return true, "Update Room Successful", room
+}
+
+func FindRoomsOfComputerLab(id_computer_lab uint) (bool, string, []models.Room) {
+
+	var rooms []models.Room
+	result := config.DB.Where("id_computer_lab = ?", id_computer_lab).Find(&rooms)
+	if result.Error != nil {
+		return false, result.Error.Error(), rooms
+	}
+	return true, "Find Rooms by ComputerLabs", rooms
 }

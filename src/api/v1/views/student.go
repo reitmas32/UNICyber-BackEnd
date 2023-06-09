@@ -2,6 +2,7 @@ package views
 
 import (
 	"encoding/json"
+	"strconv"
 	"strings"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/schemas"
@@ -80,7 +81,9 @@ func Student_POST(c *gin.Context) {
 // @Router /api/v1/student [get]
 func Student_GET(c *gin.Context) {
 
-	result, message, student := services.FindStudent(c.Param("id"))
+	id, _ := (strconv.ParseUint(c.Param("id"), 10, 32))
+
+	result, message, student := services.FindStudent(uint(id))
 
 	responseGetStudent := models.Response{
 		Message: message,
@@ -106,7 +109,9 @@ func Student_GET(c *gin.Context) {
 // @Router /api/v1/student [delete]
 func Student_DELETE(c *gin.Context) {
 
-	result, message, student := services.DeleteStudent(c.Param("id"))
+	id, _ := (strconv.ParseUint(c.Param("id"), 10, 32))
+
+	result, message, student := services.DeleteStudent(uint(id))
 
 	responseDeleteStudent := models.Response{
 		Message: message,
@@ -147,10 +152,12 @@ func Student_PUT(c *gin.Context) {
 		return
 	}
 
-	result, message, student := services.FindStudent(c.Param("id"))
+	id, _ := (strconv.ParseUint(c.Param("id"), 10, 32))
+
+	result, message, student := services.FindStudent(uint(id))
 
 	if result {
-		result, message, student = services.UpdateStudent(c.Param("id"), studentUpdateSchema)
+		result, message, student = services.UpdateStudent(uint(id), studentUpdateSchema)
 	}
 
 	responseUpdateStudent := models.Response{

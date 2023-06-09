@@ -5,7 +5,7 @@ import "github.com/jinzhu/gorm"
 type Room struct {
 	gorm.Model
 	// Metadata
-	IdComputerLab string
+	IdComputerLab uint
 
 	//Data
 	Name string

@@ -107,7 +107,9 @@ func ComputerLab_POST(c *gin.Context) {
 // @Router /api/v1/computer-lab [get]
 func ComputerLab_GET(c *gin.Context) {
 
-	result, message, computerLab := services.FindComputerLab(c.Param("id"))
+	id, _ := (strconv.ParseUint(c.Param("id"), 10, 32))
+
+	result, message, computerLab := services.FindComputerLab(uint(id))
 
 	responseGetComputerLab := models.Response{
 		Message: message,
@@ -133,10 +135,12 @@ func ComputerLab_GET(c *gin.Context) {
 // @Router /api/v1/computer-lab [delete]
 func ComputerLab_DELETE(c *gin.Context) {
 
-	result, message, computerLab := services.FindComputerLab(c.Param("id"))
+	id, _ := (strconv.ParseUint(c.Param("id"), 10, 32))
+
+	result, message, computerLab := services.FindComputerLab(uint(id))
 
 	if result {
-		result, message, _ = services.DeleteComputerLab(c.Param("id"))
+		result, message, _ = services.DeleteComputerLab(uint(id))
 	}
 
 	responseDeleteComputerLab := models.Response{
@@ -177,10 +181,12 @@ func ComputerLab_PUT(c *gin.Context) {
 		return
 	}
 
-	result, message, computerLab := services.FindComputerLab(c.Param("id"))
+	id, _ := (strconv.ParseUint(c.Param("id"), 10, 32))
+
+	result, message, computerLab := services.FindComputerLab(uint(id))
 
 	if result {
-		result, message, computerLab = services.UpdateComputerLab(c.Param("id"), computerLabUpdateSchema)
+		result, message, computerLab = services.UpdateComputerLab(uint(id), computerLabUpdateSchema)
 	}
 
 	responseUpdateComputerLab := models.Response{
@@ -243,6 +249,42 @@ func ComputerLabs_Limit_GET(c *gin.Context) {
 	}
 
 	if !result {
+		responseGetComputerLab.Data = "{}"
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseGetComputerLab)
+}
+
+// @Summary get N items of the computer-lab
+// @ID get-computer-labs_limit
+// @Tags Computer Lab
+// @Produce json
+// @Param id path string true "Id of User"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/computer-labs-limit/{id} [get]
+func ComputerLabs_User_GET(c *gin.Context) {
+
+	user_name := c.Param("user_name")
+
+	result, message, computerLabs := services.GetComputerLabs_User(user_name)
+
+	responseGetComputerLab := models.Response{
+		Message: message,
+		Success: result,
+		Data:    computerLabs,
+	}
+	if result {
+		data_list := responseGetComputerLab.Data.([]models.LinkAccount)
+		var computerLabs []models.ComputerLab
+		for i := 0; i < len(data_list); i++ {
+			_, _, computerLab := services.FindComputerLab(data_list[i].IdComputerLab)
+			computerLabs = append(computerLabs, computerLab)
+		}
+
+		responseGetComputerLab.Data = computerLabs
+	} else {
 		responseGetComputerLab.Data = "{}"
 	}
 

@@ -17,7 +17,7 @@ func CreateStudent(student models.Student) (bool, string, models.Student) {
 	return true, "Create Student Successful", student
 }
 
-func FindStudent(id string) (bool, string, models.Student) {
+func FindStudent(id uint) (bool, string, models.Student) {
 
 	var student models.Student
 	if err := config.DB.First(&student, "id = ?", id).Error; err != nil {
@@ -27,7 +27,7 @@ func FindStudent(id string) (bool, string, models.Student) {
 	return true, "Find Student", student
 }
 
-func DeleteStudent(id string) (bool, string, models.Student) {
+func DeleteStudent(id uint) (bool, string, models.Student) {
 
 	var student models.Student
 	if err := config.DB.Delete(&student, "id = ?", id).Error; err != nil {
@@ -37,7 +37,7 @@ func DeleteStudent(id string) (bool, string, models.Student) {
 	return true, "Delete Student", student
 }
 
-func UpdateStudent(id string, new_student schemas.StudentUpdateSchema) (bool, string, models.Student) {
+func UpdateStudent(id uint, new_student schemas.StudentUpdateSchema) (bool, string, models.Student) {
 
 	var student models.Student
 	if err := config.DB.First(&student, "id = ?", id).Error; err != nil {

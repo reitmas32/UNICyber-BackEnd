@@ -5,12 +5,22 @@ import (
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 )
 
-func CreateLinkAccount(linkAccount models.LinkAccount) (bool, string) {
+func CreateLinkAccount(linkAccount models.LinkAccount) (bool, string, models.LinkAccount) {
 
 	result := config.DB.Create(&linkAccount)
 	if result.Error != nil {
-		return false, result.Error.Error()
+		return false, result.Error.Error(), linkAccount
 	}
 
-	return true, "Create LinkAccount Successful"
+	return true, "Create LinkAccount Successful", linkAccount
+}
+
+func GetComputerLabs_User(user_name string) (bool, string, []models.LinkAccount) {
+	var linksAccount []models.LinkAccount
+	result := config.DB.Where("user_name = ?", user_name).Find(&linksAccount)
+	if result.Error != nil {
+		return false, result.Error.Error(), linksAccount
+	}
+	return true, "Find ComputerLabs by User", linksAccount
+
 }

@@ -9,7 +9,7 @@ import (
 
 func Rooms() {
 	//Create Room
-	config.Router.POST(fmt.Sprintf("/api/%s/rooms", config.API_VERSION), views.Room_POST)
+	config.Router.POST(fmt.Sprintf("/api/%s/room", config.API_VERSION), views.Room_POST)
 
 	//Get Room
 	config.Router.GET(fmt.Sprintf("/api/%s/room/:id", config.API_VERSION), views.Room_GET)
@@ -19,4 +19,7 @@ func Rooms() {
 
 	//Delete Room
 	config.Router.DELETE(fmt.Sprintf("/api/%s/room/:id", config.API_VERSION), views.Room_DELETE)
+
+	//Get Rooms of ComputerLab
+	config.Router.GET(fmt.Sprintf("/api/%s/rooms/:id-computer-lab", config.API_VERSION), views.RoomsOfCompuer_GET)
 }
