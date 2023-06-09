@@ -65,3 +65,18 @@ func FindComputerOfRoom(id_room uint) (bool, string, []models.Computer) {
 	}
 	return true, "Find Computers by Room", computers
 }
+
+func SetStateComputer(id uint, id_state uint) (bool, string, models.Computer) {
+
+	var computer models.Computer
+	if err := config.DB.First(&computer, "id = ?", id).Error; err != nil {
+		return false, "No Find Computer", computer
+	} else {
+
+		computer.IdState = tools.CopyField(id_state, computer.IdState, uint(1))
+
+		config.DB.Save(&computer)
+	}
+
+	return true, "Set State Successful", computer
+}
