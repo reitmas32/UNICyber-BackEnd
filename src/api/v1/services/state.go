@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/config"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 )
@@ -23,4 +25,14 @@ func FindState(id uint) (bool, string, models.State) {
 	}
 
 	return true, "Find State", state
+}
+
+func GetStates() (bool, string, []models.State) {
+
+	var states []models.State
+	if err := config.DB.Find(&states).Error; err != nil {
+		return false, fmt.Sprint("No se encontraron States: ", err), states
+	}
+
+	return true, "States encontrados", states
 }
