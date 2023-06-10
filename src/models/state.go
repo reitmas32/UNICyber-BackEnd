@@ -7,4 +7,7 @@ type State struct {
 
 	//Data
 	Name string
+
+	//Image
+	Image string
 }
