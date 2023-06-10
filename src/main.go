@@ -17,19 +17,20 @@ import (
 )
 
 func CreateStates() {
-	createState(1, "Disponible")
-	createState(2, "Descompuesto")
-	createState(3, "Mantenimiento")
-	createState(4, "Proyecto")
-	createState(5, "Reparación")
+	createState(1, "Disponible", "https://em-content.zobj.net/source/microsoft-teams/337/desktop-computer_1f5a5-fe0f.png")
+	createState(2, "Descompuesto", "https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/reparacion.png")
+	createState(3, "Mantenimiento", "https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/mantenimiento.png")
+	createState(4, "Proyecto", "https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/proyecto.png")
+	createState(5, "Reparación", "https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/reparacion.png")
 
 }
 
-func createState(id uint, name string) {
+func createState(id uint, name string, img string) {
 	result, _, _ := services.FindState(id)
 	if !result {
 		state := models.State{
-			Name: name,
+			Name:  name,
+			Image: img,
 		}
 		services.CreateState(state)
 	}
@@ -80,6 +81,7 @@ func main() {
 	routes.Computer()
 	routes.ComputerLab()
 	routes.StudentRoutes()
+	routes.States()
 
 	// Escucha en el puerto 8080
 	config.Router.Run(fmt.Sprintf(":%d", config.PORT))
