@@ -73,7 +73,7 @@ func SetStateComputer(id uint, id_state uint) (bool, string, models.Computer) {
 		return false, "No Find Computer", computer
 	} else {
 
-		computer.IdState = tools.CopyField(id_state, computer.IdState, uint(1))
+		computer.IdState = tools.CopyField(id_state, computer.IdState, uint(0))
 
 		config.DB.Save(&computer)
 	}
