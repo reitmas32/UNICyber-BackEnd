@@ -30,5 +30,6 @@ func MigrateDB() {
 
 	//State
 	DB.AutoMigrate(&models.State{})
+	DB.AutoMigrate(&models.UniversityProgram{})
 
 }

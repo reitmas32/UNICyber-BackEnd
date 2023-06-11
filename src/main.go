@@ -36,6 +36,37 @@ func createState(id uint, name string, img string) {
 	}
 }
 
+func CreateUniversityPrograms() {
+	createUniversityProgram(1, "Ingeniería Aeroespacial")
+	createUniversityProgram(2, "Ingeniería Civil")
+	createUniversityProgram(3, "Ingeniería Geomática")
+	createUniversityProgram(4, "Ingeniería Ambiental")
+	createUniversityProgram(5, "Ingeniería Geofísica")
+	createUniversityProgram(6, "Ingeniería Geológica")
+	createUniversityProgram(7, "Ingeniería Petrolera")
+	createUniversityProgram(8, "Ingeniería de Minas y Metalurgia")
+	createUniversityProgram(9, "Ingeniería en Computación")
+	createUniversityProgram(10, "Ingeniería Eléctrica Electrónica")
+	createUniversityProgram(11, "Ingeniería en Telecomunicaciones")
+	createUniversityProgram(12, "Ingeniería Mecánica")
+	createUniversityProgram(13, "Ingeniería Industrial")
+	createUniversityProgram(14, "Ingeniería Mecatrónica")
+	createUniversityProgram(15, "Ingeniería en Sistemas Biomédicos")
+	createUniversityProgram(16, "Posgrado")
+	createUniversityProgram(17, "Intercambio")
+
+}
+
+func createUniversityProgram(id uint, name string) {
+	result, _, _ := services.FindUniversityProgram(id)
+	if !result {
+		universityProgram := models.UniversityProgram{
+			Name: name,
+		}
+		services.CreateUniversityProgram(universityProgram)
+	}
+}
+
 // @title UNICyber-API
 // @version 1.0
 // @description This is a API by System UNICyber|SISEC https://github.com/reitmas32/UNICyber-BackEnd
@@ -67,6 +98,7 @@ func main() {
 	config.MigrateDB()
 
 	CreateStates()
+	CreateUniversityPrograms()
 
 	config.SetupRouter()
 
@@ -82,6 +114,7 @@ func main() {
 	routes.ComputerLab()
 	routes.StudentRoutes()
 	routes.States()
+	routes.UniversityPrograms()
 
 	// Escucha en el puerto 8080
 	config.Router.Run(fmt.Sprintf(":%d", config.PORT))

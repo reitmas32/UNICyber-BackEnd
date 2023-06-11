@@ -19,4 +19,7 @@ func StudentRoutes() {
 
 	//Delete Computer
 	config.Router.DELETE(fmt.Sprintf("/api/%s/student/:id", config.API_VERSION), views.Student_DELETE)
+
+	//Get Student
+	config.Router.GET(fmt.Sprintf("/api/%s/students/:account-number", config.API_VERSION), views.StudentByAccountNumber_GET)
 }

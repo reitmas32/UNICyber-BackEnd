@@ -49,9 +49,20 @@ func UpdateStudent(id uint, new_student schemas.StudentUpdateSchema) (bool, stri
 		student.UniversityProgram = tools.CopyField(new_student.UniversityProgram, student.UniversityProgram, "")
 		student.AccountNumber = tools.CopyField(new_student.AccountNumber, student.AccountNumber, "")
 		student.Semester = tools.CopyField(new_student.Semester, student.Semester, 0)
+		student.IdUniversityProgram = tools.CopyField(new_student.IdUniversityProgram, student.IdUniversityProgram, 0)
 
 		config.DB.Save(&student)
 	}
 
 	return true, "Update Student Successful", student
+}
+
+func FindStudentByAccountNumber(accountNumber string) (bool, string, models.Student) {
+
+	var student models.Student
+	if err := config.DB.First(&student, "account_number = ?", accountNumber).Error; err != nil {
+		return false, "No Find Student", student
+	}
+
+	return true, "Find Student", student
 }
