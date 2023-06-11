@@ -42,30 +42,38 @@ func Student_POST(c *gin.Context) {
 	}
 
 	student := models.Student{
-		Name:              studentCreateSchema.Name,
-		LastName:          studentCreateSchema.LastName,
-		UniversityProgram: studentCreateSchema.UniversityProgram,
-		Email:             studentCreateSchema.Email,
-		AccountNumber:     studentCreateSchema.AccountNumber,
-		Semester:          studentCreateSchema.Semester,
+		Name:                studentCreateSchema.Name,
+		LastName:            studentCreateSchema.LastName,
+		UniversityProgram:   studentCreateSchema.UniversityProgram,
+		Email:               studentCreateSchema.Email,
+		AccountNumber:       studentCreateSchema.AccountNumber,
+		Semester:            studentCreateSchema.Semester,
 		IdUniversityProgram: studentCreateSchema.IdUniversityProgram,
 	}
 
-	result, message, new_student := services.CreateStudent(student)
+	result, _, oldStudent := services.FindStudentByAccountNumber(student.AccountNumber)
 
-	if result {
+	if !result {
 
-		responseCreateStudent = models.Response{
-			Message: message,
-			Success: result,
-			Data:    new_student,
+		result, message, new_student := services.CreateStudent(student)
+
+		if result {
+
+			responseCreateStudent = models.Response{
+				Message: message,
+				Success: result,
+				Data:    new_student,
+			}
+		} else {
+			responseCreateStudent = models.Response{
+				Message: message,
+				Success: responseCreateStudent.Success,
+				Data:    "{}",
+			}
 		}
 	} else {
-		responseCreateStudent = models.Response{
-			Message: message,
-			Success: responseCreateStudent.Success,
-			Data:    "{}",
-		}
+		responseCreateStudent.Message = "There is already a Student with the account number provided"
+		responseCreateStudent.Data = oldStudent
 	}
 
 	c.Header("Content-Type", "application/json")
