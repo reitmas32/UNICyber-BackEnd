@@ -13,7 +13,6 @@ type Student struct {
 
 	//Info Academic
 	IdUniversityProgram uint
-	UniversityProgram   string
 	AccountNumber       string
 	Semester            uint8
 }

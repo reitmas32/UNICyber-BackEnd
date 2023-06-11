@@ -8,7 +8,6 @@ type StudentCreateSchema struct {
 
 	//Info Academic
 	IdUniversityProgram uint   `json:"id_university_program" binding:"required"`
-	UniversityProgram   string `json:"university_program" binding:"required"`
 	AccountNumber       string `json:"account_number" binding:"required,len=9,numeric"`
 	Semester            uint8  `json:"semester" binding:"required"`
 }

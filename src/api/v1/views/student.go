@@ -44,7 +44,6 @@ func Student_POST(c *gin.Context) {
 	student := models.Student{
 		Name:                studentCreateSchema.Name,
 		LastName:            studentCreateSchema.LastName,
-		UniversityProgram:   studentCreateSchema.UniversityProgram,
 		Email:               studentCreateSchema.Email,
 		AccountNumber:       studentCreateSchema.AccountNumber,
 		Semester:            studentCreateSchema.Semester,
