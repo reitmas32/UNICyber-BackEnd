@@ -173,3 +173,31 @@ func Student_PUT(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 	c.JSON(200, responseUpdateStudent)
 }
+
+// @Summary get a item of the students
+// @ID get-student
+// @Tags Students
+// @Produce json
+// @Param id path string true "ID of Student"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/student [get]
+func StudentByAccountNumber_GET(c *gin.Context) {
+
+	accountNumber := c.Param("account-number")
+
+	result, message, student := services.FindStudentByAccountNumber(accountNumber)
+
+	responseGetStudent := models.Response{
+		Message: message,
+		Success: result,
+		Data:    student,
+	}
+
+	if !result {
+		responseGetStudent.Data = "{}"
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseGetStudent)
+}
