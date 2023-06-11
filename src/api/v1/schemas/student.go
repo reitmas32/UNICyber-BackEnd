@@ -7,9 +7,10 @@ type StudentCreateSchema struct {
 	Email    string `json:"email" binding:"email"`
 
 	//Info Academic
-	UniversityProgram string `json:"university_program" binding:"required"`
-	AccountNumber     string `json:"account_number" binding:"required,len=9,numeric"`
-	Semester          uint8  `json:"semester" binding:"required"`
+	IdUniversityProgram uint   `json:"id_university_program" binding:"required"`
+	UniversityProgram   string `json:"university_program" binding:"required"`
+	AccountNumber       string `json:"account_number" binding:"required,len=9,numeric"`
+	Semester            uint8  `json:"semester" binding:"required"`
 }
 
 type StudentUpdateSchema struct {
@@ -19,7 +20,8 @@ type StudentUpdateSchema struct {
 	Email    string `json:"email" binding:"email"`
 
 	//Info Academic
-	UniversityProgram string `json:"university_program"`
-	AccountNumber     string `json:"account_number" binding:",len=9,numeric"`
-	Semester          uint8  `json:"semester"`
+	IdUniversityProgram uint   `json:"id_university_program"`
+	UniversityProgram   string `json:"university_program"`
+	AccountNumber       string `json:"account_number" binding:",len=9,numeric"`
+	Semester            uint8  `json:"semester"`
 }

@@ -12,7 +12,8 @@ type Student struct {
 	Email    string
 
 	//Info Academic
-	UniversityProgram string
-	AccountNumber     string
-	Semester          uint8
+	IdUniversityProgram uint
+	UniversityProgram   string
+	AccountNumber       string
+	Semester            uint8
 }

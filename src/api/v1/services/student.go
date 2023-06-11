@@ -49,6 +49,7 @@ func UpdateStudent(id uint, new_student schemas.StudentUpdateSchema) (bool, stri
 		student.UniversityProgram = tools.CopyField(new_student.UniversityProgram, student.UniversityProgram, "")
 		student.AccountNumber = tools.CopyField(new_student.AccountNumber, student.AccountNumber, "")
 		student.Semester = tools.CopyField(new_student.Semester, student.Semester, 0)
+		student.IdUniversityProgram = tools.CopyField(new_student.IdUniversityProgram, student.IdUniversityProgram, 0)
 
 		config.DB.Save(&student)
 	}

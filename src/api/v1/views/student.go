@@ -48,6 +48,7 @@ func Student_POST(c *gin.Context) {
 		Email:             studentCreateSchema.Email,
 		AccountNumber:     studentCreateSchema.AccountNumber,
 		Semester:          studentCreateSchema.Semester,
+		IdUniversityProgram: studentCreateSchema.IdUniversityProgram,
 	}
 
 	result, message, new_student := services.CreateStudent(student)
