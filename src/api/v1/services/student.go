@@ -55,3 +55,13 @@ func UpdateStudent(id uint, new_student schemas.StudentUpdateSchema) (bool, stri
 
 	return true, "Update Student Successful", student
 }
+
+func FindStudentByAccountNumber(accountNumber string) (bool, string, models.Student) {
+
+	var student models.Student
+	if err := config.DB.First(&student, "account_number = ?", accountNumber).Error; err != nil {
+		return false, "No Find Student", student
+	}
+
+	return true, "Find Student", student
+}
