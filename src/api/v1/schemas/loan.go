@@ -5,6 +5,11 @@ type LoanCreateSchema struct {
 	IdComputer uint `json:"id_computer" binding:"required"`
 }
 
+type LoanCreateByAccountNumberSchema struct {
+	AccountNumber string `json:"account_number" binding:"required"`
+	IdComputer    uint   `json:"id_computer" binding:"required"`
+}
+
 type LoanUpdateSchema struct {
 	// Metadata
 
