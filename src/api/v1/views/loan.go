@@ -12,13 +12,13 @@ import (
 )
 
 // @Summary add a new item of the computers
-// @ID create-computer
+// @ID create-loan
 // @Tags Computers
 // @Produce json
-// @Param data body schemas.loanCreateSchema true "Schema by Create New Computer"
+// @Param data body schemas.LoanCreateSchema true "Schema by Create New Loan"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
-// @Router /api/v1/computer [post]
+// @Router /api/v1/loan-computer [post]
 func Loan_POST(c *gin.Context) {
 
 	responseCreateLoan := models.Response{
@@ -85,13 +85,13 @@ func Loan_POST(c *gin.Context) {
 }
 
 // @Summary add a new item of the computers
-// @ID create-computer
+// @ID create-loan-by-account-number
 // @Tags Computers
 // @Produce json
-// @Param data body schemas.loanCreateSchema true "Schema by Create New Computer"
+// @Param data body schemas.LoanCreateByAccountNumberSchema true "Schema by Create New Computer"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
-// @Router /api/v1/computer [post]
+// @Router /api/v1/loan-computer-by-account-number [post]
 func LoanByAccountNumber_POST(c *gin.Context) {
 
 	responseCreateLoan := models.Response{
@@ -153,6 +153,73 @@ func LoanByAccountNumber_POST(c *gin.Context) {
 			Message: message,
 			Success: result,
 			Data:    new_loan,
+		}
+	} else {
+		responseCreateLoan = models.Response{
+			Message: message,
+			Success: responseCreateLoan.Success,
+			Data:    nil,
+		}
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseCreateLoan)
+}
+
+// @Summary add a new item of the computers
+// @ID leave-loan-computer
+// @Tags Operations
+// @Produce json
+// @Param data body schemas.loanCreateSchema true "Schema by Loan Leave Computer"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/loan-leave-computer [put]
+func LoanLeave_PUT(c *gin.Context) {
+
+	responseCreateLoan := models.Response{
+		Message: "No Create Computer",
+		Success: false,
+		Data:    "{}",
+	}
+
+	// Decodificar el objeto JSON recibido
+	var loanLeaveSchema schemas.LoanLeaveComputerSchema
+	if err := c.ShouldBindWith(&loanLeaveSchema, binding.JSON); err != nil {
+		responseCreateLoan := models.Response{
+			Message: "Error to Get Content JSON",
+			Success: false,
+			Data:    strings.Split(err.Error(), "\n"),
+		}
+		c.Header("Content-Type", "application/json")
+		c.JSON(200, responseCreateLoan)
+		return
+	}
+
+	exitsComputer, _, _ := services.FindComputer(loanLeaveSchema.IdComputer)
+
+	if !exitsComputer {
+		responseCreateLoan.Message = "No Exist the Computer"
+		c.Header("Content-Type", "application/json")
+		c.JSON(200, responseCreateLoan)
+		return
+	}
+
+	existLoan, message, loan := services.LoanLeaveComputer(loanLeaveSchema.IdComputer)
+
+	if existLoan {
+		responseCreateLoan.Message = "Session Start on other computer"
+		responseCreateLoan.Data = loan
+		c.Header("Content-Type", "application/json")
+		c.JSON(200, responseCreateLoan)
+		return
+	}
+
+	if existLoan {
+
+		responseCreateLoan = models.Response{
+			Message: message,
+			Success: existLoan,
+			Data:    loan,
 		}
 	} else {
 		responseCreateLoan = models.Response{
