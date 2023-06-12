@@ -113,6 +113,7 @@ func main() {
 	routes.Computer()
 	routes.ComputerLab()
 	routes.StudentRoutes()
+	routes.LoanRoutes()
 	routes.States()
 	routes.UniversityPrograms()
 
