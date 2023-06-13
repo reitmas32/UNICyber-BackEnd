@@ -48,6 +48,7 @@ func Computer_POST(c *gin.Context) {
 		State:   "Disponible",
 		Message: "",
 		Type:    computerCreateSchema.Type,
+		IdState: computerCreateSchema.IdState,
 	}
 
 	result, message, _ := services.FindRoom(computer.IdRoom)
