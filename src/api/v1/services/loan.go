@@ -39,3 +39,13 @@ func LoanLeaveComputer(idComputer uint) (bool, string, models.Loan) {
 
 	return true, "Find Loan", loan
 }
+
+func FindLoanByIdComputer(idComputer uint) (bool, string, models.Loan) {
+
+	var loan models.Loan
+	if err := config.DB.First(&loan, "id_computer = ? AND sesion_end = ?", idComputer, time.Time{}).Error; err != nil {
+		return false, "No Find Computer", loan
+	}
+
+	return true, "Find Computer", loan
+}

@@ -1,6 +1,7 @@
 package views
 
 import (
+	"strconv"
 	"strings"
 	"time"
 
@@ -149,6 +150,8 @@ func LoanByAccountNumber_POST(c *gin.Context) {
 
 	if result {
 
+		services.SetStateComputer(loanCreateSchema.IdComputer, 6)
+
 		responseCreateLoan = models.Response{
 			Message: message,
 			Success: result,
@@ -204,21 +207,14 @@ func LoanLeave_PUT(c *gin.Context) {
 		return
 	}
 
-	existLoan, message, loan := services.LoanLeaveComputer(loanLeaveSchema.IdComputer)
+	leaveLoan, message, loan := services.LoanLeaveComputer(loanLeaveSchema.IdComputer)
 
-	if existLoan {
-		responseCreateLoan.Message = "Session Start on other computer"
-		responseCreateLoan.Data = loan
-		c.Header("Content-Type", "application/json")
-		c.JSON(200, responseCreateLoan)
-		return
-	}
-
-	if existLoan {
+	if leaveLoan {
+		services.SetStateComputer(loanLeaveSchema.IdComputer, 1)
 
 		responseCreateLoan = models.Response{
 			Message: message,
-			Success: existLoan,
+			Success: leaveLoan,
 			Data:    loan,
 		}
 	} else {
@@ -227,6 +223,38 @@ func LoanLeave_PUT(c *gin.Context) {
 			Success: responseCreateLoan.Success,
 			Data:    nil,
 		}
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseCreateLoan)
+}
+
+// @Summary add a new item of the computers
+// @ID create-loan
+// @Tags Computers
+// @Produce json
+// @Param data body schemas.LoanCreateSchema true "Schema by Create New Loan"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/loan-computer [post]
+func LoanComputer_GET(c *gin.Context) {
+
+	responseCreateLoan := models.Response{
+		Message: "No Create Computer",
+		Success: false,
+		Data:    "{}",
+	}
+
+	idComputer, _ := (strconv.ParseUint(c.Param("id-computer"), 10, 32))
+
+	result, message, loan := services.FindLoanByIdComputer(uint(idComputer))
+
+	responseCreateLoan.Success = result
+	responseCreateLoan.Message = message
+	responseCreateLoan.Data = loan
+
+	if !result {
+		responseCreateLoan.Data = "{}"
 	}
 
 	c.Header("Content-Type", "application/json")

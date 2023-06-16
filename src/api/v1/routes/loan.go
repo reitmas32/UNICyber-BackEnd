@@ -16,6 +16,9 @@ func LoanRoutes() {
 
 	//Create Computer by AccountNumber
 	config.Router.PUT(fmt.Sprintf("/api/%s/loan-leave-computer", config.API_VERSION), views.LoanLeave_PUT)
+
+	//Create Computer
+	config.Router.GET(fmt.Sprintf("/api/%s/loan-computer/:id-computer", config.API_VERSION), views.LoanComputer_GET)
 	//Get Computer
 	//config.Router.GET(fmt.Sprintf("/api/%s/loan-computer/:id", config.API_VERSION), views.Student_GET)
 
