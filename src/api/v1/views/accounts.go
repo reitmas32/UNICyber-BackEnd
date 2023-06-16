@@ -41,7 +41,7 @@ func SignIn_PUT(c *gin.Context) {
 	// Crear un cliente HTTP personalizado con los headers deseados
 	client := &http.Client{}
 	//Todo Remplazar la url de desarrollo o producción
-	apiURL := "http://127.0.0.1:5000/api/v1/signin"
+	apiURL := "http://unicappaccountsdev.pythonanywhere.com/api/v1/signin"
 	jsonData, err := json.Marshal(user)
 	if err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
@@ -98,7 +98,7 @@ func SignUp_POST(c *gin.Context) {
 	// Crear un cliente HTTP personalizado con los headers deseados
 	client := &http.Client{}
 	//Todo Remplazar la url de desarrollo o producción
-	apiURL := fmt.Sprintf("http://127.0.0.1:%d/api/%s/signup", config.UNIACCOUNTS_API_PORT, config.UNIACCOUNTS_API_VERSION)
+	apiURL := fmt.Sprintf("http://unicappaccountsdev.pythonanywhere.com/api/%s/signup", config.UNIACCOUNTS_API_VERSION)
 	jsonData, err := json.Marshal(user)
 	if err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
