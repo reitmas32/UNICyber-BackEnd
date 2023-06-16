@@ -3,7 +3,6 @@ package config
 import (
 	"log"
 	"os"
-	"path/filepath"
 
 	"github.com/joho/godotenv"
 )
@@ -72,13 +71,4 @@ func getEnv(key string) string {
 		}
 	}
 	return value
-}
-
-// getBaseDir obtiene el directorio base del programa
-func getBaseDir() string {
-	ex, err := os.Executable()
-	if err != nil {
-		log.Fatal(err)
-	}
-	return filepath.Dir(ex)
 }

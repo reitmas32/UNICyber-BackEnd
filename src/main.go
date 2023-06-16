@@ -22,6 +22,7 @@ func CreateStates() {
 	createState(3, "Mantenimiento", "https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/mantenimiento.png")
 	createState(4, "Proyecto", "https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/proyecto.png")
 	createState(5, "Reparación", "https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/reparacion.png")
+	createState(6, "Loan", "https://raw.githubusercontent.com/reitmas32/unica_cybercoffee/main/public/assets/proyecto.png")
 
 }
 
@@ -113,6 +114,7 @@ func main() {
 	routes.Computer()
 	routes.ComputerLab()
 	routes.StudentRoutes()
+	routes.LoanRoutes()
 	routes.States()
 	routes.UniversityPrograms()
 

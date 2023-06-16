@@ -32,4 +32,7 @@ func MigrateDB() {
 	DB.AutoMigrate(&models.State{})
 	DB.AutoMigrate(&models.UniversityProgram{})
 
+	//Operations
+	DB.AutoMigrate(&models.Loan{})
+
 }
