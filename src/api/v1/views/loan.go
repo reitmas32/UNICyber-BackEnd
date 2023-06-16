@@ -14,7 +14,7 @@ import (
 
 // @Summary add a new item of the computers
 // @ID create-loan
-// @Tags Computers
+// @Tags Operations
 // @Produce json
 // @Param data body schemas.LoanCreateSchema true "Schema by Create New Loan"
 // @Success 200 {object} models.Response
@@ -87,7 +87,7 @@ func Loan_POST(c *gin.Context) {
 
 // @Summary add a new item of the computers
 // @ID create-loan-by-account-number
-// @Tags Computers
+// @Tags Operations
 // @Produce json
 // @Param data body schemas.LoanCreateByAccountNumberSchema true "Schema by Create New Computer"
 // @Success 200 {object} models.Response
@@ -173,7 +173,7 @@ func LoanByAccountNumber_POST(c *gin.Context) {
 // @ID leave-loan-computer
 // @Tags Operations
 // @Produce json
-// @Param data body schemas.loanCreateSchema true "Schema by Loan Leave Computer"
+// @Param data body schemas.LoanLeaveComputerSchema true "Schema by Loan Leave Computer"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
 // @Router /api/v1/loan-leave-computer [put]
@@ -230,13 +230,12 @@ func LoanLeave_PUT(c *gin.Context) {
 }
 
 // @Summary add a new item of the computers
-// @ID create-loan
+// @ID get-loan
 // @Tags Computers
 // @Produce json
-// @Param data body schemas.LoanCreateSchema true "Schema by Create New Loan"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
-// @Router /api/v1/loan-computer [post]
+// @Router /api/v1/loan-computer [get]
 func LoanComputer_GET(c *gin.Context) {
 
 	responseCreateLoan := models.Response{
