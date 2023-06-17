@@ -272,3 +272,58 @@ func LinkAccount_PUT(c *gin.Context) {
 	c.Header("Content-Type", "application/json")
 	c.JSON(200, responseLinkAccount)
 }
+
+// @Summary LinkAccount User whit ComputerLab
+// @ID post-link-account
+// @Tags Accounts
+// @Produce json
+// @Param data body schemas.LinkAccountRequisitionSchema true "Schema by LinkAccount User whit ComputerLab"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/link-account [post]
+func LinkAccountJanky_POST(c *gin.Context) {
+
+	// Decodificar el objeto JSON recibido en la estructura User
+	var linkAccountSchema schemas.LinkAccountRequisitionSchema
+	if err := c.ShouldBindWith(&linkAccountSchema, binding.JSON); err != nil {
+		responseLinkAccount := models.Response{
+			Message: "Failed to confirm the linking.",
+			Success: false,
+			Data:    "{}",
+		}
+		c.Header("Content-Type", "application/json")
+		c.JSON(200, responseLinkAccount)
+		return
+	}
+
+	linkAccount := models.LinkAccount{
+		UserName:      linkAccountSchema.UserName,
+		IdComputerLab: linkAccountSchema.IdComputerLab,
+	}
+	responseLinkAccount := models.Response{
+		Message: "Failed to confirm the linking.",
+		Success: false,
+		Data:    "{}",
+	}
+
+	result, message, new_linkAccount := services.CreateLinkAccount(linkAccount)
+
+	if result {
+
+		responseLinkAccount = models.Response{
+			Message: message,
+			Success: result,
+			Data:    new_linkAccount,
+		}
+	} else {
+		responseLinkAccount = models.Response{
+			Message: message,
+			Success: result,
+			Data:    "{}",
+		}
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseLinkAccount)
+
+}
