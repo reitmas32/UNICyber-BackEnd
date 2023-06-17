@@ -94,6 +94,10 @@ func main() {
 	log.Println("Run Server on API_VERSION:", config.API_VERSION)
 	log.Println("UNIACCOUNTS_API_SERVICE_NAME:", config.UNIACCOUNTS_API_SERVICE_NAME)
 	log.Println("UNIACCOUNTS_API_KEY:", config.UNIACCOUNTS_API_KEY)
+	log.Println("SMTP_HOST:", config.SMTP_HOST)
+	log.Println("SMTP_PORT:", config.SMTP_PORT)
+	log.Println("SMTP_USER:", config.SMTP_USER)
+	log.Println("SMTP_PASSWORD:", config.SMTP_PASSWORD)
 
 	// Configuración de la conexión a la base de datos MySQL
 	config.SetupDB()
