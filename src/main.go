@@ -6,14 +6,16 @@ import (
 
 	_ "github.com/UNIHacks/UNIAccounts-BackEnd/src/docs"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
+
+	//swaggerFiles "github.com/swaggo/files"
+	//ginSwagger "github.com/swaggo/gin-swagger"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/routes"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/services"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/config"
 
 	_ "github.com/mattn/go-sqlite3"
+	//_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 func CreateStates() {
@@ -104,7 +106,7 @@ func main() {
 	config.SetupRouter()
 
 	// docs route on Mode Debug
-	config.Router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	//config.Router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	config.Router.GET("/", routes.IndexHandler)
 	routes.SignIn()

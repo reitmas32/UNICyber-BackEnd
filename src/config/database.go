@@ -9,6 +9,8 @@ var DB *gorm.DB
 var err error
 
 func SetupDB() {
+	//DB, err = gorm.Open("mysql", "rafael:tere@tcp(127.0.0.1:4306)/sisec_test?charset=utf8mb4&parseTime=True&loc=Local")
+	//DB, err = gorm.Open("sqlite3", "app/my_database.db")
 	DB, err = gorm.Open("sqlite3", "my_database.db")
 	if err != nil {
 		panic(err)
