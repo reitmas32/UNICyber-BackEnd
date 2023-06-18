@@ -274,13 +274,13 @@ func LinkAccount_PUT(c *gin.Context) {
 }
 
 // @Summary LinkAccount User whit ComputerLab
-// @ID post-link-account
+// @ID post-link-account-janky
 // @Tags Accounts
 // @Produce json
 // @Param data body schemas.LinkAccountRequisitionSchema true "Schema by LinkAccount User whit ComputerLab"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
-// @Router /api/v1/link-account [post]
+// @Router /api/v1/link-account-janky [post]
 func LinkAccountJanky_POST(c *gin.Context) {
 
 	// Decodificar el objeto JSON recibido en la estructura User

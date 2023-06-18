@@ -11,6 +11,7 @@ definitions:
         type: boolean
     type: object
   schemas.ComputerCreateSchema:
+    description: Descripción de la estructura A
     properties:
       id_room:
         example: 3
@@ -578,6 +579,30 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/schemas.LinkAccountConfirmationSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: LinkAccount User whit ComputerLab
+      tags:
+      - Accounts
+  /api/v1/link-account-janky:
+    post:
+      operationId: post-link-account-janky
+      parameters:
+      - description: Schema by LinkAccount User whit ComputerLab
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.LinkAccountRequisitionSchema'
       produces:
       - application/json
       responses:

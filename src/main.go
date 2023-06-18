@@ -7,8 +7,8 @@ import (
 	_ "github.com/UNIHacks/UNIAccounts-BackEnd/src/docs"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
 
-	//swaggerFiles "github.com/swaggo/files"
-	//ginSwagger "github.com/swaggo/gin-swagger"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/routes"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/services"
@@ -81,7 +81,7 @@ func createUniversityProgram(id uint, name string) {
 // @license.name MIT
 // @license.url https://opensource.org/licenses/MIT
 
-// @host localhost:3000
+// @host https://unicyber-api-docs.onrender.com/
 // @BasePath /
 // @query.collection.format multi
 func main() {
@@ -110,7 +110,7 @@ func main() {
 	config.SetupRouter()
 
 	// docs route on Mode Debug
-	//config.Router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	config.Router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	config.Router.GET("/", routes.IndexHandler)
 	routes.SignIn()

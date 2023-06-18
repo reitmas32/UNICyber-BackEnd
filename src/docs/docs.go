@@ -561,6 +561,43 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/link-account-janky": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "LinkAccount User whit ComputerLab",
+                "operationId": "post-link-account-janky",
+                "parameters": [
+                    {
+                        "description": "Schema by LinkAccount User whit ComputerLab",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.LinkAccountRequisitionSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/loan-computer": {
             "get": {
                 "produces": [
@@ -1199,6 +1236,7 @@ const docTemplate = `{
             }
         },
         "schemas.ComputerCreateSchema": {
+            "description": "Descripción de la estructura A",
             "type": "object",
             "required": [
                 "id_room",
