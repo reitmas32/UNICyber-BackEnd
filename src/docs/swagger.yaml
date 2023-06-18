@@ -226,7 +226,7 @@ definitions:
     - role
     - user_name
     type: object
-host: localhost:3000
+host: https://unicyber-api-docs.onrender.com/
 info:
   contact:
     email: rafa.zamora.rals@gmail.com

@@ -14,7 +14,7 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:3000",
+    "host": "https://unicyber-api-docs.onrender.com/",
     "basePath": "/",
     "paths": {
         "/api/v1/computer": {
