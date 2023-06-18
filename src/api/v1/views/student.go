@@ -183,13 +183,13 @@ func Student_PUT(c *gin.Context) {
 }
 
 // @Summary get a item of the students
-// @ID get-student
+// @ID get-student-by-account-number
 // @Tags Students
 // @Produce json
-// @Param id path string true "ID of Student"
+// @Param account-number path string true "Account Number of Student"
 // @Success 200 {object} models.Response
 // @Failure 400 {object} models.Response
-// @Router /api/v1/student [get]
+// @Router /api/v1/students/{account-number} [get]
 func StudentByAccountNumber_GET(c *gin.Context) {
 
 	accountNumber := c.Param("account-number")

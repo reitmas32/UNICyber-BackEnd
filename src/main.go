@@ -6,14 +6,16 @@ import (
 
 	_ "github.com/UNIHacks/UNIAccounts-BackEnd/src/docs"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
+
+	//swaggerFiles "github.com/swaggo/files"
+	//ginSwagger "github.com/swaggo/gin-swagger"
 
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/routes"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/api/v1/services"
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/config"
 
 	_ "github.com/mattn/go-sqlite3"
+	//_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 func CreateStates() {
@@ -92,6 +94,10 @@ func main() {
 	log.Println("Run Server on API_VERSION:", config.API_VERSION)
 	log.Println("UNIACCOUNTS_API_SERVICE_NAME:", config.UNIACCOUNTS_API_SERVICE_NAME)
 	log.Println("UNIACCOUNTS_API_KEY:", config.UNIACCOUNTS_API_KEY)
+	log.Println("SMTP_HOST:", config.SMTP_HOST)
+	log.Println("SMTP_PORT:", config.SMTP_PORT)
+	log.Println("SMTP_USER:", config.SMTP_USER)
+	log.Println("SMTP_PASSWORD:", config.SMTP_PASSWORD)
 
 	// Configuración de la conexión a la base de datos MySQL
 	config.SetupDB()
@@ -104,7 +110,7 @@ func main() {
 	config.SetupRouter()
 
 	// docs route on Mode Debug
-	config.Router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	//config.Router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	config.Router.GET("/", routes.IndexHandler)
 	routes.SignIn()

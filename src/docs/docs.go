@@ -561,6 +561,141 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/loan-computer": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Computers"
+                ],
+                "summary": "add a new item of the computers",
+                "operationId": "get-loan",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Operations"
+                ],
+                "summary": "add a new item of the computers",
+                "operationId": "create-loan",
+                "parameters": [
+                    {
+                        "description": "Schema by Create New Loan",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.LoanCreateSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/loan-computer-by-account-number": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Operations"
+                ],
+                "summary": "add a new item of the computers",
+                "operationId": "create-loan-by-account-number",
+                "parameters": [
+                    {
+                        "description": "Schema by Create New Computer",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.LoanCreateByAccountNumberSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/loan-leave-computer": {
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Operations"
+                ],
+                "summary": "add a new item of the computers",
+                "operationId": "leave-loan-computer",
+                "parameters": [
+                    {
+                        "description": "Schema by Loan Leave Computer",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.LoanLeaveComputerSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/room": {
             "get": {
                 "produces": [
@@ -815,6 +950,32 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/states": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "States"
+                ],
+                "summary": "get all item of the States",
+                "operationId": "get-states",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/student": {
             "get": {
                 "produces": [
@@ -959,6 +1120,67 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/v1/students/{account-number}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Students"
+                ],
+                "summary": "get a item of the students",
+                "operationId": "get-student-by-account-number",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Account Number of Student",
+                        "name": "account-number",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/university-programs": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UniversityPrograms"
+                ],
+                "summary": "get all item of the UniversityPrograms",
+                "operationId": "get-university-programs",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -977,15 +1199,19 @@ const docTemplate = `{
             }
         },
         "schemas.ComputerCreateSchema": {
-            "description": "Descripción de la estructura A",
             "type": "object",
             "required": [
                 "id_room",
+                "id_state",
                 "name",
                 "type"
             ],
             "properties": {
                 "id_room": {
+                    "type": "integer",
+                    "example": 3
+                },
+                "id_state": {
                     "type": "integer",
                     "example": 3
                 },
@@ -1091,6 +1317,47 @@ const docTemplate = `{
                 }
             }
         },
+        "schemas.LoanCreateByAccountNumberSchema": {
+            "type": "object",
+            "required": [
+                "account_number",
+                "id_computer"
+            ],
+            "properties": {
+                "account_number": {
+                    "type": "string"
+                },
+                "id_computer": {
+                    "type": "integer"
+                }
+            }
+        },
+        "schemas.LoanCreateSchema": {
+            "type": "object",
+            "required": [
+                "id_computer",
+                "id_student"
+            ],
+            "properties": {
+                "id_computer": {
+                    "type": "integer"
+                },
+                "id_student": {
+                    "type": "integer"
+                }
+            }
+        },
+        "schemas.LoanLeaveComputerSchema": {
+            "type": "object",
+            "required": [
+                "id_computer"
+            ],
+            "properties": {
+                "id_computer": {
+                    "type": "integer"
+                }
+            }
+        },
         "schemas.RoomCreateSchema": {
             "type": "object",
             "required": [
@@ -1131,10 +1398,10 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "account_number",
+                "id_university_program",
                 "last_name",
                 "name",
-                "semester",
-                "university_program"
+                "semester"
             ],
             "properties": {
                 "account_number": {
@@ -1142,6 +1409,10 @@ const docTemplate = `{
                 },
                 "email": {
                     "type": "string"
+                },
+                "id_university_program": {
+                    "description": "Info Academic",
+                    "type": "integer"
                 },
                 "last_name": {
                     "type": "string"
@@ -1152,10 +1423,6 @@ const docTemplate = `{
                 },
                 "semester": {
                     "type": "integer"
-                },
-                "university_program": {
-                    "description": "Info Academic",
-                    "type": "string"
                 }
             }
         },
@@ -1168,6 +1435,10 @@ const docTemplate = `{
                 "email": {
                     "type": "string"
                 },
+                "id_university_program": {
+                    "description": "Info Academic",
+                    "type": "integer"
+                },
                 "last_name": {
                     "type": "string"
                 },
@@ -1179,7 +1450,6 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "university_program": {
-                    "description": "Info Academic",
                     "type": "string"
                 }
             }

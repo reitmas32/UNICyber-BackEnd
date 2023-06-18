@@ -11,9 +11,11 @@ definitions:
         type: boolean
     type: object
   schemas.ComputerCreateSchema:
-    description: Descripción de la estructura A
     properties:
       id_room:
+        example: 3
+        type: integer
+      id_state:
         example: 3
         type: integer
       name:
@@ -24,6 +26,7 @@ definitions:
         type: string
     required:
     - id_room
+    - id_state
     - name
     - type
     type: object
@@ -91,6 +94,33 @@ definitions:
     - idComputerLab
     - user_name
     type: object
+  schemas.LoanCreateByAccountNumberSchema:
+    properties:
+      account_number:
+        type: string
+      id_computer:
+        type: integer
+    required:
+    - account_number
+    - id_computer
+    type: object
+  schemas.LoanCreateSchema:
+    properties:
+      id_computer:
+        type: integer
+      id_student:
+        type: integer
+    required:
+    - id_computer
+    - id_student
+    type: object
+  schemas.LoanLeaveComputerSchema:
+    properties:
+      id_computer:
+        type: integer
+    required:
+    - id_computer
+    type: object
   schemas.RoomCreateSchema:
     properties:
       id_computer_lab:
@@ -121,6 +151,9 @@ definitions:
         type: string
       email:
         type: string
+      id_university_program:
+        description: Info Academic
+        type: integer
       last_name:
         type: string
       name:
@@ -128,15 +161,12 @@ definitions:
         type: string
       semester:
         type: integer
-      university_program:
-        description: Info Academic
-        type: string
     required:
     - account_number
+    - id_university_program
     - last_name
     - name
     - semester
-    - university_program
     type: object
   schemas.StudentUpdateSchema:
     properties:
@@ -144,6 +174,9 @@ definitions:
         type: string
       email:
         type: string
+      id_university_program:
+        description: Info Academic
+        type: integer
       last_name:
         type: string
       name:
@@ -152,7 +185,6 @@ definitions:
       semester:
         type: integer
       university_program:
-        description: Info Academic
         type: string
     type: object
   schemas.UserSignInSchema:
@@ -560,6 +592,94 @@ paths:
       summary: LinkAccount User whit ComputerLab
       tags:
       - Accounts
+  /api/v1/loan-computer:
+    get:
+      operationId: get-loan
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: add a new item of the computers
+      tags:
+      - Computers
+    post:
+      operationId: create-loan
+      parameters:
+      - description: Schema by Create New Loan
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.LoanCreateSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: add a new item of the computers
+      tags:
+      - Operations
+  /api/v1/loan-computer-by-account-number:
+    post:
+      operationId: create-loan-by-account-number
+      parameters:
+      - description: Schema by Create New Computer
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.LoanCreateByAccountNumberSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: add a new item of the computers
+      tags:
+      - Operations
+  /api/v1/loan-leave-computer:
+    put:
+      operationId: leave-loan-computer
+      parameters:
+      - description: Schema by Loan Leave Computer
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.LoanLeaveComputerSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: add a new item of the computers
+      tags:
+      - Operations
   /api/v1/room:
     delete:
       operationId: delete-room
@@ -727,6 +847,23 @@ paths:
       summary: SignUp User
       tags:
       - Accounts
+  /api/v1/states:
+    get:
+      operationId: get-states
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get all item of the States
+      tags:
+      - States
   /api/v1/student:
     delete:
       operationId: delete-student
@@ -823,4 +960,44 @@ paths:
       summary: update a item of the students
       tags:
       - Students
+  /api/v1/students/{account-number}:
+    get:
+      operationId: get-student-by-account-number
+      parameters:
+      - description: Account Number of Student
+        in: path
+        name: account-number
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get a item of the students
+      tags:
+      - Students
+  /api/v1/university-programs:
+    get:
+      operationId: get-university-programs
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: get all item of the UniversityPrograms
+      tags:
+      - UniversityPrograms
 swagger: "2.0"
