@@ -28,11 +28,6 @@ var (
 )
 
 func LoadEnvs() {
-	// Cargar variables de entorno desde el archivo .env
-	//err := godotenv.Load("config/.env")
-	//if err != nil {
-	//	log.Fatal("Error al cargar el archivo .env:", err)
-	//}
 
 	// Obtener valores de las variables de entorno
 	ENVIRONMENT = getEnv("ENVIRONMENT")
@@ -44,12 +39,9 @@ func LoadEnvs() {
 
 }
 
-// getEnv obtiene el valor de una variable de entorno o devuelve un valor predeterminado si no está definida
 func getEnv(key string) string {
 	value := os.Getenv(key)
 	if value == "" {
-		// Valor predeterminado en caso de que la variable de entorno no esté definida
-		// Puedes ajustar esto según tus necesidades
 		switch key {
 		case "ENVIRONMENT":
 			return "development"
