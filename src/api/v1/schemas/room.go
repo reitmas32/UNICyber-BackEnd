@@ -6,9 +6,6 @@ type RoomCreateSchema struct {
 }
 
 type RoomUpdateSchema struct {
-	// Metadata
-
-	// Data
 	Name  string `json:"name"`
 	Index int    `json:"index"`
 }

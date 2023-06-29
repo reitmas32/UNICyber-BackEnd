@@ -15,9 +15,6 @@ type LoanLeaveComputerSchema struct {
 }
 
 type LoanUpdateSchema struct {
-	// Metadata
-
-	// Data
 	IdStudent  uint `json:"id_student"`
 	IdComputer uint `json:"id_computer"`
 }
