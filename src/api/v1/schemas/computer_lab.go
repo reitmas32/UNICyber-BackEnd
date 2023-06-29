@@ -10,11 +10,6 @@ type ComputerLabFindSchema struct {
 }
 
 type ComputerLabUpdateSchema struct {
-	// Metadata
-	//IdComputer string `gorm:"primaryKey"`
-	//IdRoom     string
-
-	// Data
 	Name        string `json:"name" binding:"required"`
 	Description string `json:"description" binding:"required"`
 }

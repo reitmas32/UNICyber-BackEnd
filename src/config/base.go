@@ -16,6 +16,9 @@ var (
 	DEBUG = true
 	HOST  = "0.0.0.0"
 
+	//PostgreSQL
+	URL_POSTGRESQL = ""
+
 	//Credentials and Config UNIAccounts
 	UNIACCOUNTS_API_VERSION      = "v1"
 	UNIACCOUNTS_API_PORT         = 5000
@@ -28,11 +31,6 @@ var (
 )
 
 func LoadEnvs() {
-	// Cargar variables de entorno desde el archivo .env
-	//err := godotenv.Load("config/.env")
-	//if err != nil {
-	//	log.Fatal("Error al cargar el archivo .env:", err)
-	//}
 
 	// Obtener valores de las variables de entorno
 	ENVIRONMENT = getEnv("ENVIRONMENT")
@@ -42,17 +40,16 @@ func LoadEnvs() {
 	SMTP_USER = getEnv("SMTP_USER")
 	SMTP_PASSWORD = getEnv("SMTP_PASSWORD")
 
+	URL_POSTGRESQL = getEnv("URL_POSTGRESQL")
+
 }
 
-// getEnv obtiene el valor de una variable de entorno o devuelve un valor predeterminado si no está definida
 func getEnv(key string) string {
 	value := os.Getenv(key)
 	if value == "" {
-		// Valor predeterminado en caso de que la variable de entorno no esté definida
-		// Puedes ajustar esto según tus necesidades
 		switch key {
 		case "ENVIRONMENT":
-			return "development"
+			return "local"
 		case "SECRET_KEY_TOKEN":
 			return "default_secret_key"
 		case "UNIACCOUNTS_API_KEY":

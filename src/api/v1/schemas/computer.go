@@ -1,8 +1,5 @@
 package schemas
 
-// @Summary Ejemplo de estructura A
-// @Description Descripción de la estructura A
-// @Tags Computer
 type ComputerCreateSchema struct {
 	Name    string `json:"name" example:"Equipo 2" binding:"required"`
 	IdRoom  uint   `json:"id_room" example:"3" binding:"required"`
@@ -15,9 +12,6 @@ type ComputerFindSchema struct {
 }
 
 type ComputerUpdateSchema struct {
-	// Metadata
-	//IdComputer string `gorm:"primaryKey"`
-	//IdRoom     string
 
 	// UI
 	Pos_x float32 `json:"pos_x" example:"156.29"`
