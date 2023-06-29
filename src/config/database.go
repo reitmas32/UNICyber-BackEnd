@@ -2,7 +2,9 @@ package config
 
 import (
 	"github.com/UNIHacks/UNIAccounts-BackEnd/src/models"
-	"github.com/jinzhu/gorm"
+	//"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
@@ -11,8 +13,10 @@ var err error
 func SetupDB() {
 	//DB, err = gorm.Open("mysql", "rafael:tere@tcp(127.0.0.1:4306)/sisec_test?charset=utf8mb4&parseTime=True&loc=Local")
 	//DB, err = gorm.Open("sqlite3", "app/my_database.db")
-	DB, err = gorm.Open("sqlite3", "my_database.db")
+	dsn := "my_database.db"
+	DB, err = gorm.Open(sqlite.Open(dsn), &gorm.Config{})
 	if err != nil {
+		print(err)
 		panic(err)
 	}
 }
