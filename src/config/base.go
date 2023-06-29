@@ -16,6 +16,9 @@ var (
 	DEBUG = true
 	HOST  = "0.0.0.0"
 
+	//PostgreSQL
+	URL_POSTGRESQL = ""
+
 	//Credentials and Config UNIAccounts
 	UNIACCOUNTS_API_VERSION      = "v1"
 	UNIACCOUNTS_API_PORT         = 5000
@@ -37,6 +40,8 @@ func LoadEnvs() {
 	SMTP_USER = getEnv("SMTP_USER")
 	SMTP_PASSWORD = getEnv("SMTP_PASSWORD")
 
+	URL_POSTGRESQL = getEnv("URL_POSTGRESQL")
+
 }
 
 func getEnv(key string) string {
@@ -44,7 +49,7 @@ func getEnv(key string) string {
 	if value == "" {
 		switch key {
 		case "ENVIRONMENT":
-			return "development"
+			return "local"
 		case "SECRET_KEY_TOKEN":
 			return "default_secret_key"
 		case "UNIACCOUNTS_API_KEY":
