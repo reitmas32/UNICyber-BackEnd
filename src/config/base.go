@@ -1,11 +1,7 @@
 package config
 
 import (
-	"log"
 	"os"
-	"path/filepath"
-
-	"github.com/joho/godotenv"
 )
 
 var (
@@ -33,10 +29,10 @@ var (
 
 func LoadEnvs() {
 	// Cargar variables de entorno desde el archivo .env
-	err := godotenv.Load("config/.env")
-	if err != nil {
-		log.Fatal("Error al cargar el archivo .env:", err)
-	}
+	//err := godotenv.Load("config/.env")
+	//if err != nil {
+	//	log.Fatal("Error al cargar el archivo .env:", err)
+	//}
 
 	// Obtener valores de las variables de entorno
 	ENVIRONMENT = getEnv("ENVIRONMENT")
@@ -72,13 +68,4 @@ func getEnv(key string) string {
 		}
 	}
 	return value
-}
-
-// getBaseDir obtiene el directorio base del programa
-func getBaseDir() string {
-	ex, err := os.Executable()
-	if err != nil {
-		log.Fatal(err)
-	}
-	return filepath.Dir(ex)
 }

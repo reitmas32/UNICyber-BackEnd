@@ -4,9 +4,10 @@ package schemas
 // @Description Descripción de la estructura A
 // @Tags Computer
 type ComputerCreateSchema struct {
-	Name   string `json:"name" example:"Equipo 2" binding:"required"`
-	IdRoom uint   `json:"id_room" example:"3" binding:"required"`
-	Type   string `json:"type" example:"Impresora" binding:"required"`
+	Name    string `json:"name" example:"Equipo 2" binding:"required"`
+	IdRoom  uint   `json:"id_room" example:"3" binding:"required"`
+	Type    string `json:"type" example:"Impresora" binding:"required"`
+	IdState uint   `json:"id_state" example:"3" binding:"required"`
 }
 
 type ComputerFindSchema struct {

@@ -41,7 +41,7 @@ func SignIn_PUT(c *gin.Context) {
 	// Crear un cliente HTTP personalizado con los headers deseados
 	client := &http.Client{}
 	//Todo Remplazar la url de desarrollo o producción
-	apiURL := "http://127.0.0.1:5000/api/v1/signin"
+	apiURL := "http://unicappaccountsdev.pythonanywhere.com/api/v1/signin"
 	jsonData, err := json.Marshal(user)
 	if err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
@@ -98,7 +98,7 @@ func SignUp_POST(c *gin.Context) {
 	// Crear un cliente HTTP personalizado con los headers deseados
 	client := &http.Client{}
 	//Todo Remplazar la url de desarrollo o producción
-	apiURL := fmt.Sprintf("http://127.0.0.1:%d/api/%s/signup", config.UNIACCOUNTS_API_PORT, config.UNIACCOUNTS_API_VERSION)
+	apiURL := fmt.Sprintf("http://unicappaccountsdev.pythonanywhere.com/api/%s/signup", config.UNIACCOUNTS_API_VERSION)
 	jsonData, err := json.Marshal(user)
 	if err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
@@ -271,4 +271,59 @@ func LinkAccount_PUT(c *gin.Context) {
 
 	c.Header("Content-Type", "application/json")
 	c.JSON(200, responseLinkAccount)
+}
+
+// @Summary LinkAccount User whit ComputerLab
+// @ID post-link-account
+// @Tags Accounts
+// @Produce json
+// @Param data body schemas.LinkAccountRequisitionSchema true "Schema by LinkAccount User whit ComputerLab"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /api/v1/link-account [post]
+func LinkAccountJanky_POST(c *gin.Context) {
+
+	// Decodificar el objeto JSON recibido en la estructura User
+	var linkAccountSchema schemas.LinkAccountRequisitionSchema
+	if err := c.ShouldBindWith(&linkAccountSchema, binding.JSON); err != nil {
+		responseLinkAccount := models.Response{
+			Message: "Failed to confirm the linking.",
+			Success: false,
+			Data:    "{}",
+		}
+		c.Header("Content-Type", "application/json")
+		c.JSON(200, responseLinkAccount)
+		return
+	}
+
+	linkAccount := models.LinkAccount{
+		UserName:      linkAccountSchema.UserName,
+		IdComputerLab: linkAccountSchema.IdComputerLab,
+	}
+	responseLinkAccount := models.Response{
+		Message: "Failed to confirm the linking.",
+		Success: false,
+		Data:    "{}",
+	}
+
+	result, message, new_linkAccount := services.CreateLinkAccount(linkAccount)
+
+	if result {
+
+		responseLinkAccount = models.Response{
+			Message: message,
+			Success: result,
+			Data:    new_linkAccount,
+		}
+	} else {
+		responseLinkAccount = models.Response{
+			Message: message,
+			Success: result,
+			Data:    "{}",
+		}
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.JSON(200, responseLinkAccount)
+
 }

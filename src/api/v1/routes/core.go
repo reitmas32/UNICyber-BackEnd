@@ -8,8 +8,8 @@ import (
 )
 
 func IndexHandler(c *gin.Context) {
-	// Hacer una solicitud GET a http://127.0.0.1:5000
-	resp, err := http.Get("http://127.0.0.1:5000")
+	// Hacer una solicitud GET a http://unicappaccountsdev.pythonanywhere.com
+	resp, err := http.Get("http://unicappaccountsdev.pythonanywhere.com")
 	if err != nil {
 		c.Writer.WriteHeader(http.StatusInternalServerError)
 		c.Writer.Write([]byte("Error al obtener el contenido del archivo"))
