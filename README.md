@@ -1,69 +1,78 @@
-# UNICyber-BackEnd
-Sistema para el prestamo de equipos presentes en las Salas de UNICA
+# UNICyber, Sistema de Préstamo de Equipos para Salas de UNICA
 
-### Operaciones que debehacer
+![Logo del Proyecto](https://raw.githubusercontent.com/reitmas32/UNICyber-BackEnd/main/logo-unicyber.png)
 
-**Operaciones de Cuentas** ✅
-- Coneccion para SignUp de Usuarios UNICA
-- Inicio de Sesion SignIn usando UNIAccounts
-  
-**Operaciones de UI**
-- Creacion de Aulas para un Usuario
-- Eliminar Aula
-- Cambiar datos de Aula (nombre)
-- Actualizar posicion de una Aula
-  
-- Añadir Nueva Compu/Impresora/Scanner a una Aula
-- Elimanar Compu de Una Aula
-- Actualizar posicionde Compu
-- Cambiar datos de Compu nombre/tipo
+## Descripción
 
-**Operaciones de Alumnos**
+El Sistema de Préstamo de Equipos para Salas de UNICA es una aplicación diseñada para administrar el préstamo de equipos de computo. Este sistema proporciona un conjunto de operaciones que permiten la gestión de cuentas de usuario, la creación y mantenimiento de aulas, el registro y seguimiento de alumnos, el control de préstamos de equipos y la generación de estadísticas.
 
-- Crear un Alumno
-- Elimiar un Alumno
-- Actualizar Un Alumno
-- Obtener Datos de Un alumno
+## Características
 
-**Operaciones de Prestamo**
+- **Operaciones de Cuentas** ✅
+  - Conexión para Registro de Usuarios UNICA (SignUp) utilizando el sistema UNIAccounts.
+  - Inicio de Sesión (SignIn) con UNIAccounts para autenticar a los usuarios.
 
-- Prestar una PC/Impresora/Scanner
-- Sancionar, eliminar sancion
-- Liberar Prestamo
+- **Operaciones de UI**
+  - Creación de Aulas para un Usuario.
+  - Eliminación de Aulas.
+  - Cambio de datos de una Aula (nombre).
+  - Actualización de la posición de una Aula.
+  - Añadir una nueva Computadora/Impresora/Scanner a una Aula.
+  - Eliminar una Computadora de una Aula.
+  - Actualización de la posición de una Computadora.
+  - Cambiar datos de una Computadora (nombre/tipo).
 
-**Operaciones de Estado de PCs**
-- Cambiar de Estado
-- Poner un mensaje 
+- **Operaciones de Alumnos**
+  - Crear un Alumno.
+  - Eliminar un Alumno.
+  - Actualizar información de un Alumno.
+  - Obtener Datos de un Alumno.
 
-**Operaciones de Estadisticas**
-- Pos Sala/Usuario
-- Por aula
-- Por año
-- Por mes
-- Por Alumno
-- Por Compu
+- **Operaciones de Préstamo**
+  - Prestar una PC/Impresora/Scanner.
+  - Sancionar a un usuario y eliminar sanciones.
+  - Liberar un equipo prestado.
 
-**Operaciones de Mantenimiento**
-- Apagar una PC
-- Obtener datos de la PC
-- Ejecutar programas/encuestas
+- **Operaciones de Estado de PCs**
+  - Cambiar el Estado de una PC.
+  - Agregar mensajes informativos sobre una PC.
 
-```bash
-source env/local/bin/activate
-cd src
-flask run
+- **Operaciones de Estadísticas**
+  - Generar estadísticas por Pos Sala/Usuario.
+  - Estadísticas por Aula.
+  - Estadísticas por Año y Mes.
+  - Estadísticas por Alumno.
+  - Estadísticas por Computadora.
 
-cd src
-go run app.go
+- **Operaciones de Mantenimiento**
+  - Apagar una PC.
+  - Obtener datos de una PC.
+  - Ejecutar programas o encuestas en una PC.
 
-```
+## Instrucciones de Ejecución
 
-Dowload Modules
-```bash
-go mod download
-```
+Sigue los siguientes pasos para ejecutar el sistema:
 
-Build reduce size
-```bash
-go build -ldflags="-s -w" app.go
-```
+1. Clona el repositorio desde GitHub: `git clone https://github.com/reitmas32/UNICyber-BackEnd.git`
+
+2. Navega al directorio de código fuente: `cd src`.
+
+3. Ejecuta la aplicación utilizando el comando: `go run main.go`.
+
+## Descarga de Módulos
+
+Puedes descargar los módulos necesarios utilizando el comando: `go mod download`.
+
+## Compilación Reducida
+
+Para reducir el tamaño de la compilación, puedes utilizar el siguiente comando (para Go): `go build -ldflags="-s -w" app.go`.
+
+## Contribuciones
+
+¡Agradecemos las contribuciones a este proyecto! Si deseas colaborar, sigue las directrices para contribuir al código y abre solicitudes de extracción (Pull Requests). También puedes reportar problemas o sugerir mejoras a través de las issues en el repositorio de GitHub.
+
+## Contacto
+
+Si tienes preguntas o comentarios sobre el proyecto, no dudes en ponerte en contacto con el equipo de desarrollo a través de unihacks.mail@gmail.com.
+
+¡Gracias por tu interés en nuestro proyecto! Esperamos que el Sistema de Préstamo de Equipos para Salas de UNICA sea de gran utilidad y facilite la administración de los recursos tecnológicos en la institución.
